@@ -1,0 +1,10 @@
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+platforms/
+engine/
+*/www/lib/
+tmp
+.DS_Store
+.idea
