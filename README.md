@@ -13,9 +13,13 @@ __NOTE: I have only tested this on Android devices so far. iOS feedback wanted!_
 
 `ionic plugin add org.apache.cordova.media`
 
-### Install module using bower
+### Install this module using bower
 
-`bower info ionic-audio`
+`bower install ionic-audio`
+
+There's a sample Ionic project in the folder `example-audio`. Keep in mind that the module depends on a Cordova plugin so
+the project won't run locally with `ionic serve`. While you won't be able to test the playback, you can still run the project
+locally to tune the templates before deploying to the device.
 
 ### Include JS file
 
