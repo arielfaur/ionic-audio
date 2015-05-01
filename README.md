@@ -71,13 +71,13 @@ $scope.myTrack = {
 This directive takes care of displaying the right play/pause/loading status. It updates the UI accordingly and shows a spinner
 while the track is loading.
 
-```<ion-audio-play></ion-audio-play>```
+`<ion-audio-play></ion-audio-play>`
 
 ### ion-audio-progress
 Shows a progress bar using Ionic's range control. It also displays the track duration and progress if
 the `display-time` attribute is present.
 
-```<ion-audio-progress-bar display-time></ion-audio-progress-bar>```
+`<ion-audio-progress-bar display-time></ion-audio-progress-bar>`
 
 ## TODO
 + Test on iOS
