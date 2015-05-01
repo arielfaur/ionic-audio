@@ -131,7 +131,7 @@ angular.module('ionic-audio', ['ionic'])
             require: '^^ionAudioPlayer',
             link: function(scope, element, attrs, controller) {
                 var
-                    playElem = element.find('a'), spinnerElem = element.find('ion-spinner');
+                    playElem = element.find('a'), spinnerElem = element.find('ion-spinner'), hasLoaded = false;
 
                 spinnerElem.css({position: 'relative', top: '8px', left: '8px;'});
 
@@ -161,7 +161,10 @@ angular.module('ionic-audio', ['ionic'])
                             //case Media.MEDIA_PAUSED:
                             //    break;
                             case Media.MEDIA_RUNNING:
-                                toggleSpinner();
+                                if (!hasLoaded) {
+                                    toggleSpinner();
+                                    hasLoaded = true;
+                                }
                                 break;
                             case Media.MEDIA_STOPPED:
                                 togglePlayButton();

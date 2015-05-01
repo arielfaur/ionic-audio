@@ -1,6 +1,6 @@
 <ion-view view-title="Music">
   <ion-content>
-      <ion-audio-player track="track">
+      <ion-audio-player ng-repeat="track in tracks" track="track">
               <div class="list list-inset">
                   <div class="item item-thumbnail-left">
                       <img src="{{track.art}}">
