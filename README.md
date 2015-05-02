@@ -17,9 +17,10 @@ __NOTE: I have only tested this on Android devices so far. iOS feedback wanted!_
 
 `bower install ionic-audio`
 
-There's a sample Ionic project in the folder `example-audio`. Keep in mind that the module depends on a Cordova plugin so
-the project won't run locally with `ionic serve`. While you won't be able to test the playback, you can still run the project
-locally to tune the templates before deploying to the device.
+There's a sample Ionic project in the folder `example-audio`. The project contains not platforms, so you must add
+one and make a build if you want to test it on your device.
+Keep in mind that the module depends on a Cordova plugin so the module won't run locally with `ionic serve`.
+However, you can still run the project locally to tune the UI before deploying to the device.
 
 ### Include JS file
 
@@ -34,7 +35,7 @@ locally to tune the templates before deploying to the device.
 ```
 <ion-view view-title="Music">
   <ion-content>
-      <ion-audio-player track="track">
+      <ion-audio-track track="track">
           <div class="list list-inset">
               <div class="item item-thumbnail-left">
                   <img src="{{track.art}}">
@@ -46,23 +47,23 @@ locally to tune the templates before deploying to the device.
                 <ion-audio-progress-bar display-time></ion-audio-progress-bar>
               </div>
           </div>
-      </ion-audio-player>
+      </ion-audio-track>
   </ion-content>
 </ion-view>
 ```
 
 ## Directives
 
-### ion-audio-player
-This is the main directive. It defines a player linked to a specific audio track, which is to be defined as a scope object
-and passed as parameter using the `track` attribute. The player template is defined inside the body of
- `ion-audio-player`. It is possible to have multiple instances on a single view, each one being completely
+### ion-audio-track
+This is the main directive that must be linked to the audio track defined as a scope object
+and passed as parameter using the `track` attribute. The player UI is defined inside the body of
+ `ion-audio-track`. It is possible to have multiple instances on a single view, each one being completely
 independent.
 
 ```
-<ion-audio-player track="myTrack">
+<ion-audio-track track="myTrack">
 ...
-</ion-audio-player>
+</ion-audio-track>
 ```
 
 Then in your controller:
@@ -81,15 +82,21 @@ while the track is loading.
 
 `<ion-audio-play></ion-audio-play>`
 
-### ion-audio-progress
+### ion-audio-progress-bar
 Shows a progress bar using Ionic's range control. It also displays the track duration and progress if
 the `display-time` attribute is present.
 
 `<ion-audio-progress-bar display-time></ion-audio-progress-bar>`
 
+### ion-audio-progress-box
+Shows a global progress bar and track info. This directive is used to have a single progress bar per view that is shared
+among all tracks defined. Check out the example for a use case.
+
+`<ion-audio-progress-box display-time></ion-audio-progress-box>`
+
 ## TODO
 + Test on iOS
 + Implement playlist functionality
 + Implement seek-to functionality using the slider
-+ Add parameters to customize default player icons - now hardcoded
++ Implement customization of progress bar and default player icons - now hardcoded
 + Replace Ionic range control with SVG to show track progress instead (maybe?)
