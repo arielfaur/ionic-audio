@@ -46,7 +46,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
               }
           }
       })
-
+      .state('tab.music2', {
+          url: '/more-music',
+          views: {
+              'tab-more-music': {
+                  templateUrl: 'templates/tab-music2.html',
+                  controller: 'MusicCtrl'
+              }
+          }
+      })
   .state('tab.dash', {
     url: '/dash',
     views: {

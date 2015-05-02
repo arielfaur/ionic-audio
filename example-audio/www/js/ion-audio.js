@@ -1,7 +1,7 @@
 angular.module('ionic-audio', ['ionic'])
     .filter('time', function() {
         return function(input) {
-            input = input || '0';
+            input = input || 0;
 
             var t = parseInt(input,10);
 
@@ -11,7 +11,11 @@ angular.module('ionic-audio', ['ionic'])
             return addLeadingZero(Math.floor(t / 60)) + ':' + addLeadingZero(t % 60);
         };
     })
-
+    .filter('duration', function($filter) {
+        return function (input) {
+            return (input > 0) ? $filter('time')(input) : '';
+        }
+    })
     .factory('MediaManager', ['$interval', '$timeout', function($interval, $timeout) {
         var tracks = [], currentTrack, currentMedia, playerTimer;
 
@@ -179,6 +183,8 @@ angular.module('ionic-audio', ['ionic'])
                     }
                 }
 
+                // we need to set a delay to allow timer to finish its task before starting a new playback
+                // TODO: find better approach
                 $timeout(function() {
                     console.log('ionic-audio: playing new track...');
                     play(trackID);
@@ -193,7 +199,7 @@ angular.module('ionic-audio', ['ionic'])
         }
 
     }])
-    .directive('ionAudioPlayer', ['$interval', '$ionicPlatform', 'MediaManager', function($interval,  $ionicPlatform, MediaManager) {
+    .directive('ionAudioPlayer', ['$interval', '$ionicPlatform', '$rootScope', 'MediaManager', function($interval,  $ionicPlatform, $rootScope, MediaManager) {
         return {
             transclude: true,
             template: '<div ng-transclude></div>',
@@ -228,6 +234,8 @@ angular.module('ionic-audio', ['ionic'])
                 this.progressChange = function(progress, duration) {
                     $scope.track.progress = progress;
                     $scope.track.duration = duration;
+
+                    $rootScope.$broadcast('ionic-audio:progressChange', progress, duration);
                 };
                 this.play = function() {
                     $ionicPlatform.ready(function() {
@@ -263,10 +271,10 @@ angular.module('ionic-audio', ['ionic'])
     .directive('ionAudioPlay', ['$ionicPlatform', function($ionicPlatform) {
         return {
             restrict: 'EA',
+            transclude: true,
             scope: {
-                buttonStyles: '@'
             },
-            template: '<a class="button button-icon icon ion-play" ng-class="buttonStyles"></a><ion-spinner icon="ios" class="ng-hide"></ion-spinner>',
+            template: '<ng-transclude></ng-transclude><ion-spinner icon="ios" class="ng-hide"></ion-spinner>',
             require: '^^ionAudioPlayer',
             link: function(scope, element, attrs, controller) {
                 var
@@ -323,9 +331,7 @@ angular.module('ionic-audio', ['ionic'])
         return {
             restrict: 'E',
             template: '<div class="range"><ion-audio-progress></ion-audio-progress><input type="range" name="volume" min="0" max="{{track.duration}}" ng-model="track.progress"><ion-audio-duration></ion-audio-duration></div>',
-            //scope: true,
-            require: '^^ionAudioPlayer',
-            link: function(scope, element, attrs, controller) {
+            link: function(scope, element, attrs) {
                 if (!angular.isDefined(attrs.displayTime)) {
                     element.find('ion-audio-progress').remove();
                     element.find('ion-audio-duration').remove();
@@ -333,24 +339,42 @@ angular.module('ionic-audio', ['ionic'])
             }
         }
     }])
+    .directive('ionGlobalAudioProgressBar', [function() {
+        return {
+            restrict: 'E',
+            template: '<div class="range"><ion-audio-progress></ion-audio-progress><input type="range" name="volume" min="0" max="{{track.duration}}" ng-model="track.progress"><ion-audio-duration></ion-audio-duration></div>',
+            scope: {},
+            link: function(scope, element, attrs) {
+                if (!angular.isDefined(attrs.displayTime)) {
+                    element.find('ion-audio-progress').remove();
+                    element.find('ion-audio-duration').remove();
+                }
+
+                scope.track = {
+                    progress: 0,
+                    duration: -1
+                };
+
+                scope.$on('ionic-audio:progressChange', function (e, progress, duration) {
+                    scope.track.progress = progress;
+                    scope.track.duration = duration;
+                });
+            }
+        }
+    }])
     .directive('ionAudioProgress', [function() {
         return {
             restrict: 'E',
             template: '{{track.progress | time}}',
-            //scope: true,
-            require: '^^ionAudioPlayer',
-            link: function(scope, element, attrs, controller) {
-
+            link: function(scope, element, attrs) {
             }
         }
     }])
     .directive('ionAudioDuration', [function() {
         return {
             restrict: 'E',
-            template: '{{track.duration | time}}',
-            //scope: true,
-            require: '^^ionAudioPlayer',
-            link: function(scope, element, attrs, controller) {
+            template: '{{track.duration | duration}}',
+            link: function(scope, element, attrs) {
                 element.addClass('ng-hide');
 
                 var listener = scope.$watch('track.duration', function(newVal) {
