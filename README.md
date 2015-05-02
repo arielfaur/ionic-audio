@@ -11,15 +11,23 @@ __NOTE: I have only tested this on Android devices so far. iOS feedback wanted!_
 [Cordova media plugin]
 (https://github.com/apache/cordova-plugin-media)
 
-```ionic plugin add org.apache.cordova.media```
+`ionic plugin add org.apache.cordova.media`
+
+### Install this module using bower
+
+`bower install ionic-audio`
+
+There's a sample Ionic project in the folder `example-audio`. Keep in mind that the module depends on a Cordova plugin so
+the project won't run locally with `ionic serve`. While you won't be able to test the playback, you can still run the project
+locally to tune the templates before deploying to the device.
 
 ### Include JS file
 
-``` <script src="dist/ion-audio.js"></script>```
+`<script src="dist/ion-audio.js"></script>`
 
 ### Inject the dependency in your app's module
 
-``` angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ionic-audio'])```
+`angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ionic-audio'])`
 
 ### Define your player UI using directives as in the follow example
 
