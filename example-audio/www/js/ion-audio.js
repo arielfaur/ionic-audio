@@ -12,7 +12,188 @@ angular.module('ionic-audio', ['ionic'])
         };
     })
 
-    .directive('ionAudioPlayer', ['$interval', '$ionicPlatform', function($interval,  $ionicPlatform) {
+    .factory('MediaManager', ['$interval', '$timeout', function($interval, $timeout) {
+        var tracks = [], currentTrack, currentMedia, playerTimer;
+
+
+        var startTimer = function() {
+            if ( angular.isDefined(playerTimer) ) return;
+
+            if (!currentTrack) return;
+
+            playerTimer = $interval(function() {
+                if ( currentTrack.duration < 0){
+                    currentTrack.duration = currentMedia.getDuration();
+                }
+
+                currentMedia.getCurrentPosition(
+                    // success callback
+                    function(position) {
+                        if (position > -1) {
+                            currentTrack.progress = position;
+                        }
+                    },
+                    // error callback
+                    function(e) {
+                        console.log("Error getting pos=" + e);
+                    });
+
+                if (angular.isFunction(currentTrack.onProgress))
+                    currentTrack.onProgress(currentTrack.progress, currentTrack.duration);
+
+            }, 1000);
+
+        };
+
+        var stopTimer = function() {
+            if (angular.isDefined(playerTimer)) {
+                $interval.cancel(playerTimer);
+                playerTimer = undefined;
+            }
+        };
+
+        var releaseMedia = function() {
+            if (angular.isDefined(currentMedia)) {
+                currentMedia.release();
+                currentMedia = undefined;
+                currentTrack = undefined;
+            }
+        };
+
+        var onSuccess = function() {
+            stopTimer();
+            releaseMedia();
+
+            if (angular.isFunction(this.onSuccess))
+                this.onSuccess();
+        };
+
+        var onError = function() {
+            if (angular.isFunction(this.onError))
+                this.onError();
+        };
+
+        var onStatusChange = function(status) {
+            this.status = status;
+
+            if (angular.isFunction(this.onStatusChange))
+                this.onStatusChange(status);
+        };
+
+        var createMedia = function(track) {
+            if (!track.url) {
+                console.log('ionic-audio: missing track url');
+                return undefined;
+            }
+
+            return new Media(track.url,
+                angular.bind(track, onSuccess),
+                angular.bind(track, onError),
+                angular.bind(track, onStatusChange));
+
+        };
+
+        var destroy = function() {
+            stopTimer();
+            releaseMedia();
+        };
+
+        var stop = function() {
+            currentMedia.stop();    // will call onSuccess...
+
+            currentTrack = undefined;
+        };
+
+        var pause = function() {
+            currentMedia.pause();
+            stopTimer();
+        };
+
+        var resume = function() {
+            currentMedia.play();
+            startTimer();
+        };
+
+
+        var play = function(trackID) {
+            currentTrack = tracks[trackID];
+
+            currentMedia = createMedia(currentTrack);
+            currentMedia.play();
+
+            startTimer();
+
+        };
+
+        /*
+        Creates a new Media from a track object
+
+         var track = {
+             url: 'https://s3.amazonaws.com/ionic-audio/Message+in+a+bottle.mp3',
+             artist: 'The Police',
+             title: 'Message in a bottle',
+             art: 'img/The_Police_Greatest_Hits.jpg'
+         }
+         */
+        return {
+
+            addTrack: function(track, onSuccessCallback, onErrorCallback, onStatusChangeCallback, onProgressCallback) {
+                if (!track.url) {
+                    console.log('ionic-audio: missing track url');
+                    return;
+                }
+                angular.extend(track, {
+                    onSuccess: onSuccessCallback,
+                    onError: onErrorCallback,
+                    onStatusChange: onStatusChangeCallback,
+                    onProgress: onProgressCallback,
+                    status: 0,
+                    duration: -1,
+                    progress: 0
+                });
+                var index = tracks.push(track) - 1;
+                tracks[index].id = index;
+                return index;
+            },
+            play: function(trackID) {
+                // avoid two tracks playing simultaneously
+
+                if (currentTrack) {
+                    if (currentTrack.id == trackID) {
+                        if (currentTrack.status == Media.MEDIA_RUNNING) {
+                            console.log('ionic-audio: pausing...');
+                            pause();
+                            return;
+                        } else {
+                            if (currentTrack.status == Media.MEDIA_PAUSED) {
+                                console.log('ionic-audio: resuming...');
+                                resume();
+                                return;
+                            }
+                        }
+                    } else {
+                        if (currentTrack.id > -1) {
+                            console.log('ionic-audio: stopping...');
+                            stop();
+                        }
+                    }
+                }
+
+                $timeout(function() {
+                    console.log('ionic-audio: playing new track...');
+                    play(trackID);
+                }, 1000);
+
+            },
+
+            destroy: function() {
+                destroy();
+            }
+
+        }
+
+    }])
+    .directive('ionAudioPlayer', ['$interval', '$ionicPlatform', 'MediaManager', function($interval,  $ionicPlatform, MediaManager) {
         return {
             transclude: true,
             template: '<div ng-transclude></div>',
@@ -22,64 +203,31 @@ angular.module('ionic-audio', ['ionic'])
             },
             controller: ['$scope', function($scope) {
 
-                var media, playerTimer, controller = this;
+                var media, controller = this;
 
+                $scope.track.id = -1;
                 $scope.track.status = 0;
                 $scope.track.duration = -1;
                 $scope.track.progress = 0;
 
                 this.init = function() {
-
-                    media = new Media($scope.track.url, this.playbackSuccess, null, this.statusChange);
+                    //media = new Media($scope.track.url, this.playbackSuccess, null, this.statusChange);
+                    $scope.track.id = MediaManager.addTrack($scope.track, this.playbackSuccess, null, this.statusChange, this.progressChange);
                 };
 
-                this.startTimer = function() {
-                    if ( angular.isDefined(playerTimer) ) return;
-
-                    playerTimer = $interval(function() {
-                        if ( $scope.track.duration < 0){
-                            $scope.track.duration = media.getDuration();
-                        }
-
-                        media.getCurrentPosition(
-                            // success callback
-                            function(position) {
-                                if (position > -1) {
-                                    $scope.track.progress = position;
-                                }
-                            },
-                            // error callback
-                            function(e) {
-                                console.log("Error getting pos=" + e);
-                            });
-                    }, 1000);
-                };
-
-                this.stopTimer = function() {
-                    if (angular.isDefined(playerTimer)) {
-                        $interval.cancel(playerTimer);
-                        playerTimer = undefined;
-                    }
-                };
-
-                this.releaseMedia = function() {
-                    if (angular.isDefined(media)) {
-                        media.stop();
-                        media.release();
-                        media = undefined;
-                    }
-                };
                 this.playbackSuccess = function() {
                     $scope.track.status = 0;
                     $scope.track.progress = 0;
 
-                    controller.stopTimer();
-                    controller.releaseMedia();
                 };
                 this.statusChange = function(status) {
                     $scope.track.status = status;
 
                     $scope.$broadcast('ionic-audio:statusChange', status);
+                };
+                this.progressChange = function(progress, duration) {
+                    $scope.track.progress = progress;
+                    $scope.track.duration = duration;
                 };
                 this.play = function() {
                     $ionicPlatform.ready(function() {
@@ -88,19 +236,12 @@ angular.module('ionic-audio', ['ionic'])
                             return;
                         }
 
-                        if (!media) {
+                        if ($scope.track.id < 0) {
                             controller.init();
                         }
 
-                        if ($scope.track.status == Media.MEDIA_RUNNING) {
-                            console.log('ionic-audio: pausing...');
-                            media.pause();
-                            controller.stopTimer()
-                        } else {
-                            console.log('ionic-audio: playing...');
-                            media.play();
-                            controller.startTimer();
-                        }
+                        MediaManager.play($scope.track.id);
+
                     }, false);
 
                 }
@@ -113,9 +254,7 @@ angular.module('ionic-audio', ['ionic'])
                 }
 
                 scope.$on('$destroy', function() {
-                    // Make sure that the interval is destroyed too
-                    controller.stopTimer();
-                    controller.releaseMedia();
+                    MediaManager.destroy();
                 });
 
             }
@@ -131,7 +270,7 @@ angular.module('ionic-audio', ['ionic'])
             require: '^^ionAudioPlayer',
             link: function(scope, element, attrs, controller) {
                 var
-                    playElem = element.find('a'), spinnerElem = element.find('ion-spinner'), hasLoaded = false;
+                    playElem = element.find('a'), spinnerElem = element.find('ion-spinner'), hasLoaded;
 
                 spinnerElem.css({position: 'relative', top: '8px', left: '8px;'});
 
@@ -139,8 +278,12 @@ angular.module('ionic-audio', ['ionic'])
                     spinnerElem.toggleClass('ng-hide');
                 }
 
-                function togglePlayButton() {
-                    playElem.toggleClass('ion-play ion-pause');
+                function togglePlayButton(hasStopped) {
+                    if (hasStopped) {
+                        playElem.addClass('ion-play').removeClass('ion-pause');
+                    } else {
+                        playElem.toggleClass('ion-play ion-pause');
+                    }
                 }
 
                 $ionicPlatform.ready(function() {
@@ -156,6 +299,7 @@ angular.module('ionic-audio', ['ionic'])
 
                         switch (status) {
                             case Media.MEDIA_STARTING:
+                                hasLoaded = false;
                                 toggleSpinner();
                                 break;
                             //case Media.MEDIA_PAUSED:
@@ -167,7 +311,7 @@ angular.module('ionic-audio', ['ionic'])
                                 }
                                 break;
                             case Media.MEDIA_STOPPED:
-                                togglePlayButton();
+                                togglePlayButton(true);
                                 break;
                         }
                     });
@@ -179,7 +323,7 @@ angular.module('ionic-audio', ['ionic'])
         return {
             restrict: 'E',
             template: '<div class="range"><ion-audio-progress></ion-audio-progress><input type="range" name="volume" min="0" max="{{track.duration}}" ng-model="track.progress"><ion-audio-duration></ion-audio-duration></div>',
-            scope: true,
+            //scope: true,
             require: '^^ionAudioPlayer',
             link: function(scope, element, attrs, controller) {
                 if (!angular.isDefined(attrs.displayTime)) {
@@ -193,7 +337,7 @@ angular.module('ionic-audio', ['ionic'])
         return {
             restrict: 'E',
             template: '{{track.progress | time}}',
-            scope: true,
+            //scope: true,
             require: '^^ionAudioPlayer',
             link: function(scope, element, attrs, controller) {
 
@@ -204,7 +348,7 @@ angular.module('ionic-audio', ['ionic'])
         return {
             restrict: 'E',
             template: '{{track.duration | time}}',
-            scope: true,
+            //scope: true,
             require: '^^ionAudioPlayer',
             link: function(scope, element, attrs, controller) {
                 element.addClass('ng-hide');
