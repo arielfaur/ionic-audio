@@ -1,6 +1,6 @@
 <ion-view view-title="More Music">
   <ion-content>
-      <ion-audio-player ng-repeat="track in tracks" track="track">
+      <ion-audio-track ng-repeat="track in tracks" track="track">
           <div class="card">
               <div class="item item-stable item-thumbnail-left">
                   <img src="{{track.art}}">
@@ -9,10 +9,10 @@
                   <ion-audio-play><a class="button button-icon button-stable icon ion-play"></a></ion-audio-play>
               </div>
           </div>
-      </ion-audio-player>
+      </ion-audio-track>
       <div class="card">
           <div class="item item-divider item-stable">
-              <ion-global-audio-progress-bar display-time></ion-global-audio-progress-bar>
+              <ion-audio-progress-box display-time></ion-audio-progress-box>
           </div>
       </div>
   </ion-content>
