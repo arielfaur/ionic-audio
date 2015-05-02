@@ -2,7 +2,13 @@
 This Ionic module creates a player UI for the cordova-media plugin by providing some Angular directives. It is possible
 to customize the look and feel of the player providing an own template as shown in the example ionic project.
 
-__NOTE: I have only tested this on Android devices so far. iOS feedback wanted!__
+__NOTE: I have only tested this on :__
+
++ Android 5.1
++ Android 4.1.2
++ Android 4.1.2 w/ Crosswalk (much better UI performance)
+
+__iOS feedback wanted!__
 
 ## Usage
 

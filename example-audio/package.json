@@ -22,6 +22,9 @@
     "org.apache.cordova.splashscreen"
   ],
   "cordovaPlatforms": [
-    "android"
+    {
+      "platform": "android",
+      "locator": "./engine/cordova-android-c0.6.1/"
+    }
   ]
 }
