@@ -343,22 +343,23 @@ angular.module('ionic-audio', ['ionic'])
     .directive('ionAudioProgressBox', [function() {
         return {
             restrict: 'E',
-            template: '<h2>{{track.title}} - {{track.artist}}</h2><div class="range"><ion-audio-progress></ion-audio-progress><input type="range" name="volume" min="0" max="{{track.duration}}" ng-model="track.progress"><ion-audio-duration></ion-audio-duration></div>',
+            template: '<h2 ng-style="displayTrackInfo()">{{track.title}} - {{track.artist}}</h2><div class="range"><ion-audio-progress></ion-audio-progress><input type="range" name="volume" min="0" max="{{track.duration}}" ng-model="track.progress"><ion-audio-duration></ion-audio-duration></div>',
             scope: {},
             link: function(scope, element, attrs) {
+
                 if (!angular.isDefined(attrs.displayTime)) {
                     element.find('ion-audio-progress').remove();
                     element.find('ion-audio-duration').remove();
                 }
 
+                scope.displayTrackInfo = function() {
+                    var visibility = scope.track.artist && scope.track.title ? 'visible' : 'hidden';
+                    return { visibility: visibility}
+                };
+
                 scope.track = {
                     progress: 0,
                     duration: -1
-                };
-
-                var toggleTrackInfo = function() {
-                    var visibility = scope.track.artist && scope.track.title ? 'visible' : 'hidden';
-                    element.find('h2').css('visibility', visibility);
                 };
 
                 scope.$on('ionic-audio:globalCurrentTrack', function (e, track) {
@@ -366,8 +367,6 @@ angular.module('ionic-audio', ['ionic'])
                     if (track.status == Media.MEDIA_STARTING) {
                         scope.track.artist = track.artist;
                         scope.track.title = track.title;
-
-                        toggleTrackInfo();
                     }
                 });
 
