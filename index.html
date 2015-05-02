@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Ionic-audio by arielfaur</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Ionic-audio</h1>
+        <p>Ionic UI for the Cordova Media Plugin</p>
+
+        <p class="view"><a href="https://github.com/arielfaur/ionic-audio">View the Project on GitHub <small>arielfaur/ionic-audio</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/arielfaur/ionic-audio/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/arielfaur/ionic-audio/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/arielfaur/ionic-audio">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="ionic-audio" class="anchor" href="#ionic-audio" aria-hidden="true"><span class="octicon octicon-link"></span></a>ionic-audio</h1>
+
+<p>This Ionic module creates a player UI for the cordova-media plugin by providing some Angular directives. It is possible
+to customize the look and feel of the player providing an own template as shown in the example ionic project.</p>
+
+<p><strong>NOTE: I have only tested this on Android devices so far. iOS feedback wanted!</strong></p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="install-dependencies" class="anchor" href="#install-dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install dependencies</h3>
+
+<p><a href="https://github.com/apache/cordova-plugin-media">Cordova media plugin</a></p>
+
+<p><code>ionic plugin add org.apache.cordova.media</code></p>
+
+<h3>
+<a id="install-this-module-using-bower" class="anchor" href="#install-this-module-using-bower" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install this module using bower</h3>
+
+<p><code>bower install ionic-audio</code></p>
+
+<p>There's a sample Ionic project in the folder <code>example-audio</code>. The project contains not platforms, so you must add
+one and make a build if you want to test it on your device.
+Keep in mind that the module depends on a Cordova plugin so the module won't run locally with <code>ionic serve</code>.
+However, you can still run the project locally to tune the UI before deploying to the device.</p>
+
+<h3>
+<a id="include-js-file" class="anchor" href="#include-js-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Include JS file</h3>
+
+<p><code>&lt;script src="dist/ion-audio.js"&gt;&lt;/script&gt;</code></p>
+
+<h3>
+<a id="inject-the-dependency-in-your-apps-module" class="anchor" href="#inject-the-dependency-in-your-apps-module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inject the dependency in your app's module</h3>
+
+<p><code>angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ionic-audio'])</code></p>
+
+<h3>
+<a id="define-your-player-ui-using-directives-as-in-the-follow-example" class="anchor" href="#define-your-player-ui-using-directives-as-in-the-follow-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Define your player UI using directives as in the follow example</h3>
+
+<pre><code>&lt;ion-view view-title="Music"&gt;
+  &lt;ion-content&gt;
+      &lt;ion-audio-track track="track"&gt;
+          &lt;div class="list list-inset"&gt;
+              &lt;div class="item item-thumbnail-left"&gt;
+                  &lt;img src="{{track.art}}"&gt;
+                  &lt;h2&gt;{{track.title}}&lt;/h2&gt;
+                  &lt;p&gt;{{track.artist}}&lt;/p&gt;
+                  &lt;ion-audio-play&gt;&lt;/ion-audio-play&gt;
+              &lt;/div&gt;
+              &lt;div class="item"&gt;
+                &lt;ion-audio-progress-bar display-time&gt;&lt;/ion-audio-progress-bar&gt;
+              &lt;/div&gt;
+          &lt;/div&gt;
+      &lt;/ion-audio-track&gt;
+  &lt;/ion-content&gt;
+&lt;/ion-view&gt;
+</code></pre>
+
+<h2>
+<a id="directives" class="anchor" href="#directives" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directives</h2>
+
+<h3>
+<a id="ion-audio-track" class="anchor" href="#ion-audio-track" aria-hidden="true"><span class="octicon octicon-link"></span></a>ion-audio-track</h3>
+
+<p>This is the main directive that must be linked to the audio track defined as a scope object
+and passed as parameter using the <code>track</code> attribute. The player UI is defined inside the body of
+ <code>ion-audio-track</code>. It is possible to have multiple instances on a single view, each one being completely
+independent.</p>
+
+<pre><code>&lt;ion-audio-track track="myTrack"&gt;
+...
+&lt;/ion-audio-track&gt;
+</code></pre>
+
+<p>Then in your controller:</p>
+
+<pre><code>$scope.myTrack = {
+    url: 'https://www.example.com/my_song.mp3',
+    artist: 'Somebody',
+    title: 'Song name',
+    art: 'img/album_art.jpg'
+}
+</code></pre>
+
+<h3>
+<a id="ion-audio-play" class="anchor" href="#ion-audio-play" aria-hidden="true"><span class="octicon octicon-link"></span></a>ion-audio-play</h3>
+
+<p>This directive takes care of displaying the right play/pause/loading status. It updates the UI accordingly and shows a spinner
+while the track is loading.</p>
+
+<p><code>&lt;ion-audio-play&gt;&lt;/ion-audio-play&gt;</code></p>
+
+<h3>
+<a id="ion-audio-progress-bar" class="anchor" href="#ion-audio-progress-bar" aria-hidden="true"><span class="octicon octicon-link"></span></a>ion-audio-progress-bar</h3>
+
+<p>Shows a progress bar using Ionic's range control. It also displays the track duration and progress if
+the <code>display-time</code> attribute is present.</p>
+
+<p><code>&lt;ion-audio-progress-bar display-time&gt;&lt;/ion-audio-progress-bar&gt;</code></p>
+
+<h3>
+<a id="ion-audio-progress-box" class="anchor" href="#ion-audio-progress-box" aria-hidden="true"><span class="octicon octicon-link"></span></a>ion-audio-progress-box</h3>
+
+<p>Shows a global progress bar and track info. This directive is used to have a single progress bar per view that is shared
+among all tracks defined. Check out the example for a use case.</p>
+
+<p><code>&lt;ion-audio-progress-box display-time&gt;&lt;/ion-audio-progress-box&gt;</code></p>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>TODO</h2>
+
+<ul>
+<li>Test on iOS</li>
+<li>Implement playlist functionality</li>
+<li>Implement seek-to functionality using the slider</li>
+<li>Implement customization of progress bar and default player icons - now hardcoded</li>
+<li>Replace Ionic range control with SVG to show track progress instead (maybe?)</li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/arielfaur">arielfaur</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
