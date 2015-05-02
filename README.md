@@ -10,6 +10,14 @@ __NOTE: I have only tested this on :__
 
 __iOS feedback wanted!__
 
+## Demo
+You need a real device to test audio playback but these demos can be used to tweak the UI. You can also run the example
+projects locally with `ionic serve` if you prefer.
+
+1. [List audio tracks with a global progress bar] (http://codepen.io/arielfaur/full/JddevO/)
+
+2. [List independent audio tracks with embedded progress bar] (http://codepen.io/arielfaur/full/rVVQKy/)
+
 ## Usage
 
 ### Install dependencies
