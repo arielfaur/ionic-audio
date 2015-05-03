@@ -1,6 +1,8 @@
 # ionic-audio
-This Ionic module creates a player UI for the cordova-media plugin by providing some Angular directives. It is possible
-to customize the look and feel of the player providing an own template as shown in the example ionic project.
+This Ionic module creates an audio player UI and wrapper for the cordova-media plugin by providing some Angular service and directives. The module will create the UI made of a track info and progress bar(s). It will also interface with the Media API and manage media creation/playback/pause/stop events.  
+
+A tracklist must be provided in JSON format with basic information such as track artist, title and URL.
+It is possible to customize the look and feel of the player providing an own template as shown in the demo below and the example project included.
 
 __NOTE: I have only tested this on :__
 
