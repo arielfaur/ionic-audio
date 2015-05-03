@@ -104,11 +104,19 @@ the `display-time` attribute is present.
 
 `<ion-audio-progress-bar display-time></ion-audio-progress-bar>`
 
+Sample use case: tracks listed with an embedded progress bar.
+
+![](https://github.com/arielfaur/ionic-audio/raw/master/screenshots/Screenshot_progress_bar.png)
+
 ### ion-audio-progress-box
 Shows a global progress bar and track info. This directive is used to have a single progress bar per view that is shared
 among all tracks defined. Check out the example for a use case.
 
 `<ion-audio-progress-box display-time></ion-audio-progress-box>`
+
+Sample use case: tracks listed with a global progress bar.
+
+![](https://github.com/arielfaur/ionic-audio/raw/master/screenshots/Screenshot_progress_box.png)
 
 ## TODO
 + Test on iOS
