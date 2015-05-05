@@ -1,7 +1,7 @@
 # ionic-audio
-This Ionic module creates an audio player UI and wrapper for the cordova-media plugin by providing some Angular service and directives. The module will create the UI made of a track info and progress bar(s). It will also interface with the Media API and manage media creation/playback/pause/stop events.  
+This Ionic module creates an audio player UI and wrapper for the cordova-media plugin by providing some Angular service and directives. The module will render the UI, displaying track info and progress bar(s). It will also interface with the Media API and manage media creation/playback/pause/stop events.  
 
-A tracklist must be provided in JSON format with basic information such as track artist, title and URL.
+A tracklist with basic information such as artist, title and media URL must be provided in JSON format.
 It is possible to customize the look and feel of the player providing an own template as shown in the demo below and the example project included.
 
 __NOTE: I have only tested this on :__
@@ -73,7 +73,7 @@ However, you can still run the project locally to tune the UI before deploying t
 ### ion-audio-track
 This is the main directive that must be linked to the audio track defined as a scope object
 and passed as parameter using the `track` attribute. The player UI is defined inside the body of
- `ion-audio-track`. It is possible to have multiple instances on a single view, each one being completely
+ `ion-audio-track`. Supports multiple instances per view, each one being completely
 independent.
 
 ```
@@ -109,8 +109,8 @@ Sample use case: tracks listed with an embedded progress bar.
 ![](https://github.com/arielfaur/ionic-audio/raw/master/screenshots/Screenshot_progress_bar.png)
 
 ### ion-audio-progress-box
-Shows a global progress bar and track info. This directive is used to have a single progress bar per view that is shared
-among all tracks defined. Check out the example for a use case.
+Shows a global progress bar and and displays track info. The aim of this directive is to render a single progress bar per view that is shared
+among all tracks in that view.
 
 `<ion-audio-progress-box display-time></ion-audio-progress-box>`
 
