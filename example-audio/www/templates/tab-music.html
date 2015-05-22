@@ -1,19 +1,21 @@
 <ion-view view-title="Music">
   <ion-content>
-      <div class="list">
-      <ion-audio-track ng-repeat="track in tracks" track="track">
-              <div class="list card">
+      <ion-audio>
+          <ion-audio-track ng-repeat="track in tracks" track="track">
+              <div class="list list-inset">
                   <div class="item item-thumbnail-left">
                       <img src="{{track.art}}">
+
                       <h2>{{track.title}}</h2>
+
                       <p>{{track.artist}}</p>
                       <ion-audio-play><a class="button button-icon icon ion-play"></a></ion-audio-play>
                   </div>
                   <div class="item item-divider">
-                    <ion-audio-progress-bar display-time></ion-audio-progress-bar>
+                      <ion-audio-progress-bar display-time></ion-audio-progress-bar>
                   </div>
               </div>
-      </ion-audio-track>
-      </div>
+          </ion-audio-track>
+      </ion-audio>
   </ion-content>
 </ion-view>

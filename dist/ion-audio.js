@@ -157,6 +157,7 @@ angular.module('ionic-audio', ['ionic'])
          }
          */
         return {
+
             play: function(track) {
 
                 // avoid two tracks playing simultaneously
@@ -177,9 +178,11 @@ angular.module('ionic-audio', ['ionic'])
                     }
                 }
 
+
                 $timeout(function() {
                     play(track);
                 }, 1000);
+
             },
 
             pause: function() {
@@ -187,11 +190,8 @@ angular.module('ionic-audio', ['ionic'])
             },
 
             seekTo: function(pos) {
-                pause();
-
                 $timeout(function() {
                     seekTo(pos);
-                    resume();
                 }, 300);
             },
 
@@ -207,8 +207,8 @@ angular.module('ionic-audio', ['ionic'])
           restrict: 'E',
           scope: {
           },
-          controller: ['$rootScope', function($rootScope) {
-              var tracks = [];
+          controller: ['$scope', function($scope) {
+              var tracks = [], currentTrackID;
 
               this.addTrack = function(track, playbackSuccess, playbackError, statusChange, progressChange) {
                   if (!track.url) {
@@ -234,7 +234,10 @@ angular.module('ionic-audio', ['ionic'])
 
                   MediaManager.play(tracks[trackID]);
 
-                  $rootScope.$broadcast('ionic-audio:trackChange', tracks[trackID]);
+                  if (currentTrackID != trackID) {
+                      $scope.$parent.$broadcast('ionic-audio:trackChange', tracks[trackID]);
+                      currentTrackID = trackID;
+                  }
               };
 
               this.seekTo = function(pos) {
@@ -257,7 +260,7 @@ angular.module('ionic-audio', ['ionic'])
             scope: {
                 track: '='
             },
-            controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+            controller: ['$scope', function($scope) {
                 var ionAudioCtrl;
 
                 if (!$scope.track.url) {
@@ -268,9 +271,6 @@ angular.module('ionic-audio', ['ionic'])
                 var playbackSuccess = function() {
                     $scope.track.status = 0;
                     $scope.track.progress = 0;
-
-                    $rootScope.$broadcast('ionic-audio:trackSuccess');
-
                 };
                 var statusChange = function(status) {
                     $scope.track.status = status;
@@ -290,6 +290,10 @@ angular.module('ionic-audio', ['ionic'])
                     ionAudioCtrl.play($scope.track.id);
 
                     return $scope.track.id;
+                };
+
+                this.getTrack = function() {
+                    return $scope.track;
                 };
 
                 this.init = function(ctrl) {
@@ -365,63 +369,52 @@ angular.module('ionic-audio', ['ionic'])
     .directive('ionAudioProgressBar', [function() {
         return {
             restrict: 'E',
-            template: '<div class="range">{{track.progress | time}}<input type="range" name="volume" min="0" max="{{track.duration}}" ng-model="track.progress" on-release="sliderRelease()">{{track.duration | duration}}</div>',
-            require: '^^ionAudioTrack',
-            link: function(scope, element, attrs, controller) {
-                if (!angular.isDefined(attrs.displayTime)) {
-                    element.find('ion-audio-progress').remove();
-                    element.find('ion-audio-duration').remove();
-                }
-
-                scope.sliderRelease = function() {
-                    var pos = scope.track.progress;
-                    controller.seekTo(pos);
-                }
-            }
-        }
-    }])
-    .directive('ionAudioProgressBox', [function() {
-        return {
-            restrict: 'E',
-            require: '^^ionAudio',
+            template: '<h2 class="ion-audio-track-info" ng-style="displayTrackInfo()">{{track.title}} - {{track.artist}}</h2><div class="range"><ion-audio-progress track="track"></ion-audio-progress><input type="range" name="volume" min="0" max="{{track.duration}}" ng-model="track.progress" on-release="sliderRelease()"><ion-audio-duration track="track"></ion-audio-duration></div>',
+            require: ['^^ionAudio', '?^^ionAudioTrack'],
             scope: {},
-            template: '<h2 ng-style="displayTrackInfo()">{{track.title}} - {{track.artist}}</h2><div class="range">{{track.progress | time}}<input type="range" name="volume" min="0" max="{{track.duration}}" ng-model="track.progress" on-release="sliderRelease()">{{track.duration | duration}}</div>',
-            link: function(scope, element, attrs, controller) {
+            link: function(scope, element, attrs, controllers) {
+                var ionAudioCtrl = controllers[0],
+                  ionAudioTrackCtrl = controllers[1];
+
                 if (!angular.isDefined(attrs.displayTime)) {
                     element.find('ion-audio-progress').remove();
                     element.find('ion-audio-duration').remove();
                 }
-
-                function init() {
-                    scope.track = {
-                        progress: 0,
-                        status: 0
-                    };
+                if (!angular.isDefined(attrs.displayInfo)) {
+                    element.find('h2').remove();
                 }
+
+                scope.track = {
+                    progress: 0,
+                    status: 0,
+                    duration: -1
+                };
 
                 scope.displayTrackInfo = function() {
                     return { visibility: scope.track.title || scope.track.artist ? 'visible' : 'hidden'}
                 };
 
+                if (ionAudioTrackCtrl) {
+                    scope.track = ionAudioTrackCtrl.getTrack();
+                } else {
+                    scope.$on('ionic-audio:trackChange', function (e, track) {
+                        scope.track = track;
+                    });
+                }
+
                 scope.sliderRelease = function() {
                     var pos = scope.track.progress;
-                    controller.seekTo(pos);
+                    ionAudioCtrl.seekTo(pos);
                 };
-
-                scope.$on('ionic-audio:trackChange', function (e, track) {
-                    scope.track = track;
-                });
-                scope.$on('ionic-audio:trackSuccess', function () {
-                    init();
-                });
-
-                init();
             }
         }
     }])
     .directive('ionAudioProgress', [function() {
         return {
             restrict: 'E',
+            scope: {
+                track: '='
+            },
             template: '{{track.progress | time}}',
             link: function(scope, element, attrs) {
             }
@@ -430,9 +423,11 @@ angular.module('ionic-audio', ['ionic'])
     .directive('ionAudioDuration', [function() {
         return {
             restrict: 'E',
+            scope: {
+                track: '='
+            },
             template: '{{track.duration | duration}}',
             link: function(scope, element, attrs) {
             }
         }
-    }])
-;
+    }]);
