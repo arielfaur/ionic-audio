@@ -1,8 +1,7 @@
 # ionic-audio
-This Ionic module creates an audio player UI and wrapper for the cordova-media plugin by providing some Angular service and directives. The module will render the UI, displaying track info and progress bar(s). It will also interface with the Media API and manage media creation/playback/pause/stop events.  
+This module creates an audio player UI for Ionic. It is basically a facade to the cordova-media plugin and provides an Angular service and set of directives to create an audio player. The UI takes care of displaying track information, progress bar(s) and loading spinners and it keeps all in sync. The underlying service will also interface with the Media API and handle media creation/playback/pause/stop events.  
 
-A tracklist with basic information such as artist, title and media URL must be provided in JSON format.
-It is possible to customize the look and feel of the player providing an own template as shown in the demo below and the example project included.
+It is possible to customize the look and feel by providing a template as shown in the demo below and the example project included.
 
 __NOTE: I have only tested this on :__
 
@@ -71,8 +70,7 @@ However, you can still run the project locally to tune the UI before deploying t
 ## Directives
 
 ### ion-audio-track
-This is the main directive that must be linked to the audio track defined as a scope object
-and passed as parameter using the `track` attribute. The player UI is defined inside the body of
+Creates an audio track from a JSON object passed as parameter using the `track` attribute. The player UI is defined inside the body of
  `ion-audio-track`. Supports multiple instances per view, each one being completely
 independent.
 
@@ -93,13 +91,13 @@ $scope.myTrack = {
 ```
 
 ### ion-audio-play
-This directive takes care of displaying the right play/pause/loading status. It updates the UI accordingly and shows a spinner
+Displays play/pause/loading status. It updates the UI accordingly and shows a spinner
 while the track is loading.
 
 `<ion-audio-play></ion-audio-play>`
 
 ### ion-audio-progress-bar
-Shows a progress bar using Ionic's range control. It also displays the track duration and progress if
+Shows a progress bar using Ionic's range control. It also displays the track duration and progress update if
 the `display-time` attribute is present.
 
 `<ion-audio-progress-bar display-time></ion-audio-progress-bar>`
@@ -108,11 +106,18 @@ Sample use case: tracks listed with an embedded progress bar.
 
 ![](https://github.com/arielfaur/ionic-audio/raw/master/screenshots/Screenshot_progress_bar.png)
 
+<del>
 ### ion-audio-progress-box
 Shows a global progress bar and and displays track info. The aim of this directive is to render a single progress bar per view that is shared
 among all tracks in that view.
 
 `<ion-audio-progress-box display-time></ion-audio-progress-box>`
+</del>
+
+#### Use as a global progress bar
+If a `ion-audio-progress-bar` is placed outside the scope of `ion-audio-track`, it will automatically behave as a standalone bar keeping in sync with the track list. Add a `display-info` attribute to show the current playing track.
+
+`<ion-audio-progress-bar display-time display-info></ion-audio-progress-bar>`
 
 Sample use case: tracks listed with a global progress bar.
 
@@ -121,6 +126,6 @@ Sample use case: tracks listed with a global progress bar.
 ## TODO
 + Test on iOS
 + Implement playlist functionality
-+ Implement seek-to functionality using the slider
++ ~~Implement seek-to functionality using the slider~~
 + Implement customization of progress bar and default player icons - now hardcoded
 + Replace Ionic range control with SVG to show track progress instead (maybe?)
