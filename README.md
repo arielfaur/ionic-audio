@@ -106,13 +106,6 @@ Sample use case: tracks listed with an embedded progress bar.
 
 ![](https://github.com/arielfaur/ionic-audio/raw/master/screenshots/Screenshot_progress_bar.png)
 
-<del>
-### ion-audio-progress-box
-Shows a global progress bar and and displays track info. The aim of this directive is to render a single progress bar per view that is shared
-among all tracks in that view.
-
-`<ion-audio-progress-box display-time></ion-audio-progress-box>`
-</del>
 
 #### Use as a global progress bar
 If a `ion-audio-progress-bar` is placed outside the scope of `ion-audio-track`, it will automatically behave as a standalone bar keeping in sync with the track list. Add a `display-info` attribute to show the current playing track.
