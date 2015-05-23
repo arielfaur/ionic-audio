@@ -228,6 +228,10 @@ angular.module('ionic-audio', ['ionic'])
             controller: ['$scope', function($scope) {
                 var controller = this;
 
+                $scope.track.progress = 0;
+                $scope.track.status = 0;
+                $scope.track.duration = -1;
+
                 var playbackSuccess = function() {
                     $scope.track.status = 0;
                     $scope.track.progress = 0;
@@ -257,8 +261,9 @@ angular.module('ionic-audio', ['ionic'])
                     return $scope.track;
                 };
 
-                $scope.track.id = MediaManager.add($scope.track, playbackSuccess, null, statusChange, progressChange);
-
+                if (MediaManager) {
+                    $scope.track.id = MediaManager.add($scope.track, playbackSuccess, null, statusChange, progressChange);
+                }
             }],
             link: function(scope, element, attrs, controller) {
                 controller.hasOwnProgressBar = element.find('ion-audio-progress-bar').length > 0;
