@@ -56,7 +56,10 @@ However, you can still run the project locally to tune the UI before deploying t
                   <img src="{{track.art}}">
                   <h2>{{track.title}}</h2>
                   <p>{{track.artist}}</p>
-                  <ion-audio-play></ion-audio-play>
+                  <ion-audio-controls>
+                        <a class="button button-icon icon" ion-audio-play></a>
+                        <ion-spinner icon="ios"></ion-spinner>
+                    </ion-audio-controls>
               </div>
               <div class="item">
                 <ion-audio-progress-bar display-time></ion-audio-progress-bar>
@@ -90,11 +93,17 @@ $scope.myTrack = {
 }
 ```
 
-### ion-audio-play
-Displays play/pause/loading status. It updates the UI accordingly and shows a spinner
-while the track is loading.
+### ion-audio-controls
+Container for `ion-audio-play` and `ion-spinner` directives. The spinner is automatically hidden/shown when needed.
 
-`<ion-audio-play></ion-audio-play>`
+### ion-audio-play
+Displays play/pause/loading status. Simply apply this attribute to an `a` or `button` element. It updates the UI accordingly and shows a spinner
+while the track is loading.
+Additionally, the attributes `text-play` and `text-pause` may be used to include a label for each status.
+
+`<a class="button button-icon icon" ion-audio-play></a>`
+
+`<button class="button button-small button-assertive icon-left" ion-audio-play text-play="Play" text-pause="Pause"></button>`
 
 ### ion-audio-progress-bar
 Shows a progress bar using Ionic's range control. It also displays the track duration and progress update if

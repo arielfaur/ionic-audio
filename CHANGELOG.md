@@ -5,8 +5,7 @@
 
 ### Breaking changes
 - added `ion-audio-controls` directive to wrap play buttons and spinner
-- `ion-audio-play` is used as attribute and no longer an element
-
+- `ion-audio-play` is used as attribute and no longer as an element
 
 ## v1.2.1
 
