@@ -129,5 +129,5 @@ Sample use case: tracks listed with a global progress bar.
 + Test on iOS
 + Implement playlist functionality
 + ~~Implement seek-to functionality using the slider~~
-+ ~~Implement customization of progress bar and default player icons - now hardcoded~~
++ ~~Implement customization of progress bar and default player icons - now hardcoded ~~
 + Replace Ionic range control with SVG to show track progress instead (maybe?)
