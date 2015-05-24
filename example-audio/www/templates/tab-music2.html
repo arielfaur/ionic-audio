@@ -1,19 +1,21 @@
 <ion-view view-title="More Music">
-  <ion-content>
-      <ion-audio-track ng-repeat="track in tracks" track="track">
-          <div class="card">
-              <div class="item item-stable item-thumbnail-left">
-                  <img src="{{track.art}}">
-                  <h2>{{track.title}}</h2>
-                  <p>{{track.artist}}</p>
-                  <ion-audio-play><a class="button button-icon button-stable icon ion-play"></a></ion-audio-play>
-              </div>
-          </div>
-      </ion-audio-track>
-      <div class="card">
-          <div class="item item-divider item-stable">
-              <ion-audio-progress-box display-time></ion-audio-progress-box>
-          </div>
-      </div>
-  </ion-content>
+    <ion-content>
+        <ion-audio-track ng-repeat="track in tracks" track="track">
+            <div class="card">
+                <div class="item">
+                    <h2>{{track.title}}</h2>
+                    <p>{{track.artist}}</p>
+                    <ion-audio-controls>
+                        <button class="button button-small button-assertive icon-left" ion-audio-play text-play="Play" text-pause="Pause"></button>
+                        <ion-spinner></ion-spinner>
+                    </ion-audio-controls>
+                </div>
+            </div>
+        </ion-audio-track>
+        <div class="card">
+            <div class="item item-divider">
+                <ion-audio-progress-bar display-time display-info></ion-audio-progress-bar>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>
