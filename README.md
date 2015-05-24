@@ -103,7 +103,7 @@ Additionally, the attributes `text-play` and `text-pause` may be used to include
 
 `<a class="button button-icon icon" ion-audio-play></a>`
 
-`<button class="button button-small button-assertive icon-left" ion-audio-play text-play="Play" text-pause="Pause"></button>`
+`<button class="button icon-left" ion-audio-play text-play="Play" text-pause="Pause"></button>`
 
 ### ion-audio-progress-bar
 Shows a progress bar using Ionic's range control. It also displays the track duration and progress update if
@@ -129,5 +129,5 @@ Sample use case: tracks listed with a global progress bar.
 + Test on iOS
 + Implement playlist functionality
 + ~~Implement seek-to functionality using the slider~~
-+ Implement customization of progress bar and default player icons - now hardcoded
++ ~~Implement customization of progress bar and default player icons - now hardcoded~~
 + Replace Ionic range control with SVG to show track progress instead (maybe?)
