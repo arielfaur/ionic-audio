@@ -198,7 +198,7 @@ angular.module('ionic-audio', ['ionic'])
 
                 $timeout(function() {
                     play(tracks[trackID]);
-                }, 1000);
+                }, 300);
 
             },
 
@@ -357,15 +357,21 @@ angular.module('ionic-audio', ['ionic'])
                 };
 
                 element.on('click', function() {
+                    element.prop('disabled', true);
                     // call main directive's play method
                     controller.playTrack();
                     togglePlaying();
                 });
 
                 var unbindStatusListener = scope.$watch('track.status', function (status) {
-                    //  Media.MEDIA_STOPPED
+                    //  Media.MEDIA_NONE or Media.MEDIA_STOPPED
                     if (status == 0 || status == 4) {
                         init();
+                    }
+
+                    // Media.MEDIA_RUNNING or Media.MEDIA_PAUSED
+                    if (status == 2 || status == 3) {
+                        element.prop('disabled', false);
                     }
                 });
 
@@ -411,10 +417,9 @@ angular.module('ionic-audio', ['ionic'])
                     return { visibility: angular.isDefined(attrs.displayInfo) && (scope.track.title || scope.track.artist) ? 'visible' : 'hidden'}
                 };
 
-                // disable slider if track is not playing
+                // disable slider if track hasn't loaded
                 var unbindStatusListener = scope.$watch('track.status', function(status) {
-                    //   Media.MEDIA_RUNNING
-                    slider.prop('disabled', status != 2);
+                    slider.prop('disabled', status == 0);   //   Media.MEDIA_NONE
                 });
 
                 if (controller) {
@@ -430,9 +435,6 @@ angular.module('ionic-audio', ['ionic'])
                 // handle track seek-to
                 scope.sliderRelease = function() {
                     var pos = scope.track.progress;
-                    if (scope.track.status != 2)    //   Media.MEDIA_RUNNING
-                        return;
-
                     MediaManager.seekTo(pos);
                 };
 

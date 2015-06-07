@@ -1,3 +1,9 @@
+## v1.2.3
+
+- fixed slider bug to allow seeking-to when track is paused
+- fixed bug when play button is pressed intermittently
+- reduced playback delay to 300ms to improve responsiveness
+
 ## v1.2.2
 
 - fixed play control responsiveness
