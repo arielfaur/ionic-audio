@@ -284,7 +284,7 @@ angular.module('ionic-audio', ['ionic'])
           restrict: 'EA',
           scope: {},
           require: ['ionAudioControls', '^^ionAudioTrack'],
-          controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+          controller: ['$scope', '$element', function($scope, $element) {
               var spinnerElem = $element.find('ion-spinner'), hasLoaded, self = this;
 
               spinnerElem.addClass('ng-hide');
@@ -334,19 +334,21 @@ angular.module('ionic-audio', ['ionic'])
     }])
     .directive('ionAudioPlay', [function() {
         return {
-            scope: true,
+            //scope: true,
             restrict: 'A',
             require: '^^ionAudioControls',
             link: function(scope, element, attrs, controller) {
+                var isLoading, currentStatus = 0;
 
                 var init = function() {
+                    isLoading = false;
                     element.addClass('ion-play');
                     element.removeClass('ion-pause');
                     element.text(attrs.textPlay);
                 };
 
                 var setText = function() {
-                    if (!attrs.textPlay || !attrs.textPause) return '';
+                    if (!attrs.textPlay || !attrs.textPause) return;
 
                     element.text((element.text() == attrs.textPlay ? attrs.textPause : attrs.textPlay));
                 };
@@ -357,22 +359,22 @@ angular.module('ionic-audio', ['ionic'])
                 };
 
                 element.on('click', function() {
-                    element.prop('disabled', true);
-                    // call main directive's play method
+                    if (isLoading) return;  //  debounce multiple clicks
+
                     controller.playTrack();
                     togglePlaying();
+                    if (currentStatus == 0) isLoading = true;
                 });
 
                 var unbindStatusListener = scope.$watch('track.status', function (status) {
                     //  Media.MEDIA_NONE or Media.MEDIA_STOPPED
                     if (status == 0 || status == 4) {
                         init();
+                    } else if (status == 2) {   // Media.MEDIA_RUNNING
+                        isLoading = false;
                     }
 
-                    // Media.MEDIA_RUNNING or Media.MEDIA_PAUSED
-                    if (status == 2 || status == 3) {
-                        element.prop('disabled', false);
-                    }
+                    currentStatus = status;
                 });
 
                 init();
@@ -417,8 +419,9 @@ angular.module('ionic-audio', ['ionic'])
                     return { visibility: angular.isDefined(attrs.displayInfo) && (scope.track.title || scope.track.artist) ? 'visible' : 'hidden'}
                 };
 
-                // disable slider if track hasn't loaded
+                // disable slider if track is not playing
                 var unbindStatusListener = scope.$watch('track.status', function(status) {
+                    // disable if track hasn't loaded
                     slider.prop('disabled', status == 0);   //   Media.MEDIA_NONE
                 });
 
@@ -443,7 +446,6 @@ angular.module('ionic-audio', ['ionic'])
                     if (angular.isDefined(unbindTrackListener)) {
                         unbindTrackListener();
                     }
-                    MediaManager.destroy();
                 });
             }
         }

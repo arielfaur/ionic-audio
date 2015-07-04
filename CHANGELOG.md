@@ -1,3 +1,7 @@
+## v1.2.4
+
+- fixed bug where pause button was disabled and was not possible to stop playback
+
 ## v1.2.3
 
 - fixed slider bug to allow seeking-to when track is paused
