@@ -3,11 +3,12 @@ This module creates an audio player UI for Ionic. It is basically a facade to th
 
 It is possible to customize the look and feel by providing a template as shown in the demo below and the example project included.
 
-__NOTE: I have only tested this on :__
+__NOTE: This has been tested on :__
 
 + Android 5.1
 + Android 4.1.2
 + Android 4.1.2 w/ Crosswalk (much better UI performance)
++ iOS (reported by users) 
 
 __iOS feedback wanted!__
 
