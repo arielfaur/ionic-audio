@@ -26,7 +26,7 @@ projects locally with `ionic serve` if you prefer.
 [Cordova media plugin]
 (https://github.com/apache/cordova-plugin-media)
 
-`ionic plugin add org.apache.cordova.media`
+`ionic plugin add cordova-plugin-media`
 
 ### Install this module using bower
 
