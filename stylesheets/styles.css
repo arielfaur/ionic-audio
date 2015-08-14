@@ -169,6 +169,10 @@ section ul {
     list-style: none;
 }
 
+section ul.features {
+    list-style: disc;
+}
+
 small {
   font-size:11px;
 }

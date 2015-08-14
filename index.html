@@ -42,17 +42,18 @@
 
 <a id="ionic-audio" class="anchor" href="#ionic-audio" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 
-<p>This module creates an audio player UI for Ionic. It is basically a facade to the cordova-media plugin and provides an Angular service and set of directives to create an audio player. The UI takes care of displaying track information, progress bar(s) and loading spinners and it keeps all in sync. The underlying service will also interface with the Media API and handle media creation/playback/pause/stop events.  </p>
+<p>This module creates an audio player UI for Ionic. It creates an interface to the cordova-media plugin including a service that controls Media playback and directives to define the look and feel of the player.</p>
+<h2><a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
 
-<p>It is possible to customize the look and feel by providing a template as shown in the demo below and the example project included.</p>
+<ul class="features">
+    <li>Easily customized</li>
+    <li>Keeps multiple tracks in sync</li>
+    <li>Displays track information</li>
+    <li>Displays loading spinners</li>
+    <li>Shows and updates track progress</li>
+    <li>Progress bars can be global (playlist style) or embedded with each track</li>
 
-<p><strong>NOTE: This has been tested on :</strong></p>
-
-<ul>
-<li>Android 5.1</li>
-<li>Android 4.1.2</li>
-<li>Android 4.1.2 w/ Crosswalk (much better UI performance)</li>
-<li>iOS (reported by users) </li>
+<li>Tested on iOS and Android 4.1+ (better UI performance with Crosswalk plugin)</li>
 </ul>
 
 <p><strong>iOS feedback wanted!</strong></p>
@@ -196,7 +197,7 @@ the <code>display-time</code> attribute is present.</p>
 <h2>
 <a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>TODO</h2>
 
-<ul>
+<ul class="features">
 <li>Test on iOS</li>
 <li>Implement playlist functionality</li>
 <li><del>Implement seek-to functionality using the slider</del></li>
