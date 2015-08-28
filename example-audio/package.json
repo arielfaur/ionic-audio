@@ -21,10 +21,5 @@
     "org.apache.cordova.media",
     "org.apache.cordova.splashscreen"
   ],
-  "cordovaPlatforms": [
-    {
-      "platform": "android",
-      "locator": "./engine/cordova-android-c0.6.1/"
-    }
-  ]
+  "cordovaPlatforms": []
 }

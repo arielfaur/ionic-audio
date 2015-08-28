@@ -11,11 +11,11 @@ angular.module('ionic-audio', ['ionic'])
             return addLeadingZero(Math.floor(t / 60)) + ':' + addLeadingZero(t % 60);
         };
     })
-    .filter('duration', function($filter) {
+    .filter('duration', ['$filter', function($filter) {
         return function (input) {
             return (input > 0) ? $filter('time')(input) : '';
         }
-    })
+    }])
     .factory('MediaManager', ['$interval', '$timeout', '$window', function($interval, $timeout, $window) {
         var tracks = [], currentTrack, currentMedia, playerTimer;
 
