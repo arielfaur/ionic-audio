@@ -1,7 +1,7 @@
 {
   "name": "ionic-audio",
   "private": false,
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Ionic UI for the Cordova Media Plugin",
   "repository": "https://github.com/arielfaur/ionic-audio.git",
   "license": "MIT",
