@@ -336,9 +336,13 @@ angular.module('ionic-audio', ['ionic'])
         return {
             //scope: true,
             restrict: 'A',
-            require: '^^ionAudioControls',
-            link: function(scope, element, attrs, controller) {
+            require: ['^^ionAudioTrack', '^^ionAudioControls'],
+            link: function(scope, element, attrs, controllers) {
                 var isLoading, currentStatus = 0;
+                
+                scope.track = controllers[0].getTrack();
+                
+                var controller = controllers[1];
 
                 var init = function() {
                     isLoading = false;
