@@ -114,6 +114,9 @@ angular.module('ionic-audio', ['ionic'])
         };
 
         var pause = function() {
+            if(!currentTrack) {
+                return;
+            }
             console.log('ionic-audio: pausing track '  + currentTrack.title);
 
             currentMedia.pause();
@@ -135,6 +138,9 @@ angular.module('ionic-audio', ['ionic'])
 
 
         var play = function(track) {
+            if(!currentTrack) {
+                return;
+            }
             currentTrack = track;
 
             console.log('ionic-audio: playing track ' + currentTrack.title);
