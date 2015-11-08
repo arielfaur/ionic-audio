@@ -1,4 +1,4 @@
-angular.module('ion-audio').directive('ionAudioTrack', ionAudioTrack);
+angular.module('ionic-audio').directive('ionAudioTrack', ionAudioTrack);
 
 function ionAudioTrack() {
     return {

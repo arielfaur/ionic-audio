@@ -1,4 +1,4 @@
-angular.module('ion-audio').controller('ionAudioTrackCtrl', ionAudioTrackCtrl);
+angular.module('ionic-audio').controller('ionAudioTrackCtrl', ionAudioTrackCtrl);
 
 function ionAudioTrackCtrl($scope) {
     var controller = this;

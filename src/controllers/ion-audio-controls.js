@@ -1,4 +1,4 @@
-angular.module('ion-audio').controller('ionAudioControlsCtrl', ionAudioControlsCtrl);
+angular.module('ionic-audio').controller('ionAudioControlsCtrl', ionAudioControlsCtrl);
 
 function ionAudioControlsCtrl($scope, $element) {
     var spinnerElem = $element.find('ion-spinner'), hasLoaded, self = this;
