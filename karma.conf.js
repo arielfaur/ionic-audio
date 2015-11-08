@@ -18,7 +18,7 @@ module.exports = function(config) {
       'bower_components/ionic/js/ionic.bundle.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'dist/ion-audio.js',
+      'src/*js',
       'src/**/*.js',
       'tests/ion-audio_test.js'
     ],
