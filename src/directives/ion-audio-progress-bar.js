@@ -1,6 +1,6 @@
 angular.module('ionic-audio').directive('ionAudioProgressBar', ionAudioProgressBar);
 
-function ionAudioProgressBar() {
+function ionAudioProgressBar(MediaManager) {
     return {
         restrict: 'E',
         template:
@@ -67,3 +67,5 @@ function ionAudioProgressBar() {
         });
     }
 }
+
+ionAudioProgressBar.$inject = ['MediaManager'];

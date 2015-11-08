@@ -1,6 +1,6 @@
 angular.module('ionic-audio').directive('ionAudioTrack', ionAudioTrack);
 
-function ionAudioTrack() {
+function ionAudioTrack(MediaManager) {
     return {
         transclude: true,
         template: '<ng-transclude></ng-transclude>',
@@ -20,3 +20,5 @@ function ionAudioTrack() {
         });
     }
 }
+
+ionAudioTrack.$inject = ['MediaManager'];

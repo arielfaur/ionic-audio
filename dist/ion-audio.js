@@ -17,11 +17,13 @@ function Time() {
 
 angular.module('ionic-audio').filter('duration', Duration);
 
-function Duration() {
+function Duration($filter) {
     return function (input) {
         return (input > 0) ? $filter('time')(input) : '';
     }
 }
+
+Duration.$inject = ['$filter'];
 
 angular.module('ionic-audio').factory('MediaManager', MediaManager);
 
@@ -96,9 +98,6 @@ function MediaManager($interval, $timeout, $window) {
     }
 
     function pause() {
-        if(!currentTrack) {
-            return;
-        }
         console.log('ionic-audio: pausing track '  + currentTrack.title);
 
         currentMedia.pause();
@@ -118,9 +117,6 @@ function MediaManager($interval, $timeout, $window) {
 
 
     function playTrack(track) {
-        if(!currentTrack) {
-            return;
-        }
         currentTrack = track;
 
         console.log('ionic-audio: playing track ' + currentTrack.title);
@@ -223,7 +219,7 @@ MediaManager.$inject = ['$interval', '$timeout', '$window'];
 
 angular.module('ionic-audio').directive('ionAudioTrack', ionAudioTrack);
 
-function ionAudioTrack() {
+function ionAudioTrack(MediaManager) {
     return {
         transclude: true,
         template: '<ng-transclude></ng-transclude>',
@@ -244,6 +240,8 @@ function ionAudioTrack() {
     }
 }
 
+ionAudioTrack.$inject = ['MediaManager'];
+
 angular.module('ionic-audio').directive('ionAudioProgress', ionAudioProgress);
 
 function ionAudioProgress() {
@@ -258,7 +256,7 @@ function ionAudioProgress() {
 
 angular.module('ionic-audio').directive('ionAudioProgressBar', ionAudioProgressBar);
 
-function ionAudioProgressBar() {
+function ionAudioProgressBar(MediaManager) {
     return {
         restrict: 'E',
         template:
@@ -325,6 +323,8 @@ function ionAudioProgressBar() {
         });
     }
 }
+
+ionAudioProgressBar.$inject = ['MediaManager'];
 
 angular.module('ionic-audio').directive('ionAudioPlay', ionAudioPlay);
 
@@ -421,7 +421,7 @@ function ionAudioControls() {
 
 angular.module('ionic-audio').controller('ionAudioTrackCtrl', ionAudioTrackCtrl);
 
-function ionAudioTrackCtrl($scope) {
+function ionAudioTrackCtrl($scope, $rootScope, MediaManager) {
     var controller = this;
 
     $scope.track.progress = 0;
@@ -467,7 +467,7 @@ function ionAudioTrackCtrl($scope) {
     }
 }
 
-ionAudioTrackCtrl.$inject = ['$scope'];
+ionAudioTrackCtrl.$inject = ['$scope', '$rootScope', 'MediaManager'];
 
 angular.module('ionic-audio').controller('ionAudioControlsCtrl', ionAudioControlsCtrl);
 

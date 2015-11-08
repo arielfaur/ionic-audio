@@ -1,6 +1,6 @@
 angular.module('ionic-audio').controller('ionAudioTrackCtrl', ionAudioTrackCtrl);
 
-function ionAudioTrackCtrl($scope) {
+function ionAudioTrackCtrl($scope, $rootScope, MediaManager) {
     var controller = this;
 
     $scope.track.progress = 0;
@@ -46,4 +46,4 @@ function ionAudioTrackCtrl($scope) {
     }
 }
 
-ionAudioTrackCtrl.$inject = ['$scope'];
+ionAudioTrackCtrl.$inject = ['$scope', '$rootScope', 'MediaManager'];
