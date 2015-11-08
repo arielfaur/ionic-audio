@@ -71,9 +71,6 @@ function MediaManager($interval, $timeout, $window) {
     }
 
     function pause() {
-        if(!currentTrack) {
-            return;
-        }
         console.log('ionic-audio: pausing track '  + currentTrack.title);
 
         currentMedia.pause();
@@ -93,9 +90,6 @@ function MediaManager($interval, $timeout, $window) {
 
 
     function playTrack(track) {
-        if(!currentTrack) {
-            return;
-        }
         currentTrack = track;
 
         console.log('ionic-audio: playing track ' + currentTrack.title);
