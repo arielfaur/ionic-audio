@@ -6,8 +6,8 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "angular": "~1.4.3",
-    "angular-mocks": "~1.4.3"
+    "angular": "1.4.3",
+    "angular-mocks": "1.4.3"
   },
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.1.0"

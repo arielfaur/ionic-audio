@@ -16,7 +16,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'bower_components/ionic/js/ionic.bundle.js',
-        'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+      'src/**/*.js',
       'dist/ion-audio.js',
       'tests/ion-audio_test.js'
     ],
