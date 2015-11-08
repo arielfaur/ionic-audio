@@ -18,8 +18,8 @@ module.exports = function(config) {
       'bower_components/ionic/js/ionic.bundle.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'src/**/*.js',
       'dist/ion-audio.js',
+      'src/**/*.js',
       'tests/ion-audio_test.js'
     ],
 
@@ -65,6 +65,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    singleRun: true
   });
 };

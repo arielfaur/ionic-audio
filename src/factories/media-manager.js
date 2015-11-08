@@ -1,4 +1,4 @@
-angular('ionic-audio').factory('MediaManager', MediaManager);
+angular.module('ionic-audio').factory('MediaManager', MediaManager);
 
 function MediaManager($interval, $timeout, $window) {
     var tracks = [], currentTrack, currentMedia, playerTimer;
