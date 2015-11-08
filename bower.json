@@ -7,7 +7,6 @@
   "private": false,
   "dependencies": {
     "angular": "~1.4.3",
-    "angular-loader": "~1.4.3",
     "angular-mocks": "~1.4.3"
   },
   "devDependencies": {
