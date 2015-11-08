@@ -21,6 +21,6 @@
   "scripts": {
     "postinstall": "bower install",
     "test": "node node_modules/karma/bin/karma start karma.conf.js",
-    "test-single-run": "karma start karma.conf.js  --single-run",
+    "test-single-run": "karma start karma.conf.js  --single-run"
   }
 }
