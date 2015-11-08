@@ -6,9 +6,9 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "angular": "~1.4.x",
-    "angular-loader": "~1.4.x",
-    "angular-mocks": "~1.4.x"
+    "angular": "~1.4.3",
+    "angular-loader": "~1.4.3",
+    "angular-mocks": "~1.4.3"
   },
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.1.0"
