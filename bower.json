@@ -5,6 +5,7 @@
   "homepage": "https://github.com/arielfaur/ionic-audio.git",
   "license": "MIT",
   "private": false,
+  "main": ["dist/ion-audio.js", "dist/ion-audio.min.js"],
   "dependencies": {
     "angular": "1.4.3",
     "angular-mocks": "1.4.3"
