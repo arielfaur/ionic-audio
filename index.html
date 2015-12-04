@@ -51,7 +51,7 @@
     <li>Displays track information</li>
     <li>Displays loading spinners</li>
     <li>Shows and updates track progress</li>
-    <li>Progress bars can be global (playlist style) or embedded with each track</li>
+    <li>Progress bars can be global (playlist style) or embedded within each track</li>
 
 <li>Tested on iOS 8.4+ and Android 4.1+ (better UI performance with Crosswalk plugin)</li>
 </ul>
@@ -192,11 +192,58 @@ the <code>display-time</code> attribute is present.</p>
 
 <p><img src="https://github.com/arielfaur/ionic-audio/raw/master/screenshots/Screenshot_progress_box.png" alt=""></p>
 
+<h2><a id="directives" class="anchor" href="#api" aria-hidden="true"><span class="octicon octicon-link"></span></a>API</h2>
+<h3>
+  <a id="MediaManager" class="anchor" href="#MediaManager" aria-hidden="true"><span class="octicon octicon-link"></span></a>MediaManager</h3>
+
+<p>Inject <code>MediaManager</code> in your controller if you need access to the currently playing track. For example, in order to stop
+playback before transitioning to another state or performing any other action:</p>
+
+<pre><code>
+.controller('MusicCtrl', ['$scope', 'MediaManager', function($scope, MediaManager) {
+
+    // bind stop button in view
+    $scope.stopPlayback = function() {
+        MediaManager.stop();
+    };
+
+    // stop any track before leaving current view
+    $scope.$on('$ionicView.beforeLeave', function() {
+        MediaManager.stop();
+    });
+
+}]);
+</code></pre>
+
+<pre><code>
+&lt;ion-view view-title="Music"&gt;
+    &lt;ion-content&gt;
+        &lt;button class="button button-assertive" ng-click="stopPlayback()"&gt;Stop all&lt;/button&gt;
+        &lt;ion-audio-track track="track"&gt;
+              &lt;div class="list list-inset"&gt;
+                  &lt;div class="item item-thumbnail-left"&gt;
+                      &lt;img src="{{track.art}}"&gt;
+                      &lt;h2&gt;{{track.title}}&lt;/h2&gt;
+                      &lt;p&gt;{{track.artist}}&lt;/p&gt;
+                      &lt;ion-audio-controls&gt;
+                            &lt;a class="button button-icon icon" ion-audio-play&gt;&lt;/a&gt;
+                            &lt;ion-spinner icon="ios"&gt;&lt;/ion-spinner&gt;
+                        &lt;/ion-audio-controls&gt;
+                  &lt;/div&gt;
+                  &lt;div class="item"&gt;
+                    &lt;ion-audio-progress-bar display-time&gt;&lt;/ion-audio-progress-bar&gt;
+                  &lt;/div&gt;
+              &lt;/div&gt;
+          &lt;/ion-audio-track&gt;
+    &lt;/ion-content&gt;
+&lt;/ion-view&gt;
+</code></pre>
+
 <h2>
 <a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>TODO</h2>
 
 <ul class="features">
-<li>Test on iOS</li>
+<li><del>Test on iOS</del></li>
 <li>Implement playlist functionality</li>
 <li><del>Implement seek-to functionality using the slider</del></li>
 <li><del>Implement customization of progress bar and default player icons - now hardcoded</del></li>
