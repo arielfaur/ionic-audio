@@ -1,25 +1,5 @@
 angular.module('ionic-audio', ['ionic']);
 
-angular.module('ionic-audio').filter('time', function () {
-	var addLeadingZero = function(n) {
-        return (new Array(2).join('0')+n).slice(-2)
-    };
-
-    return function(input) {
-        input = input || 0;
-        var t = parseInt(input);
-        return addLeadingZero(Math.floor(t / 60)) + ':' + addLeadingZero(t % 60);
-    };
-});
-
-
-angular.module('ionic-audio').filter('duration', ['$filter', function ($filter) {
-    return function (input) {
-        return (input > 0) ? $filter('time')(input) : '';
-    };
-}]);
-
-
 angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', '$window', function ($interval, $timeout, $window) {
     var tracks = [], currentTrack, currentMedia, playerTimer;
 
@@ -209,6 +189,26 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
         }, 1000);
     }
 }]);
+
+angular.module('ionic-audio').filter('time', function () {
+	var addLeadingZero = function(n) {
+        return (new Array(2).join('0')+n).slice(-2)
+    };
+
+    return function(input) {
+        input = input || 0;
+        var t = parseInt(input);
+        return addLeadingZero(Math.floor(t / 60)) + ':' + addLeadingZero(t % 60);
+    };
+});
+
+
+angular.module('ionic-audio').filter('duration', ['$filter', function ($filter) {
+    return function (input) {
+        return (input > 0) ? $filter('time')(input) : '';
+    };
+}]);
+
 
 angular.module('ionic-audio').directive('ionAudioTrack', ['MediaManager', '$rootScope', ionAudioTrack]);
 
