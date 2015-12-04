@@ -1,14 +1,12 @@
-angular.module('ionic-audio').filter('time', Time);
+angular.module('ionic-audio').filter('time', function () {
+	var addLeadingZero = function(n) {
+        return (new Array(2).join('0')+n).slice(-2)
+    };
 
-function Time() {
     return function(input) {
         input = input || 0;
-
-        var t = parseInt(input,10);
-
-        var addLeadingZero = function(n) {
-            return (n < 10) ? '0' + n : n;
-        };
+        var t = parseInt(input);
         return addLeadingZero(Math.floor(t / 60)) + ':' + addLeadingZero(t % 60);
     };
-}
+});
+

@@ -1,6 +1,6 @@
-angular.module('ionic-audio').directive('ionAudioTrack', ionAudioTrack);
+angular.module('ionic-audio').directive('ionAudioTrack', ['MediaManager', '$rootScope', ionAudioTrack]);
 
-function ionAudioTrack(MediaManager) {
+function ionAudioTrack(MediaManager, $rootScope) {
     return {
         transclude: true,
         template: '<ng-transclude></ng-transclude>',
@@ -8,17 +8,61 @@ function ionAudioTrack(MediaManager) {
         scope: {
             track: '='
         },
-        controller: 'ionAudioTrackCtrl',
-        link: link
-    }
+        controller: ['$scope', '$element', ionAudioTrackCtrl]
+    };
 
-    function link(scope, element, attrs, controller) {
-        controller.hasOwnProgressBar = element.find('ion-audio-progress-bar').length > 0;
+    function ionAudioTrackCtrl($scope, $element) {
+        var controller = this, hasOwnProgressBar = $element.find('ion-audio-progress-bar').length > 0;;
 
-        scope.$on('$destroy', function() {
+        var init = function() {
+            $scope.track.progress = 0;
+            $scope.track.status = 0;
+            $scope.track.duration = -1;
+
+            if (MediaManager) {
+               $scope.track.id = MediaManager.add($scope.track, playbackSuccess, null, statusChange, progressChange);
+            }
+        };
+
+        var playbackSuccess = function() {
+            $scope.track.status = 0;
+            $scope.track.progress = 0;
+        };
+        var statusChange = function(status) {
+            $scope.track.status = status;
+        };
+        var progressChange = function(progress, duration) {
+            $scope.track.progress = progress;
+            $scope.track.duration = duration;
+        };
+        var notifyProgressBar = function() {
+            $rootScope.$broadcast('ionic-audio:trackChange', $scope.track);
+        };
+
+        this.seekTo = function(pos) {
+            MediaManager.seekTo(pos);
+        };
+
+        this.getTrack = function() {
+            return $scope.track;
+        };
+
+        $scope.track.play = function() {
+            if (!MediaManager) return;
+
+            MediaManager.play($scope.track.id);
+
+            // notify global progress bar if detached from track
+            if (!controller.hasOwnProgressBar) notifyProgressBar();
+
+            return $scope.track.id;
+        };
+
+        $scope.$on('$destroy', function() {
             MediaManager.destroy();
         });
+
+        init();
     }
 }
 
-ionAudioTrack.$inject = ['MediaManager'];

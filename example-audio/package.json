@@ -15,11 +15,11 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    "org.apache.cordova.device",
-    "org.apache.cordova.console",
-    "com.ionic.keyboard",
-    "org.apache.cordova.media",
-    "org.apache.cordova.splashscreen"
+    "cordova-plugin-device",
+    "cordova-plugin-console",
+    "ionic-plugin-keyboard",
+    "cordova-plugin-media",
+    "cordova-plugin-splashscreen"
   ],
   "cordovaPlatforms": []
 }

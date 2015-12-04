@@ -1,5 +1,6 @@
 <ion-view view-title="Music">
   <ion-content>
+	  <button class="button button-assertive" ng-click="stopPlayback()">Stop all</button>
       <ion-audio-track ng-repeat="track in tracks" track="track">
           <div class="card">
               <div class="item item-thumbnail-left">

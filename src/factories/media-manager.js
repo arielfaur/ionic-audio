@@ -1,6 +1,4 @@
-angular.module('ionic-audio').factory('MediaManager', MediaManager);
-
-function MediaManager($interval, $timeout, $window) {
+angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', '$window', function ($interval, $timeout, $window) {
     var tracks = [], currentTrack, currentMedia, playerTimer;
 
     if (!$window.cordova && !$window.Media) {
@@ -12,6 +10,7 @@ function MediaManager($interval, $timeout, $window) {
         add: add,
         play: play,
         pause: pause,
+        stop: stop,
         seekTo: seekTo,
         destroy: destroy
     };
@@ -107,9 +106,10 @@ function MediaManager($interval, $timeout, $window) {
     }
 
     function stop() {
-        console.log('ionic-audio: stopping track ' + currentTrack.title);
-        currentMedia.stop();    // will call onSuccess...
-        currentTrack = undefined;
+        if (currentMedia){
+            console.log('ionic-audio: stopping track ' + currentTrack.title);
+            currentMedia.stop();    // will call onSuccess...
+        }
     }
 
     function createMedia(track) {
@@ -186,6 +186,4 @@ function MediaManager($interval, $timeout, $window) {
 
         }, 1000);
     }
-}
-
-MediaManager.$inject = ['$interval', '$timeout', '$window'];
+}]);

@@ -1,4 +1,4 @@
-angular.module('ionic-audio').directive('ionAudioProgressBar', ionAudioProgressBar);
+angular.module('ionic-audio').directive('ionAudioProgressBar', ['MediaManager', ionAudioProgressBar]);
 
 function ionAudioProgressBar(MediaManager) {
     return {
@@ -10,19 +10,17 @@ function ionAudioProgressBar(MediaManager) {
             '<input type="range" name="volume" min="0" max="{{track.duration}}" ng-model="track.progress" on-release="sliderRelease()" disabled>' +
             '<ion-audio-duration track="track"></ion-audio-duration>' +
             '</div>',
-        require: '?^^ionAudioTrack',
-        scope: {},
         link: link
-    }
+    };
 
-    function link(scope, element, attrs, controller) {
+    function link(scope, element, attrs) {
         var slider =  element.find('input'), unbindTrackListener;
 
-        scope.track = {
-            progress: 0,
-            status: 0,
-            duration: -1
-        };
+        function init() {
+            scope.track.progress = 0;
+            scope.track.status = 0;
+            scope.track.duration = -1;
+        }
 
         if (!angular.isDefined(attrs.displayTime)) {
             element.find('ion-audio-progress').remove();
@@ -32,10 +30,14 @@ function ionAudioProgressBar(MediaManager) {
             element.find('h2').remove();
         }
 
-        // hide/show track info if available
-        scope.displayTrackInfo = function() {
-            return { visibility: angular.isDefined(attrs.displayInfo) && (scope.track.title || scope.track.artist) ? 'visible' : 'hidden'}
-        };
+        if (angular.isUndefined(scope.track)) {
+            scope.track = {};
+
+            // listens for track changes elsewhere in the DOM
+            unbindTrackListener = scope.$on('ionic-audio:trackChange', function (e, track) {
+                scope.track = track;
+            });
+        }
 
         // disable slider if track is not playing
         var unbindStatusListener = scope.$watch('track.status', function(status) {
@@ -43,15 +45,10 @@ function ionAudioProgressBar(MediaManager) {
             slider.prop('disabled', status == 0);   //   Media.MEDIA_NONE
         });
 
-        if (controller) {
-            // get track from parent audio track directive
-            scope.track = controller.getTrack();
-        } else {
-            // get track from current playing track elsewhere in the DOM
-            unbindTrackListener = scope.$on('ionic-audio:trackChange', function (e, track) {
-                scope.track = track;
-            });
-        }
+        // hide/show track info if available
+        scope.displayTrackInfo = function() {
+            return { visibility: angular.isDefined(attrs.displayInfo) && (scope.track.title || scope.track.artist) ? 'visible' : 'hidden'}
+        };
 
         // handle track seek-to
         scope.sliderRelease = function() {
@@ -65,7 +62,8 @@ function ionAudioProgressBar(MediaManager) {
                 unbindTrackListener();
             }
         });
+
+        init();
     }
 }
 
-ionAudioProgressBar.$inject = ['MediaManager'];

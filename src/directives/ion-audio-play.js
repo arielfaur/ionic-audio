@@ -1,19 +1,14 @@
-angular.module('ionic-audio').directive('ionAudioPlay', ionAudioPlay);
+angular.module('ionic-audio').directive('ionAudioPlay', ['$ionicGesture', ionAudioPlay]);
 
-function ionAudioPlay() {
+function ionAudioPlay($ionicGesture) {
     return {
-        //scope: true,
         restrict: 'A',
-        require: ['^^ionAudioTrack', '^^ionAudioControls'],
+        require: '^^ionAudioControls',
         link: link
-    }
+    };
 
-    function link(scope, element, attrs, controllers) {
-        var isLoading, currentStatus = 0;
-
-        scope.track = controllers[0].getTrack();
-
-        var controller = controllers[1];
+    function link(scope, element, attrs, controller) {
+        var isLoading, debounce, currentStatus = 0;
 
         var init = function() {
             isLoading = false;
@@ -33,13 +28,22 @@ function ionAudioPlay() {
             setText();
         };
 
-        element.on('click', function() {
-            if (isLoading) return;  //  debounce multiple clicks
+        $ionicGesture.on('tap', function() {
+            // debounce while loading and multiple clicks
+            if (debounce || isLoading) {
+                debounce = false;
+                return;
+            }
 
-            controller.playTrack();
-            togglePlaying();
             if (currentStatus == 0) isLoading = true;
-        });
+
+            controller.play();
+            togglePlaying();
+        }, element);
+
+        $ionicGesture.on('doubletap', function() {
+            debounce = true;
+        }, element);
 
         var unbindStatusListener = scope.$watch('track.status', function (status) {
             //  Media.MEDIA_NONE or Media.MEDIA_STOPPED

@@ -13,7 +13,7 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('MusicCtrl', function($scope) {
+.controller('MusicCtrl', ['$scope', 'MediaManager', function($scope, MediaManager) {
     $scope.tracks = [
         {
             url: 'https://ionic-audio.s3.amazonaws.com/Message%20in%20a%20bottle.mp3',
@@ -28,4 +28,7 @@ angular.module('starter.controllers', [])
             art: 'https://ionic-audio.s3.amazonaws.com/The_Police_Greatest_Hits.jpg'
         }
     ];
-});
+    $scope.stopPlayback = function() {
+        MediaManager.stop();
+    };
+}]);

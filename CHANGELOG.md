@@ -1,3 +1,14 @@
+## v1.2.6
+
+- added minified and uglified script versions
+- refactor code into own scripf files
+- added global stop() method to MediaManager so that any audio playing can be stopped immediately
+- minor performance tweaks
+
+## v1.2.5
+- fixed DI issues
+- fixed scoping bug in directive ionAudioPlay
+
 ## v1.2.4
 
 - fixed bug where pause button was disabled and was not possible to stop playback
