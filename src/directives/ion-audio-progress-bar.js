@@ -3,6 +3,9 @@ angular.module('ionic-audio').directive('ionAudioProgressBar', ['MediaManager', 
 function ionAudioProgressBar(MediaManager) {
     return {
         restrict: 'E',
+        scope: {
+            track: '='
+        },
         template:
             '<h2 class="ion-audio-track-info" ng-style="displayTrackInfo()">{{track.title}} - {{track.artist}}</h2>' +
             '<div class="range">' +
@@ -66,4 +69,3 @@ function ionAudioProgressBar(MediaManager) {
         init();
     }
 }
-

@@ -15,6 +15,19 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
         destroy: destroy
     };
 
+    function find(track) {
+        if (track.id < 0) return;
+
+        var replaceTrack = tracks.filter(function(localTrack) {
+            return localTrack.id == track.id;
+        }).pop();
+
+        if (replaceTrack) {
+            tracks.splice(replaceTrack.id, 1, track);
+        }
+        return replaceTrack;
+     }
+
     /*
     Creates a new Media from a track object
 
@@ -30,6 +43,7 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
             console.log('ionic-audio: missing track url');
             return;
         }
+
         angular.extend(track, {
             onSuccess: playbackSuccess,
             onError: playbackError,
@@ -39,6 +53,10 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
             duration: -1,
             progress: 0
         });
+
+        if (find(track)) {
+            return track.id;
+        }
 
         track.id  = tracks.push(track) - 1;
         return track.id;

@@ -1,5 +1,25 @@
 angular.module('ionic-audio', ['ionic']);
 
+angular.module('ionic-audio').filter('time', function () {
+	var addLeadingZero = function(n) {
+        return (new Array(2).join('0')+n).slice(-2)
+    };
+
+    return function(input) {
+        input = input || 0;
+        var t = parseInt(input);
+        return addLeadingZero(Math.floor(t / 60)) + ':' + addLeadingZero(t % 60);
+    };
+});
+
+
+angular.module('ionic-audio').filter('duration', ['$filter', function ($filter) {
+    return function (input) {
+        return (input > 0) ? $filter('time')(input) : '';
+    };
+}]);
+
+
 angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', '$window', function ($interval, $timeout, $window) {
     var tracks = [], currentTrack, currentMedia, playerTimer;
 
@@ -17,6 +37,19 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
         destroy: destroy
     };
 
+    function find(track) {
+        if (track.id < 0) return;
+
+        var replaceTrack = tracks.filter(function(localTrack) {
+            return localTrack.id == track.id;
+        }).pop();
+
+        if (replaceTrack) {
+            tracks.splice(replaceTrack.id, 1, track);
+        }
+        return replaceTrack;
+     }
+
     /*
     Creates a new Media from a track object
 
@@ -32,6 +65,7 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
             console.log('ionic-audio: missing track url');
             return;
         }
+
         angular.extend(track, {
             onSuccess: playbackSuccess,
             onError: playbackError,
@@ -41,6 +75,10 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
             duration: -1,
             progress: 0
         });
+
+        if (find(track)) {
+            return track.id;
+        }
 
         track.id  = tracks.push(track) - 1;
         return track.id;
@@ -189,27 +227,6 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
         }, 1000);
     }
 }]);
-
-angular.module('ionic-audio').filter('time', function () {
-	var addLeadingZero = function(n) {
-        return (new Array(2).join('0')+n).slice(-2)
-    };
-
-    return function(input) {
-        input = input || 0;
-        var t = parseInt(input);
-        return addLeadingZero(Math.floor(t / 60)) + ':' + addLeadingZero(t % 60);
-    };
-});
-
-
-angular.module('ionic-audio').filter('duration', ['$filter', function ($filter) {
-    return function (input) {
-        return (input > 0) ? $filter('time')(input) : '';
-    };
-}]);
-
-
 angular.module('ionic-audio').directive('ionAudioTrack', ['MediaManager', '$rootScope', ionAudioTrack]);
 
 function ionAudioTrack(MediaManager, $rootScope) {
@@ -220,19 +237,28 @@ function ionAudioTrack(MediaManager, $rootScope) {
         scope: {
             track: '='
         },
+        require: 'ionAudioTrack',
+        link: link,
         controller: ['$scope', '$element', ionAudioTrackCtrl]
     };
 
-    function ionAudioTrackCtrl($scope, $element) {
-        var controller = this, hasOwnProgressBar = $element.find('ion-audio-progress-bar').length > 0;;
+    function link(scope, element, attr, controller) {
+        controller.hasOwnProgressBar = element.find('ion-audio-progress-bar').length > 0
+    }
 
-        var init = function() {
-            $scope.track.progress = 0;
-            $scope.track.status = 0;
-            $scope.track.duration = -1;
+    function ionAudioTrackCtrl($scope, $element) {
+        var controller = this;
+
+        var init = function(newTrack, oldTrack) {
+            if (!newTrack || !newTrack.url) return;
+
+            newTrack.progress = 0;
+            newTrack.status = 0;
+            newTrack.duration = -1;
+            if (oldTrack && oldTrack.id !== undefined) newTrack.id = oldTrack.id; 
 
             if (MediaManager) {
-               $scope.track.id = MediaManager.add($scope.track, playbackSuccess, null, statusChange, progressChange);
+                MediaManager.add(newTrack, playbackSuccess, null, statusChange, progressChange);
             }
         };
 
@@ -259,8 +285,8 @@ function ionAudioTrack(MediaManager, $rootScope) {
             return $scope.track;
         };
 
-        $scope.track.play = function() {
-            if (!MediaManager) return;
+        this.start = function() {
+            if (!$scope.track || !$scope.track.url) return;
 
             MediaManager.play($scope.track.id);
 
@@ -270,15 +296,17 @@ function ionAudioTrack(MediaManager, $rootScope) {
             return $scope.track.id;
         };
 
+        $scope.$watch('track', function(newTrack, oldTrack) {   
+            if (newTrack === undefined) return;         
+            MediaManager.stop();
+            init(newTrack, oldTrack);
+        });
+
         $scope.$on('$destroy', function() {
             MediaManager.destroy();
         });
-
-        init();
     }
 }
-
-
 angular.module('ionic-audio').directive('ionAudioProgress', ionAudioProgress);
 
 function ionAudioProgress() {
@@ -296,6 +324,9 @@ angular.module('ionic-audio').directive('ionAudioProgressBar', ['MediaManager', 
 function ionAudioProgressBar(MediaManager) {
     return {
         restrict: 'E',
+        scope: {
+            track: '='
+        },
         template:
             '<h2 class="ion-audio-track-info" ng-style="displayTrackInfo()">{{track.title}} - {{track.artist}}</h2>' +
             '<div class="range">' +
@@ -359,8 +390,6 @@ function ionAudioProgressBar(MediaManager) {
         init();
     }
 }
-
-
 angular.module('ionic-audio').directive('ionAudioPlay', ['$ionicGesture', ionAudioPlay]);
 
 function ionAudioPlay($ionicGesture) {
@@ -442,7 +471,9 @@ function ionAudioDuration() {
 angular.module('ionic-audio').directive('ionAudioControls', function() {
     return {
       restrict: 'EA',
-      controller: ['$scope', '$element', ionAudioControlsCtrl]
+      require: ['ionAudioControls', '^^ionAudioTrack'],
+      controller: ['$scope', '$element', ionAudioControlsCtrl],
+      link: link
     };
 
     function ionAudioControlsCtrl($scope, $element) {
@@ -458,11 +489,12 @@ angular.module('ionic-audio').directive('ionAudioControls', function() {
           if (!hasLoaded) {
               self.toggleSpinner();
           }
-          $scope.track.play();
+          //$scope.track.play();
+          this.start();
         };
 
         var unbindStatusListener = $scope.$watch('track.status', function (status) {
-          switch (status) {
+            switch (status) {
               case 1: // Media.MEDIA_STARTING
                   hasLoaded = false;
                   break;
@@ -478,12 +510,15 @@ angular.module('ionic-audio').directive('ionAudioControls', function() {
               case 4: // Media.MEDIA_STOPPED
                   hasLoaded = false;
                   break;
-          }
+            }
         });
 
         $scope.$on('$destroy', function() {
           unbindStatusListener();
         });
     }
-});
 
+    function link(scope, element, attrs, controllers) {
+        controllers[0].start = controllers[1].start;
+    }
+});

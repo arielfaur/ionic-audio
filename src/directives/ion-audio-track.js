@@ -8,19 +8,28 @@ function ionAudioTrack(MediaManager, $rootScope) {
         scope: {
             track: '='
         },
+        require: 'ionAudioTrack',
+        link: link,
         controller: ['$scope', '$element', ionAudioTrackCtrl]
     };
 
-    function ionAudioTrackCtrl($scope, $element) {
-        var controller = this, hasOwnProgressBar = $element.find('ion-audio-progress-bar').length > 0;;
+    function link(scope, element, attr, controller) {
+        controller.hasOwnProgressBar = element.find('ion-audio-progress-bar').length > 0
+    }
 
-        var init = function() {
-            $scope.track.progress = 0;
-            $scope.track.status = 0;
-            $scope.track.duration = -1;
+    function ionAudioTrackCtrl($scope, $element) {
+        var controller = this;
+
+        var init = function(newTrack, oldTrack) {
+            if (!newTrack || !newTrack.url) return;
+
+            newTrack.progress = 0;
+            newTrack.status = 0;
+            newTrack.duration = -1;
+            if (oldTrack && oldTrack.id !== undefined) newTrack.id = oldTrack.id; 
 
             if (MediaManager) {
-               $scope.track.id = MediaManager.add($scope.track, playbackSuccess, null, statusChange, progressChange);
+                MediaManager.add(newTrack, playbackSuccess, null, statusChange, progressChange);
             }
         };
 
@@ -47,8 +56,8 @@ function ionAudioTrack(MediaManager, $rootScope) {
             return $scope.track;
         };
 
-        $scope.track.play = function() {
-            if (!MediaManager) return;
+        this.start = function() {
+            if (!$scope.track || !$scope.track.url) return;
 
             MediaManager.play($scope.track.id);
 
@@ -58,11 +67,14 @@ function ionAudioTrack(MediaManager, $rootScope) {
             return $scope.track.id;
         };
 
+        $scope.$watch('track', function(newTrack, oldTrack) {   
+            if (newTrack === undefined) return;         
+            MediaManager.stop();
+            init(newTrack, oldTrack);
+        });
+
         $scope.$on('$destroy', function() {
             MediaManager.destroy();
         });
-
-        init();
     }
 }
-
