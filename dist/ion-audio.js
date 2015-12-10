@@ -476,7 +476,7 @@ angular.module('ionic-audio').directive('ionAudioControls', function() {
       link: link
     };
 
-    function ionAudioControlsCtrl($scope, $element) {
+function ionAudioControlsCtrl($scope, $element) {
         var spinnerElem = $element.find('ion-spinner'), hasLoaded, self = this;
 
         spinnerElem.addClass('ng-hide');
@@ -489,11 +489,10 @@ angular.module('ionic-audio').directive('ionAudioControls', function() {
           if (!hasLoaded) {
               self.toggleSpinner();
           }
-          //$scope.track.play();
           this.start();
         };
 
-        var unbindStatusListener = $scope.$watch('track.status', function (status) {
+        var unbindStatusListener = $scope.$parent.$watch('track.status', function (status) {
             switch (status) {
               case 1: // Media.MEDIA_STARTING
                   hasLoaded = false;
