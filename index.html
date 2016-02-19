@@ -120,7 +120,7 @@ However, you can still run the project locally to tune the UI before deploying t
                     &lt;/ion-audio-controls&gt;
               &lt;/div&gt;
               &lt;div class="item"&gt;
-                &lt;ion-audio-progress-bar display-time&gt;&lt;/ion-audio-progress-bar&gt;
+                &lt;ion-audio-progress-bar track="track" display-time&gt;&lt;/ion-audio-progress-bar&gt;
               &lt;/div&gt;
           &lt;/div&gt;
       &lt;/ion-audio-track&gt;
@@ -228,9 +228,9 @@ Additionally, the attributes <code>text-play</code> and <code>text-pause</code> 
 <a id="ion-audio-progress-bar" class="anchor" href="#ion-audio-progress-bar" aria-hidden="true"><span class="octicon octicon-link"></span></a>ion-audio-progress-bar</h3>
 
 <p>Shows a progress bar using Ionic's range control. It also displays the track duration and progress update if
-the <code>display-time</code> attribute is present.</p>
+the <code>display-time</code> attribute is present.</p> Pass the current track instance to the <code>track</code> property.
 
-<p><code>&lt;ion-audio-progress-bar display-time&gt;&lt;/ion-audio-progress-bar&gt;</code></p>
+<p><code>&lt;ion-audio-progress-bar track="track" display-time&gt;&lt;/ion-audio-progress-bar&gt;</code></p>
 
 <p>Sample use case: tracks listed with an embedded progress bar.</p>
 
@@ -239,7 +239,7 @@ the <code>display-time</code> attribute is present.</p>
 <h4>
 <a id="use-as-a-global-progress-bar" class="anchor" href="#use-as-a-global-progress-bar" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use as a global progress bar</h4>
 
-<p>If a <code>ion-audio-progress-bar</code> is placed outside the scope of <code>ion-audio-track</code>, it will automatically behave as a standalone bar keeping in sync with the track list. Add a <code>display-info</code> attribute to show the current playing track.</p>
+<p>If a <code>ion-audio-progress-bar</code> is placed outside the scope of <code>ion-audio-track</code>, it will automatically behave as a standalone bar keeping in sync with the track list. Add a <code>display-info</code> attribute to show the current playing track. In this case there is no need to pass a <code>track</code> property because the progress bar is outside the scope.</p>
 
 <p><code>&lt;ion-audio-progress-bar display-time display-info&gt;&lt;/ion-audio-progress-bar&gt;</code></p>
 
