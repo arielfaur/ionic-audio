@@ -42,14 +42,8 @@ function ionAudioControlsCtrl($scope, $element) {
             }
         });
 
-        var unbindPlaybackListener = $scope.$parent.$watch('togglePlayback', function (newPlayback, oldPlayback) {
-            if (newPlayback == oldPlayback) return;
-            self.play();
-        });
-
         $scope.$on('$destroy', function() {
           unbindStatusListener();
-          unbindPlaybackListener();
         });
     }
 

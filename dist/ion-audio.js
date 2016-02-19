@@ -410,9 +410,9 @@ function ionAudioProgressBar(MediaManager) {
         init();
     }
 }
-angular.module('ionic-audio').directive('ionAudioPlay', ['$ionicGesture', ionAudioPlay]);
+angular.module('ionic-audio').directive('ionAudioPlay', ['$ionicGesture', '$timeout', ionAudioPlay]);
 
-function ionAudioPlay($ionicGesture) {
+function ionAudioPlay($ionicGesture, $timeout) {
     return {
         restrict: 'A',
         require: '^^ionAudioControls',
@@ -468,10 +468,19 @@ function ionAudioPlay($ionicGesture) {
             currentStatus = status;
         });
 
+        var unbindPlaybackListener = scope.$parent.$watch('togglePlayback', function (newPlayback, oldPlayback) {
+            if (newPlayback == oldPlayback) return;
+            $timeout(function() {
+                togglePlaying();
+                controller.play();
+            },300)
+        });
+
         init();
 
         scope.$on('$destroy', function() {
             unbindStatusListener();
+            unbindPlaybackListener();
         });
     }
 }
@@ -532,14 +541,8 @@ function ionAudioControlsCtrl($scope, $element) {
             }
         });
 
-        var unbindPlaybackListener = $scope.$parent.$watch('togglePlayback', function (newPlayback, oldPlayback) {
-            if (newPlayback == oldPlayback) return;
-            self.play();
-        });
-
         $scope.$on('$destroy', function() {
           unbindStatusListener();
-          unbindPlaybackListener();
         });
     }
 

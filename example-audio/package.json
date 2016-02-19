@@ -18,8 +18,17 @@
     "cordova-plugin-device",
     "cordova-plugin-console",
     "ionic-plugin-keyboard",
+    "cordova-plugin-file",
+    "cordova-plugin-splashscreen",
     "cordova-plugin-media",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-whitelist"
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    "android",
+    {
+      "platform": "android",
+      "version": "",
+      "locator": "android"
+    }
+  ]
 }

@@ -37,52 +37,33 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
 
   // Each tab has its own nav history stack:
-      .state('tab.music', {
-          url: '/music',
-          views: {
-              'tab-music': {
-                  templateUrl: 'templates/tab-music.html',
-                  controller: 'MusicCtrl'
-              }
-          }
-      })
-      .state('tab.music2', {
-          url: '/more-music',
-          views: {
-              'tab-more-music': {
-                  templateUrl: 'templates/tab-music2.html',
-                  controller: 'MusicCtrl'
-              }
-          }
-      })
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.music', {
+    url: '/music',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
+        'tabMusic': {
+            templateUrl: 'templates/tab-music.html',
+            controller: 'MusicCtrl'
+        }
     }
   })
-
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+  .state('tab.music2', {
+    url: '/music2',
+    views: {
+        'tabMusic2': {
+            templateUrl: 'templates/tab-music2.html',
+            controller: 'MusicCtrl'
         }
+    }
+  })
+  .state('tab.music3', {
+    url: '/music3',
+    views: {
+      'tabMusic3': {
+        templateUrl: 'templates/tab-music3.html',
+        controller: 'MusicCtrl'
       }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    });
+    }
+  });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/music');
