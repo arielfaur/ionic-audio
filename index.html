@@ -153,6 +153,61 @@ independent.</p>
 }
 </code></pre>
 
+<h4>NEW in version 1.3.0:</h4>
+<p>
+You can now dynamically assign a track to the <code>ion-audio-track</code> directive. There is also a new scope property <code>toggle-playback</code> that can be used to control playback if needed. The module will simply listen to changes in the <code>toggle-playback</code> property and toggle playback regardless of the property value.
+</p>
+<pre><code>&lt;button class="button button-assertive" ng-click="playTrack(0)"&gt;Play first track&lt;/button&gt;
+&lt;ion-audio-track track="dynamicTrack" toggle-playback="togglePlayback"&gt;
+      &lt;div class="card"&gt;
+          &lt;div class="item"&gt;
+              &lt;h2&gt;{{dynamicTrack.title}}&lt;/h2&gt;
+
+              &lt;p&gt;{{dynamicTrack.artist}}&lt;/p&gt;
+              &lt;ion-audio-controls&gt;
+                  &lt;a class="button button-icon icon" ion-audio-play&gt;&lt;/a&gt;
+                  &lt;ion-spinner icon="ios" style="position: relative; top: 8px; left: 4px"&gt;&lt;/ion-spinner&gt;
+              &lt;/ion-audio-controls&gt;
+          &lt;/div&gt;
+          &lt;div class="item item-divider"&gt;
+              &lt;ion-audio-progress-bar track="dynamicTrack" display-time&gt;&lt;/ion-audio-progress-bar&gt;
+          &lt;/div&gt;
+      &lt;/div&gt;
+&lt;/ion-audio-track&gt;</code></pre>
+
+
+<pre><code>
+.controller('MusicCtrl', ['$scope', 'MediaManager', function($scope, MediaManager) {
+    
+    $scope.dynamicTrack = {};   // we use this scope variable to dynamically assign a track
+
+    $scope.tracks = [
+        {
+            url: 'http://myserver.com/audio/Track1.mp3',  // audio file from the cloud
+            artist: 'The Police',
+            title: 'Roxane'
+        },
+        {
+            url: '/android_asset/www/audio/Track2.mp3', // audio file stored in device's app folder
+            artist: 'Genesis',
+            title: 'Tonight. Tonight. Tonight'
+        }
+    ];
+
+    $scope.stopPlayback = function() {
+        MediaManager.stop();  // will stop any audio currently playing
+    };
+
+    $scope.playTrack = function(index) {
+        $scope.dynamicTrack = $scope.tracks[index];   // assign one track
+
+        $scope.togglePlayback = !$scope.togglePlayback; // start playback when track changes    
+    };
+}]);
+</code></pre>
+
+
+
 <h3>
 <a id="ion-audio-controls" class="anchor" href="#ion-audio-controls" aria-hidden="true"><span class="octicon octicon-link"></span></a>ion-audio-controls</h3>
 
