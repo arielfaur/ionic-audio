@@ -1,3 +1,20 @@
+/*
+ionic-audio v1.3.0
+ 
+Copyright 2016 Ariel Faur (https://github.com/arielfaur)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 angular.module('ionic-audio', ['ionic']);
 
 angular.module('ionic-audio').filter('time', function () {
@@ -24,7 +41,7 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
     var tracks = [], currentTrack, currentMedia, playerTimer;
 
     if (!$window.cordova && !$window.Media) {
-        console.log("ionic-audio: missing Cordova Media plugin. Have you installed the plugin? \nRun 'ionic plugin add org.apache.cordova.media'");
+        console.log("ionic-audio: missing Cordova Media plugin. Have you installed the plugin? \nRun 'ionic plugin add cordova-plugin-media'");
         return null;
     }
 
@@ -84,8 +101,9 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
         return track.id;
     }
 
-
     function play(trackID) {
+        if (!angular.isNumber(trackID) || trackID > tracks.length - 1) return;
+
         // avoid two tracks playing simultaneously
         if (currentTrack) {
             if (currentTrack.id == trackID) {
@@ -235,7 +253,8 @@ function ionAudioTrack(MediaManager, $rootScope) {
         template: '<ng-transclude></ng-transclude>',
         restrict: 'E',
         scope: {
-            track: '='
+            track: '=',
+            togglePlayback: '='
         },
         require: 'ionAudioTrack',
         link: link,
@@ -296,13 +315,14 @@ function ionAudioTrack(MediaManager, $rootScope) {
             return $scope.track.id;
         };
 
-        $scope.$watch('track', function(newTrack, oldTrack) {   
+        var unbindWatcher = $scope.$watch('track', function(newTrack, oldTrack) {  
             if (newTrack === undefined) return;         
             MediaManager.stop();
             init(newTrack, oldTrack);
         });
 
         $scope.$on('$destroy', function() {
+            unbindWatcher();
             MediaManager.destroy();
         });
     }
@@ -512,8 +532,14 @@ function ionAudioControlsCtrl($scope, $element) {
             }
         });
 
+        var unbindPlaybackListener = $scope.$parent.$watch('togglePlayback', function (newPlayback, oldPlayback) {
+            if (newPlayback == oldPlayback) return;
+            self.play();
+        });
+
         $scope.$on('$destroy', function() {
           unbindStatusListener();
+          unbindPlaybackListener();
         });
     }
 

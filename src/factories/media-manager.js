@@ -2,7 +2,7 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
     var tracks = [], currentTrack, currentMedia, playerTimer;
 
     if (!$window.cordova && !$window.Media) {
-        console.log("ionic-audio: missing Cordova Media plugin. Have you installed the plugin? \nRun 'ionic plugin add org.apache.cordova.media'");
+        console.log("ionic-audio: missing Cordova Media plugin. Have you installed the plugin? \nRun 'ionic plugin add cordova-plugin-media'");
         return null;
     }
 
@@ -62,8 +62,9 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
         return track.id;
     }
 
-
     function play(trackID) {
+        if (!angular.isNumber(trackID) || trackID > tracks.length - 1) return;
+
         // avoid two tracks playing simultaneously
         if (currentTrack) {
             if (currentTrack.id == trackID) {

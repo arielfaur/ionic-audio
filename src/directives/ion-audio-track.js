@@ -6,7 +6,8 @@ function ionAudioTrack(MediaManager, $rootScope) {
         template: '<ng-transclude></ng-transclude>',
         restrict: 'E',
         scope: {
-            track: '='
+            track: '=',
+            togglePlayback: '='
         },
         require: 'ionAudioTrack',
         link: link,
@@ -67,13 +68,14 @@ function ionAudioTrack(MediaManager, $rootScope) {
             return $scope.track.id;
         };
 
-        $scope.$watch('track', function(newTrack, oldTrack) {   
+        var unbindWatcher = $scope.$watch('track', function(newTrack, oldTrack) {  
             if (newTrack === undefined) return;         
             MediaManager.stop();
             init(newTrack, oldTrack);
         });
 
         $scope.$on('$destroy', function() {
+            unbindWatcher();
             MediaManager.destroy();
         });
     }
