@@ -1,6 +1,7 @@
-## v2.0.0b
+## v1.3.0
 
-- make tracks observable to allow dynamic assignment of track property in ```ion-audio-track```
+- make tracks observable to allow dynamic assignment of scope variable ```track``` in ```ion-audio-track```
+- updated built-in example to show this use case
 
 ### Breaking changes
 
