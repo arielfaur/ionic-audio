@@ -301,22 +301,24 @@ export class AudioTrackProgressSliderComponent extends DragGesture {
 
 @Component({
     selector: 'audio-track-progress-bar',
-    template: `<input type="range" min="0" max="100" step="1" [(ngModel)]="_range" [ngStyle]="{'visibility': _completed > 0 ? 'visible' : 'hidden'}">
+    template: `<time *ngIf="_showProgress">{{audioTrack.progress}}</time>
+    <input type="range" min="0" max="100" step="1" [(ngModel)]="_range" [ngStyle]="{'visibility': _completed > 0 ? 'visible' : 'hidden'}">
     <time *ngIf="_showDuration">{{audioTrack.duration}}</time>
     `,
     directives: [NgStyle, AudioTrackProgressSliderComponent]
 })
 export class AudioTrackProgressBarComponent {
   @Input() audioTrack: IAudioTrack;
-  @Input() maxWidth: string;
   private _completed: number = 0;
   private _range: number = 0;
   private _showDuration: boolean;
+  private _showProgress: boolean;
   constructor(private el: ElementRef, private renderer: Renderer) { 
   }
   
   @Input()
-  public set currentTime(v : boolean) {
+  public set progress(v : boolean) {
+    this._showProgress = true;
   }
   
   @Input()
@@ -325,7 +327,6 @@ export class AudioTrackProgressBarComponent {
   }
   
   ngOnInit() {    
-    //this.el.nativeElement.style.maxWidth = this.maxWidth || '100%';
     this.el.nativeElement.firstChild.addEventListener("input", (e) => { 
       this.seekTo();
     }, false);
