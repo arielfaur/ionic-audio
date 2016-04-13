@@ -8,12 +8,11 @@ import {Provider} from 'angular2/core';
   //providers: [new Provider(AudioTrack, {useClass: AudioTrack})] // alias for [AudioTrack]
 })
 export class Page1 {
-  //track: AudioTrack;
+  track: AudioTrack;
   myTracks: ITrackConstraint[];
   singleTrack: ITrackConstraint;
   
   constructor() {
-    //this.track = new AudioTrack('./assets/1990.mp3');  
     this.myTracks = [{
       src: './assets/02 - Drifting.mp3',
       artist: 'Jimi Hendrix',
@@ -33,5 +32,20 @@ export class Page1 {
       title: 'Message in a bottle',
       art: 'https://s3.amazonaws.com/ionic-audio/The_Police_Greatest_Hits.jpg'
     };
+    
+    // create an audio track instance to show API usage without directives
+    this.track = new AudioTrack('https://s3.amazonaws.com/ionic-audio/Message+in+a+bottle.mp3');
+  }
+  
+  play() {
+    this.track.play();
+  }
+  
+  pause() {
+    this.track.pause();
+  }
+  
+  stop() {
+    this.track.stop();
   }
 }

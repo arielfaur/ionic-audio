@@ -1,5 +1,5 @@
 <ion-navbar *navbar>
-  <ion-title>Tab 1</ion-title>
+  <ion-title>Music</ion-title>
 </ion-navbar>
 
 <ion-content padding class="page1">
@@ -9,11 +9,6 @@
     that are going to primarily use a Tabbed UI.
   </p>
   
-  <!--
-  <button (click)="track.play()">Play</button><button (click)="track.pause()">Pause</button><button (click)="track.stop()">Stop</button>
-  
-  -->
-   
   <ion-list>
     <audio-track #audio *ngFor="#track of myTracks"  [track]="track">
       <ion-item>  
@@ -43,4 +38,7 @@
       </ion-note>
     </ion-item>    
   </audio-track>
+  
+  <h3>API Usage</h3>
+  <button outline small (click)="play()">Play</button><button secondary outline small (click)="pause()">Pause</button><button danger outline small (click)="stop()">Stop</button>
 </ion-content>
