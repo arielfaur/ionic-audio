@@ -21,6 +21,8 @@ export interface IAudioTrack extends ITrackConstraint {
   completed: number;
   total: number;
   currentTime: number;
+  canPlay:  boolean;
+  error: MediaError;
   
   play();
   pause();
@@ -43,7 +45,7 @@ export class AudioTrack implements IAudioTrack {
     this.audio.addEventListener("timeupdate", (e) => { this.onTimeUpdate(e); }, false);
     
     this.audio.addEventListener("error", (err) => {
-			 console.log('Audio error', err);
+			 console.log(`Audio error => track ${src}`, err);
 		}, false);
     
     this.audio.addEventListener("playing", () => {
@@ -55,9 +57,8 @@ export class AudioTrack implements IAudioTrack {
 			 console.log('Finished playback');
 		}, false);
     
-    this.audio.addEventListener("loadedmetadata", () => {
-     
-			this._duration = this.formatProgress(this.audio.duration);
+    this.audio.addEventListener("durationchange", (e:any) => {    
+			this._duration = this.formatProgress(e.target.duration);
 		}, false);
   }
   
@@ -102,25 +103,37 @@ export class AudioTrack implements IAudioTrack {
      return this.audio.currentTime;
   }
   
+  public get error() : MediaError {
+    return this.audio.error;
+  }
+  
+  public get canPlay() : boolean {
+    let format = `audio/${this.audio.src.substr(this.audio.src.lastIndexOf('.')+1)}`;
+    return this.audio && this.audio.canPlayType(format) != '';
+  }
+  
   play() {
     if (!this.audio) {
       this.createAudio(); 
     }
-    
+    console.log(`Playing track ${this.src}`);
     //var source = this.ctx.createMediaElementSource(this.audio);  
     //source.connect(this.ctx.destination);
     this.audio.play();
   } 
   
   pause() {
+    if (!this.isPlaying) return;
+    console.log(`Pausing track ${this.src}`);
     this.audio.pause();
     this.isPlaying = false;
   } 
   
   stop() {
+    if (!this.audio) return;
     this.pause();
     this.audio.removeEventListener("timeupdate", (e) => { this.onTimeUpdate(e); });
-    this.audio = undefined;
+    this.destroy();
   }
   
   seekTo(time: number) {
@@ -129,6 +142,7 @@ export class AudioTrack implements IAudioTrack {
   
   destroy() {
     this.audio = undefined;  
+    console.log(`Released track ${this.src}`);
   }
 }
 
@@ -187,9 +201,7 @@ export class AudioTrackComponent {
   public get title() : string {
     return this.track.title;
   }
-  
-  
-   
+    
   public get progress() : string {
     return this._audioTrack.progress;
   }
@@ -213,11 +225,19 @@ export class AudioTrackComponent {
   public get currentTime() {
      return this._audioTrack.currentTime;
   }
+  
+  public get canPlay() {
+    return this._audioTrack.canPlay;
+  }
+  
+  public get error() {
+    return this._audioTrack.error;
+  }
 }
 
 @Component({
     selector: 'audio-track-play',
-    template: '<button clear (click)="toggle($event)"><ion-icon name="pause" *ngIf="_isPlaying"></ion-icon><ion-icon name="play" *ngIf="!_isPlaying"></ion-icon></button>',
+    template: '<button clear (click)="toggle($event)" [disabled]="audioTrack.error"><ion-icon name="pause" *ngIf="_isPlaying"></ion-icon><ion-icon name="play" *ngIf="!_isPlaying"></ion-icon></button>',
     directives: [Icon]
 })
 export class AudioTrackPlayComponent {
@@ -313,7 +333,7 @@ export class AudioTrackProgressBarComponent {
   private _range: number = 0;
   private _showDuration: boolean;
   private _showProgress: boolean;
-  constructor(private el: ElementRef, private renderer: Renderer) { 
+  constructor(private el: ElementRef) { 
   }
   
   @Input()
@@ -326,8 +346,8 @@ export class AudioTrackProgressBarComponent {
     this._showDuration = true;
   }
   
-  ngOnInit() {    
-    this.el.nativeElement.firstChild.addEventListener("input", (e) => { 
+  ngOnInit() {
+    this.el.nativeElement.querySelector("input").addEventListener("input", (e) => { 
       this.seekTo();
     }, false);
         
@@ -341,7 +361,7 @@ export class AudioTrackProgressBarComponent {
   }
   
   seekTo() {
-    let seekTo: number = Math.round(this.audioTrack.total*this.el.nativeElement.firstChild.value)/100;
+    let seekTo: number = Math.round(this.audioTrack.total*this._range)/100;
     this.audioTrack.seekTo(seekTo);   
   }
 }
