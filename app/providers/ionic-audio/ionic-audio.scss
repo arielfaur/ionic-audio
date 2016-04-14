@@ -8,7 +8,7 @@
 // MIT License
 
 $track-color: map-get($colors, primary);
-$thumb-color: map-get($colors, primary);
+$thumb-color: map-get($colors, light);
 
 $thumb-radius: 50%;
 $thumb-height: 15px;
@@ -140,14 +140,34 @@ audio-track {
         //@include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
         background: $track-color;
         //border: $track-border-width solid $track-border-color;
-        //border-radius: $track-radius;
-      }
+        //border-radius: $track-radius; 
+      }      
 
       &::-webkit-slider-thumb {
         @include thumb();
         -webkit-appearance: none;
-        margin-top: ((-$track-border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
+        margin-top: ((-$track-border-width * 2 + $track-height) / 2) - ($thumb-height / 2);       
       }
+      
+      &.light {       
+        &::-webkit-slider-runnable-track {
+          background: map-get($colors, light);
+        }
+        
+        &::-webkit-slider-thumb {
+          background: map-get($colors, light);
+        }
+      }
+      
+      &.dark {
+          &::-webkit-slider-runnable-track {
+            background: map-get($colors, dark);
+          }
+          
+          &::-webkit-slider-thumb {
+            background: map-get($colors, light);
+          }
+      }      
       
       &:focus::-webkit-slider-runnable-track {
         background: lighten($track-color, $contrast);

@@ -447,6 +447,16 @@ export class AudioTrackProgressBarComponent {
     this._showDuration = true;
   }
   
+  @Input()
+  set light(val: boolean) {
+    this.el.nativeElement.querySelector("input").classList.add('light');
+  }
+  
+  @Input()
+  set dark(val: boolean) {
+    this.el.nativeElement.querySelector("input").classList.add('dark'); 
+  }
+  
   ngOnInit() {
     this.el.nativeElement.querySelector("input").addEventListener("input", (e) => { 
       this.seekTo();

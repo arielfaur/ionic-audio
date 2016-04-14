@@ -18,7 +18,7 @@
         </ion-thumbnail>
         
         <p>{{audio.id}} - <strong>{{audio.title}}</strong> &#x26AC; <em>{{audio.artist}}</em></p>
-        <audio-track-progress-bar duration progress [audioTrack]="audio" [ngStyle]="{visibility: audio.completed > 0 ? 'visible' : 'hidden', 'width': '70%'}"></audio-track-progress-bar>
+        <audio-track-progress-bar dark duration progress [audioTrack]="audio" [ngStyle]="{visibility: audio.completed > 0 ? 'visible' : 'hidden', 'width': '70%'}"></audio-track-progress-bar>
       </ion-item>    
     </audio-track>
   </ion-list>
