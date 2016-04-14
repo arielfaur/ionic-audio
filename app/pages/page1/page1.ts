@@ -1,18 +1,18 @@
 import {Page} from 'ionic-angular';
-import {AudioTrack, AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, IAudioTrack, ITrackConstraint, AudioTimePipe} from '../../providers/ionic-audio/ionic-audio';
+import {AudioTrack, AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, IAudioTrack, ITrackConstraint, AudioTimePipe, WebAudioProvider} from '../../providers/ionic-audio/ionic-audio';
 import {Provider} from 'angular2/core';
 
 @Page({
   templateUrl: 'build/pages/page1/page1.html',
-  directives: [AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent]
-  //providers: [new Provider(AudioTrack, {useClass: AudioTrack})] // alias for [AudioTrack]
+  directives: [AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent],
+  providers: [] //[new Provider(AudioTrack, {useClass: AudioTrack})] // alias for [AudioTrack]
 })
 export class Page1 {
   track: AudioTrack;
   myTracks: ITrackConstraint[];
   singleTrack: ITrackConstraint;
   
-  constructor() {
+  constructor(private _audioProvider: WebAudioProvider) {
     this.myTracks = [{
       src: './assets/02 - Drifting.mp3',
       artist: 'Jimi Hendrix',
@@ -48,4 +48,17 @@ export class Page1 {
   stop() {
     this.track.stop();
   }
+  
+  playSingleTrackAbove() {
+    this._audioProvider.play(this.singleTrack.id);
+  }
+  
+  pauseSingleTrackAbove() {
+     this._audioProvider.pause(this.singleTrack.id);
+  }
+  
+  onTrackFinished(track: any) {
+    console.log('Track finished', track)
+  }
+  
 }

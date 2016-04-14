@@ -10,14 +10,14 @@
   </p>
   
   <ion-list>
-    <audio-track #audio *ngFor="#track of myTracks"  [track]="track">
+    <audio-track #audio *ngFor="#track of myTracks"  [track]="track" (onFinish)="onTrackFinished($event)">
       <ion-item>  
         <ion-thumbnail item-left>
           <img src="{{audio.art}}">
           <audio-track-play dark [audioTrack]="audio"></audio-track-play>  
         </ion-thumbnail>
         
-        <p><strong>{{audio.title}}</strong> &#x26AC; <em>{{audio.artist}}</em></p>
+        <p>{{audio.id}} - <strong>{{audio.title}}</strong> &#x26AC; <em>{{audio.artist}}</em></p>
         <audio-track-progress-bar duration progress [audioTrack]="audio" [ngStyle]="{visibility: audio.completed > 0 ? 'visible' : 'hidden', 'width': '70%'}"></audio-track-progress-bar>
       </ion-item>    
     </audio-track>
@@ -30,7 +30,7 @@
         <audio-track-play light [audioTrack]="track"></audio-track-play>  
       </ion-thumbnail>
       
-      <h2>{{track.title}}</h2>
+      <h2>{{track.id}} - {{track.title}}</h2>
       <h3>{{track.artist}}</h3>
       <p><audio-track-progress [audioTrack]="track"></audio-track-progress></p>
       <ion-note item-right>
@@ -40,5 +40,9 @@
   </audio-track>
   
   <h3>API Usage</h3>
+  <h4>Using WebAudioProvider to control playback</h4>
+  <button outline small (click)="playSingleTrackAbove()">Play message in a bottle</button><button secondary outline small (click)="pauseSingleTrackAbove()">Pause Message in a bottle</button>
+
+  <h4>Using AudioTrack class</h4>
   <button outline small (click)="play()">Play</button><button secondary outline small (click)="pause()">Pause</button><button danger outline small (click)="stop()">Stop</button>
 </ion-content>

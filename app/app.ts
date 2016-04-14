@@ -1,6 +1,6 @@
 import {App, Platform} from 'ionic-angular';
 import {TabsPage} from './pages/tabs/tabs';
-import {AudioTrack} from './providers/ionic-audio/ionic-audio';
+import {WebAudioProvider} from './providers/ionic-audio/ionic-audio';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
 import {Type} from 'angular2/core';
@@ -9,7 +9,7 @@ import {Type} from 'angular2/core';
 @App({
   template: '<ion-nav [root]="rootPage"></ion-nav>',
   config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
-  providers: []
+  providers: [WebAudioProvider]
 })
 export class MyApp {
   rootPage: Type = TabsPage;
