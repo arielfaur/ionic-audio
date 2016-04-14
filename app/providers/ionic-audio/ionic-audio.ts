@@ -6,7 +6,68 @@ import {DragGesture} from 'ionic-angular/gestures/drag-gesture';
 
 declare var webkitAudioContext;
 
+export interface IAudioProvider {
+  //tracks: IAudioTrack[];
+  current: number;
+  
+  //createAudio(track: IAudioTrack): IAudioTrack;
+  add(track: IAudioTrack);
+  play(index: number);
+  pause(index?: number);
+  stop(index?: number);
+}
+
+@Injectable()
+export class WebAudioProvider implements IAudioProvider {
+  static tracks: IAudioTrack[] = [];
+  private _current: number;
+  
+  constructor() {
+  }
+  
+  static createAudio(track: ITrackConstraint) {
+    let audioTrack = new AudioTrack(track.src);  
+    Object.assign(audioTrack, track);
+    let trackId = WebAudioProvider.tracks.push(audioTrack);
+    audioTrack.id = trackId-1; 
+    return audioTrack;
+  }
+  
+  add(audioTrack: IAudioTrack) {
+    WebAudioProvider.tracks.push(audioTrack);  
+  };
+  
+  play(index: number) {
+    if (index===undefined || index > WebAudioProvider.tracks.length-1) return;
+    this._current = index;
+    WebAudioProvider.tracks[index].play();  
+  };
+  
+  pause(index?: number) {
+    if (this._current===undefined || index > WebAudioProvider.tracks.length-1) return;
+    index = index || this._current;
+    WebAudioProvider.tracks[index].pause();
+  };
+  
+  stop(index?: number) {
+    if (this._current===undefined || index > WebAudioProvider.tracks.length-1) return;
+    index = index || this._current;
+    WebAudioProvider.tracks[index].stop();
+    this._current = undefined;
+  };
+    
+  public get current() : number {
+    return this._current;
+  }
+  
+  public set current(v : number) {
+    this._current = v;
+  }
+  
+}
+
 export interface ITrackConstraint {
+  id?:number;
   src: string;
   title?: string;
   artist?: string;
@@ -15,7 +76,9 @@ export interface ITrackConstraint {
 
 export interface IAudioTrack extends ITrackConstraint {
   src: string;
+  id: number;
   isPlaying: boolean; 
+  isFinished: boolean;
   duration: string;
   progress: string;
   completed: number;
@@ -35,10 +98,11 @@ export interface IAudioTrack extends ITrackConstraint {
 export class AudioTrack implements IAudioTrack {
   private audio: HTMLAudioElement;
   public isPlaying: boolean = false;
+  public isFinished: boolean = false;
   private _progress: string;
   private _completed: number;
   private _duration: string;
-  
+  private _id: number;
   constructor(public src: string, @Optional() private ctx: AudioContext = new (AudioContext || webkitAudioContext)()) {
     this.createAudio(); 
    
@@ -49,11 +113,13 @@ export class AudioTrack implements IAudioTrack {
 		}, false);
     
     this.audio.addEventListener("playing", () => {
+       this.isFinished = false;
 			 this.isPlaying = true;
 		}, false);
     
     this.audio.addEventListener("ended", () => {
       this.isPlaying = false;
+      this.isFinished = true;
 			 console.log('Finished playback');
 		}, false);
     
@@ -82,6 +148,18 @@ export class AudioTrack implements IAudioTrack {
     let h = Math.trunc(((value / 60) / 60) % 60);  
     return h > 0 ? `${h<10?'0'+h:h}:${m<10?'0'+m:m}:${s<10?'0'+s:s}` : `${m<10?'0'+m:m}:${s<10?'0'+s:s}`;
   } 
+  
+  
+  public get id() : number {
+    return this._id;
+  }
+  
+  
+  public set id(v : number) {
+    this._id = v;
+  }
+  
+  
     
   public get duration() : string {
     return this._duration;
@@ -133,6 +211,7 @@ export class AudioTrack implements IAudioTrack {
     if (!this.audio) return;
     this.pause();
     this.audio.removeEventListener("timeupdate", (e) => { this.onTimeUpdate(e); });
+    this.isFinished = true;
     this.destroy();
   }
   
@@ -148,38 +227,44 @@ export class AudioTrack implements IAudioTrack {
 
 @Component({
     selector: 'audio-track',
-    template: `
-          <ng-content></ng-content>
-    `
+    template: '<ng-content></ng-content>',
+    providers: []
 })
 export class AudioTrackComponent { 
   @Input() track: ITrackConstraint;
-  @Output() onFinish = new EventEmitter<void>();
+  @Output() onFinish = new EventEmitter<ITrackConstraint>();
+  private _isFinished: boolean = false;
   private _audioTrack: IAudioTrack;
   
-  constructor() {}
+  constructor(private _audioProvider: WebAudioProvider) {}
   
   ngOnInit() {
     if (!(this.track instanceof AudioTrack)) {
-      this._audioTrack = new AudioTrack(this.track.src) 
+      this._audioTrack = WebAudioProvider.createAudio(this.track); //new AudioTrack(this.track.src) 
     } else {
-      Object.assign(this._audioTrack, this.track)
+      Object.assign(this._audioTrack, this.track);
+      this._audioProvider.add(this._audioTrack);
     }
+    
+    // update input track parameter with track is so we pass it to WebAudioProvider if needed
+    this.track.id = this._audioTrack.id; 
   }
   
   play() {    
     this._audioTrack.play();
+    this._audioProvider.current = this._audioTrack.id;
   }
   
   pause() {
     this._audioTrack.pause();
+    this._audioProvider.current = undefined;
   }
   
   toggle() {
     if (this._audioTrack.isPlaying) {
-      this._audioTrack.pause()
+      this.pause();
     } else {
-      this._audioTrack.play()
+      this.play();
     }  
   }
   
@@ -187,6 +272,10 @@ export class AudioTrackComponent {
     this._audioTrack.seekTo(time);  
   }
   
+  
+  public get id() : number {
+    return this._audioTrack.id;
+  }
   
   public get art() : string {
     return this.track.art;
@@ -232,6 +321,18 @@ export class AudioTrackComponent {
   
   public get error() {
     return this._audioTrack.error;
+  }
+  
+  ngDoCheck() {
+    if(!Object.is(this._audioTrack.isFinished, this._isFinished)) {
+      // some logic here to react to the change
+      this._isFinished = this._audioTrack.isFinished;
+      
+      // track has stopped, trigger finish event
+      if (this._isFinished) {
+        this.onFinish.emit(this.track);       
+      }
+    }
   }
 }
 
@@ -379,41 +480,7 @@ export class AudioTimePipe implements PipeTransform {
   }
 }
   
-export interface IAudioProvider<T extends ITrackConstraint> {
-  tracks: IAudioTrack[];
-  
-  add(track: T);
-  play();
-  pause();
-  stop();
-  seekTo();
-  destroy();
-}
 
-@Injectable()
-export class WebAudioProvider<T extends ITrackConstraint> implements IAudioProvider<T> {
-  tracks: IAudioTrack[];
-  ctx: AudioContext;
-  
-  constructor() {
-    this.ctx = new (AudioContext || webkitAudioContext)();
-  }
-  
-  add(track: T) {
-    let audioTrack = new AudioTrack(track.src, this.ctx);
-    this.tracks.push(audioTrack);  
-  };
-  
-  play() {};
-  
-  pause() {};
-  
-  stop() {};
-  
-  seekTo() {};
-  
-  destroy() {};
-}
 
 /*
 @Injectable()
