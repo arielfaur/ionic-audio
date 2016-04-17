@@ -8,6 +8,7 @@ declare var webkitAudioContext;
 
 export interface IAudioProvider {
   current: number;
+  tracks: IAudioTrack[];
   
   add(track: IAudioTrack);
   play(index: number);
@@ -53,6 +54,12 @@ export class WebAudioProvider implements IAudioProvider {
     WebAudioProvider.tracks[index].stop();
     this._current = undefined;
   };
+  
+  
+  public get tracks() : IAudioTrack[] {
+    return WebAudioProvider.tracks;
+  }
+  
     
   public get current() : number {
     return this._current;
