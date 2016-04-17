@@ -7,10 +7,8 @@ import {DragGesture} from 'ionic-angular/gestures/drag-gesture';
 declare var webkitAudioContext;
 
 export interface IAudioProvider {
-  //tracks: IAudioTrack[];
   current: number;
   
-  //createAudio(track: IAudioTrack): IAudioTrack;
   add(track: IAudioTrack);
   play(index: number);
   pause(index?: number);
@@ -79,11 +77,9 @@ export interface IAudioTrack extends ITrackConstraint {
   id: number;
   isPlaying: boolean; 
   isFinished: boolean;
-  duration: string;
-  progress: string;
+  duration: number;
+  progress: number;
   completed: number;
-  total: number;
-  currentTime: number;
   canPlay:  boolean;
   error: MediaError;
   
@@ -99,9 +95,9 @@ export class AudioTrack implements IAudioTrack {
   private audio: HTMLAudioElement;
   public isPlaying: boolean = false;
   public isFinished: boolean = false;
-  private _progress: string;
+  private _progress: number;
   private _completed: number;
-  private _duration: string;
+  private _duration: number;
   private _id: number;
   constructor(public src: string, @Optional() private ctx: AudioContext = new (AudioContext || webkitAudioContext)()) {
     this.createAudio(); 
@@ -124,7 +120,7 @@ export class AudioTrack implements IAudioTrack {
 		}, false);
     
     this.audio.addEventListener("durationchange", (e:any) => {    
-			this._duration = this.formatProgress(e.target.duration);
+			this._duration = e.target.duration;
 		}, false);
   }
   
@@ -137,12 +133,12 @@ export class AudioTrack implements IAudioTrack {
   
   private onTimeUpdate(e: Event) {
     if (this.isPlaying && this.audio.currentTime > 0) {
-      this._progress = this.formatProgress(this.audio.currentTime);
+      this._progress = this.audio.currentTime;
       this._completed = this.audio.duration > 0 ? this.audio.currentTime / this.audio.duration : 0;
     }  
   }
    
-  private formatProgress(value:number) {
+  static formatTime(value:number) {
     let s = Math.trunc(value % 60);
     let m = Math.trunc((value / 60) % 60);
     let h = Math.trunc(((value / 60) / 60) % 60);  
@@ -154,33 +150,22 @@ export class AudioTrack implements IAudioTrack {
     return this._id;
   }
   
-  
   public set id(v : number) {
     this._id = v;
   }
   
-  
-    
-  public get duration() : string {
+  public get duration() : number {
     return this._duration;
   }
    
-  public get progress() : string {
+  public get progress() : number {
     return this._progress;
   }
    
   public get completed() : number {
     return this._completed;
   }
-  
-  public get total() {
-     return this.audio.duration;
-  }
-  
-  public get currentTime() {
-     return this.audio.currentTime;
-  }
-  
+ 
   public get error() : MediaError {
     return this.audio.error;
   }
@@ -291,7 +276,7 @@ export class AudioTrackComponent {
     return this.track.title;
   }
     
-  public get progress() : string {
+  public get progress() : number {
     return this._audioTrack.progress;
   }
        
@@ -299,20 +284,12 @@ export class AudioTrackComponent {
     return this._audioTrack.isPlaying;
   }
   
-  public get duration() : string {
+  public get duration() : number {
     return this._audioTrack.duration;
   }
   
   public get completed() : number {
     return this._audioTrack.completed;
-  }
-  
-  public get total() : number {
-    return this._audioTrack.total;
-  }
-  
-  public get currentTime() {
-     return this._audioTrack.currentTime;
   }
   
   public get canPlay() {
@@ -373,9 +350,21 @@ export class AudioTrackPlayComponent {
   }
 }
 
+@Pipe({name: 'audioTime'})
+export class AudioTimePipe implements PipeTransform {
+  transform(value?:number) : string {    
+    if (!value) return '';
+    let s = Math.trunc(value % 60);
+    let m = Math.trunc((value / 60) % 60);
+    let h = Math.trunc(((value / 60) / 60) % 60);  
+    return h > 0 ? `${h<10?'0'+h:h}:${m<10?'0'+m:m}:${s<10?'0'+s:s}` : `${m<10?'0'+m:m}:${s<10?'0'+s:s}`;
+  }
+}
+
 @Component({
     selector: 'audio-track-progress',
-    template: '<em *ngIf="audioTrack.completed > 0">{{audioTrack.progress}} / </em><em>{{audioTrack.duration}}</em>'
+    template: '<em *ngIf="audioTrack.completed > 0">{{audioTrack.progress | audioTime}} / </em><em>{{audioTrack.duration | audioTime}}</em>',
+    pipes: [AudioTimePipe]
 })
 export class AudioTrackProgressComponent {
   @Input() audioTrack: IAudioTrack;  
@@ -419,13 +408,13 @@ export class AudioTrackProgressSliderComponent extends DragGesture {
   };  
 }
 
-
 @Component({
     selector: 'audio-track-progress-bar',
-    template: `<time *ngIf="_showProgress">{{audioTrack.progress}}</time>
+    template: `<time *ngIf="_showProgress">{{audioTrack.progress | audioTime}}</time>
     <input type="range" min="0" max="100" step="1" [(ngModel)]="_range" [ngStyle]="{'visibility': _completed > 0 ? 'visible' : 'hidden'}">
-    <time *ngIf="_showDuration">{{audioTrack.duration}}</time>
+    <time *ngIf="_showDuration">{{audioTrack.duration | audioTime}}</time>
     `,
+    pipes: [AudioTimePipe],
     directives: [NgStyle, AudioTrackProgressSliderComponent]
 })
 export class AudioTrackProgressBarComponent {
@@ -472,23 +461,13 @@ export class AudioTrackProgressBarComponent {
   }
   
   seekTo() {
-    let seekTo: number = Math.round(this.audioTrack.total*this._range)/100;
+    let seekTo: number = Math.round(this.audioTrack.duration*this._range)/100;
     this.audioTrack.seekTo(seekTo);   
   }
 }
 
  
-@Pipe({name: 'audioTime'})
-export class AudioTimePipe implements PipeTransform {
-  transform(value:number) : string {    
-    console.log('piped value', value);
-    if (!value) return '';
-    let s = Math.trunc(value % 60);
-    let m = Math.trunc((value / 60) % 60);
-    let h = Math.trunc(((value / 60) / 60) % 60);  
-    return `${h<10?'0'+h:h}:${m<10?'0'+m:m}:${s<10?'0'+s:s}`;
-  }
-}
+
   
 
 

@@ -179,24 +179,4 @@ audio-track {
       font-size: .5em;
     }
   }
-
-  audio-track-progress-slider {
-    float: right;
-    
-    &:after {
-      content: '\26AB';
-      font-size: 17px;
-      margin-top: -11px;
-      position: absolute;
-      margin-left: -1px;
-    }
-    
-    & > span {
-      width: 4px;
-      height: 8px;
-      margin-top: -3px;
-      position: absolute; 
-      background: black;
-    }
-  }
 }
