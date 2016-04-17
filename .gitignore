@@ -5,6 +5,7 @@ node_modules/
 www/build/
 platforms/
 plugins/
+.vscode/
 *.swp
 .DS_Store
 Thumbs.db
