@@ -19,7 +19,7 @@ $thumb-shadow-color: #111;
 $thumb-border-width: 1px;
 $thumb-border-color: #fff;
 
-$track-width: 100%;
+$track-width: 90%;
 $track-height: 5px;
 $track-shadow-size: 2px;
 $track-shadow-blur: 2px;
@@ -56,6 +56,19 @@ $contrast: 5%;
 audio-track {
 
   ion-thumbnail {
+    > img {
+      top: 0;
+      position: absolute;
+      .md & {
+        @import "../../../node_modules/ionic-angular/components/item/item.md";
+        margin-top: ($item-md-padding-right / 2);
+      }
+      
+      .ios & {
+        @import "../../../node_modules/ionic-angular/components/item/item.ios";
+        margin-top: ($item-ios-padding-right / 2);
+      }
+    }
     audio-track-play {
         position: absolute;
         top: 0rem;
