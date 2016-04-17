@@ -11,7 +11,9 @@ export class Page1 {
   track: AudioTrack;
   myTracks: ITrackConstraint[];
   singleTrack: ITrackConstraint;
-  
+  allTracks: IAudioTrack[];
+  selectedTrack: number;
+   
   constructor(private _audioProvider: WebAudioProvider) {
     this.myTracks = [{
       src: './assets/02 - Drifting.mp3',
@@ -37,6 +39,10 @@ export class Page1 {
     this.track = new AudioTrack('https://s3.amazonaws.com/ionic-audio/Message+in+a+bottle.mp3');
   }
   
+  ngAfterContentInit() {
+    this.allTracks = this._audioProvider.tracks; 
+  }
+  
   play() {
     this.track.play();
   }
@@ -49,12 +55,16 @@ export class Page1 {
     this.track.stop();
   }
   
-  playSingleTrackAbove() {
-    this._audioProvider.play(this.singleTrack.id);
+  playSelectedTrack() {
+    this._audioProvider.play(this.selectedTrack);
   }
   
-  pauseSingleTrackAbove() {
-     this._audioProvider.pause(this.singleTrack.id);
+  pauseSelectedTrack() {
+     this._audioProvider.pause(this.selectedTrack);
+  }
+  
+  onTrackSelect() {
+    
   }
   
   onTrackFinished(track: any) {
