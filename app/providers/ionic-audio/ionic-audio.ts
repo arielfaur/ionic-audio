@@ -25,7 +25,7 @@ export class WebAudioProvider implements IAudioProvider {
   }
   
   static createAudio(track: ITrackConstraint) {
-    let audioTrack = new AudioTrack(track.src);  
+    let audioTrack = new AudioTrack(track.src, track.preload);  
     Object.assign(audioTrack, track);
     let trackId = WebAudioProvider.tracks.push(audioTrack);
     audioTrack.id = trackId-1; 
@@ -77,6 +77,7 @@ export interface ITrackConstraint {
   title?: string;
   artist?: string;
   art?: string;  
+  preload?: string;
 }
 
 export interface IAudioTrack extends ITrackConstraint {
@@ -106,7 +107,7 @@ export class AudioTrack implements IAudioTrack {
   private _completed: number;
   private _duration: number;
   private _id: number;
-  constructor(public src: string, @Optional() private ctx: AudioContext = new (AudioContext || webkitAudioContext)()) {
+  constructor(public src: string, @Optional() public preload: string = 'none', @Optional() private ctx: AudioContext = new (AudioContext || webkitAudioContext)()) {
     this.createAudio(); 
    
     this.audio.addEventListener("timeupdate", (e) => { this.onTimeUpdate(e); }, false);
@@ -134,6 +135,7 @@ export class AudioTrack implements IAudioTrack {
   private createAudio() {
     this.audio = new Audio();
     this.audio.src = this.src;
+    this.audio.preload = this.preload;
     //this.audio.controls = true;
     //this.audio.autoplay = false;  
   }
