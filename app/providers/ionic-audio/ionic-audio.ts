@@ -1,3 +1,5 @@
+
+import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio.d.ts'; 
 import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from 'angular2/core';
 import {NgStyle} from 'angular2/common';
 import {Http} from 'angular2/http';
@@ -5,16 +7,7 @@ import {Icon} from 'ionic-angular';
 import {DragGesture} from 'ionic-angular/gestures/drag-gesture';
 
 declare var webkitAudioContext;
-
-export interface IAudioProvider {
-  current: number;
-  tracks: IAudioTrack[];
-  
-  add(track: IAudioTrack);
-  play(index: number);
-  pause(index?: number);
-  stop(index?: number);
-}
+export * from './ionic-audio.d.ts';
 
 @Injectable()
 export class WebAudioProvider implements IAudioProvider {
@@ -71,33 +64,6 @@ export class WebAudioProvider implements IAudioProvider {
   
 }
 
-export interface ITrackConstraint {
-  id?:number;
-  src: string;
-  title?: string;
-  artist?: string;
-  art?: string;  
-  preload?: string;
-}
-
-export interface IAudioTrack extends ITrackConstraint {
-  src: string;
-  id: number;
-  isPlaying: boolean; 
-  isFinished: boolean;
-  duration: number;
-  progress: number;
-  completed: number;
-  canPlay:  boolean;
-  error: MediaError;
-  
-  play();
-  pause();
-  stop();
-  seekTo(time: number);
-  destroy();
-}
-
 @Injectable()
 export class AudioTrack implements IAudioTrack {
   private audio: HTMLAudioElement;
@@ -109,27 +75,27 @@ export class AudioTrack implements IAudioTrack {
   private _id: number;
   constructor(public src: string, @Optional() public preload: string = 'none', @Optional() private ctx: AudioContext = new (AudioContext || webkitAudioContext)()) {
     this.createAudio(); 
-   
+  
     this.audio.addEventListener("timeupdate", (e) => { this.onTimeUpdate(e); }, false);
     
     this.audio.addEventListener("error", (err) => {
-			 console.log(`Audio error => track ${src}`, err);
-		}, false);
+      console.log(`Audio error => track ${src}`, err);
+    }, false);
     
     this.audio.addEventListener("playing", () => {
-       this.isFinished = false;
-			 this.isPlaying = true;
-		}, false);
+      this.isFinished = false;
+      this.isPlaying = true;
+    }, false);
     
     this.audio.addEventListener("ended", () => {
       this.isPlaying = false;
       this.isFinished = true;
-			 console.log('Finished playback');
-		}, false);
+      console.log('Finished playback');
+    }, false);
     
     this.audio.addEventListener("durationchange", (e:any) => {    
-			this._duration = e.target.duration;
-		}, false);
+      this._duration = e.target.duration;
+    }, false);
   }
   
   private createAudio() {
@@ -146,7 +112,7 @@ export class AudioTrack implements IAudioTrack {
       this._completed = this.audio.duration > 0 ? this.audio.currentTime / this.audio.duration : 0;
     }  
   }
-   
+  
   static formatTime(value:number) {
     let s = Math.trunc(value % 60);
     let m = Math.trunc((value / 60) % 60);
@@ -166,15 +132,15 @@ export class AudioTrack implements IAudioTrack {
   public get duration() : number {
     return this._duration;
   }
-   
+  
   public get progress() : number {
     return this._progress;
   }
-   
+  
   public get completed() : number {
     return this._completed;
   }
- 
+
   public get error() : MediaError {
     return this.audio.error;
   }
@@ -288,7 +254,7 @@ export class AudioTrackComponent {
   public get progress() : number {
     return this._audioTrack.progress;
   }
-       
+      
   public get isPlaying() : boolean {
     return this._audioTrack.isPlaying;
   }
@@ -404,11 +370,11 @@ export class AudioTrackProgressSliderComponent extends DragGesture {
   }
   
   onDrag(ev) {
-   // console.log(ev)
+  // console.log(ev)
     return super.onDrag(ev);
   };
   onDragStart(ev)  {
-   // console.log(ev);
+  // console.log(ev);
     return super.onDragStart(ev);
   };         
   onDragEnd(ev) {
