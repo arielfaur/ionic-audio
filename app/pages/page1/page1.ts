@@ -16,27 +16,27 @@ export class Page1 {
    
   constructor(private _audioProvider: WebAudioProvider) {
     this.myTracks = [{
-      src: './assets/02 - Drifting.mp3',
-      artist: 'Jimi Hendrix',
-      title: 'Drifting',
-      art: 'img/hendrix.jpg'
+      src: 'https://archive.org/download/JM2013-10-05.flac16/V0/jm2013-10-05-t12-MP3-V0.mp3',
+      artist: 'John Mayer',
+      title: 'Why Georgia',
+      art: 'img/johnmayer.jpg'
     },
     {
-      src: './assets/02 - Tonight. Tonight. Tonight.mp3',
-      artist: 'Genesis',
-      title: 'Tonight. Tonight. Tonight.',
-      art: 'img/genesis.jpg'
+      src: 'https://archive.org/download/JM2013-10-05.flac16/V0/jm2013-10-05-t30-MP3-V0.mp3',
+      artist: 'John Mayer',
+      title: 'Who Says',
+      art: 'img/johnmayer.jpg'
     }];
     
     this.singleTrack = {
-      src: 'https://s3.amazonaws.com/ionic-audio/Message+in+a+bottle.mp3',
-      artist: 'The Police',
-      title: 'Message in a bottle',
-      art: 'https://s3.amazonaws.com/ionic-audio/The_Police_Greatest_Hits.jpg'
+      src: 'https://archive.org/download/swrembel2010-03-07.tlm170.flac16/swrembel2010-03-07s1t05.mp3',
+      artist: 'Stephane Wrembel',
+      title: 'Stephane Wrembel Live',
+      art: 'img/Stephane.jpg'
     };
     
     // create an audio track instance to show API usage without directives
-    this.track = new AudioTrack('https://s3.amazonaws.com/ionic-audio/Message+in+a+bottle.mp3');
+    this.track = new AudioTrack('https://archive.org/download/swrembel2010-03-07.tlm170.flac16/swrembel2010-03-07s1t05.mp3');
   }
   
   ngAfterContentInit() {
