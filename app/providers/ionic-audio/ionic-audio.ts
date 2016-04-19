@@ -73,6 +73,8 @@ export class AudioTrack implements IAudioTrack {
   private _completed: number;
   private _duration: number;
   private _id: number;
+  private _isLoading: boolean;
+  private _hasLoaded: boolean;
   constructor(public src: string, @Optional() public preload: string = 'none', @Optional() private ctx: AudioContext = new (AudioContext || webkitAudioContext)()) {
     this.createAudio(); 
   
@@ -82,7 +84,14 @@ export class AudioTrack implements IAudioTrack {
       console.log(`Audio error => track ${src}`, err);
     }, false);
     
+    this.audio.addEventListener("canplay", () => {
+      console.log(`Track ${this.src} has finished loading`);
+      this._isLoading = false;
+      this._hasLoaded = true;
+    }, false);
+    
     this.audio.addEventListener("playing", () => {
+      console.log(`Playing track ${this.src}`);
       this.isFinished = false;
       this.isPlaying = true;
     }, false);
@@ -150,11 +159,27 @@ export class AudioTrack implements IAudioTrack {
     return this.audio && this.audio.canPlayType(format) != '';
   }
   
+  
+  public get isLoading() : boolean {
+    return this._isLoading;
+  }
+  
+  
+  public get hasLoaded() : boolean {
+    return this._hasLoaded;
+  }
+  
+  
   play() {
     if (!this.audio) {
       this.createAudio(); 
     }
-    console.log(`Playing track ${this.src}`);
+    
+    if (!this._hasLoaded) {
+      console.log(`Loading track ${this.src}`);
+      this._isLoading = true;
+    }
+    
     //var source = this.ctx.createMediaElementSource(this.audio);  
     //source.connect(this.ctx.destination);
     this.audio.play();
@@ -275,6 +300,14 @@ export class AudioTrackComponent {
     return this._audioTrack.error;
   }
   
+  public get isLoading() : boolean {
+    return this._audioTrack.isLoading;
+  }
+  
+  public get hasLoaded() : boolean {
+    return this.hasLoaded;
+  }
+  
   ngDoCheck() {
     if(!Object.is(this._audioTrack.isFinished, this._isFinished)) {
       // some logic here to react to the change
@@ -290,11 +323,18 @@ export class AudioTrackComponent {
 
 @Component({
     selector: 'audio-track-play',
-    template: '<button clear (click)="toggle($event)" [disabled]="audioTrack.error"><ion-icon name="pause" *ngIf="_isPlaying"></ion-icon><ion-icon name="play" *ngIf="!_isPlaying"></ion-icon></button>',
+    template: `
+    <button clear (click)="toggle($event)" [disabled]="audioTrack.error || _isLoading">
+      <ion-icon name="pause" *ngIf="_isPlaying && !_isLoading"></ion-icon>
+      <ion-icon name="play" *ngIf="!_isPlaying && !_isLoading"></ion-icon>
+      <ion-icon name="time" *ngIf="_isLoading"></ion-icon>
+    </button>
+    `,
     directives: [Icon]
 })
 export class AudioTrackPlayComponent {
   private _isPlaying: boolean = false;
+  private _isLoading: boolean = false;
   @Input() audioTrack: IAudioTrack;
   
   @Input()
@@ -318,6 +358,11 @@ export class AudioTrackPlayComponent {
   }
   
   ngDoCheck() {
+    if(!Object.is(this.audioTrack.isLoading, this._isLoading)) {
+      // some logic here to react to the change
+      this._isLoading = this.audioTrack.isLoading;
+    }
+    
     if(!Object.is(this.audioTrack.isPlaying, this._isPlaying)) {
       // some logic here to react to the change
       this._isPlaying = this.audioTrack.isPlaying;
