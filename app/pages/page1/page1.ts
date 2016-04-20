@@ -45,9 +45,20 @@ export class Page1 {
   }
   
   ngAfterContentInit() {
+    // get all tracks managed by WebAudioProvider so we can control playback via the API
     this.allTracks = this._audioProvider.tracks; 
   }
   
+  playSelectedTrack() {
+    // use WebAudioProvider to control selected track from view
+    this._audioProvider.play(this.selectedTrack);
+  }
+  
+  pauseSelectedTrack() {
+     // use WebAudioProvider to control selected track from view
+     this._audioProvider.pause(this.selectedTrack);
+  }
+    
   play() {
     this.track.play();
   }
@@ -59,19 +70,7 @@ export class Page1 {
   stop() {
     this.track.stop();
   }
-  
-  playSelectedTrack() {
-    this._audioProvider.play(this.selectedTrack);
-  }
-  
-  pauseSelectedTrack() {
-     this._audioProvider.pause(this.selectedTrack);
-  }
-  
-  onTrackSelect() {
     
-  }
-  
   onTrackFinished(track: any) {
     console.log('Track finished', track)
   }
