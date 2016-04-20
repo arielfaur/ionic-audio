@@ -13,7 +13,7 @@
       <ion-item>  
         <ion-thumbnail item-left>
           <img src="{{audio.art}}">
-          <audio-track-play dark [audioTrack]="audio"></audio-track-play>  
+          <audio-track-play dark [audioTrack]="audio"><ion-spinner></ion-spinner></audio-track-play>  
         </ion-thumbnail>
         
         <p><strong>{{audio.title}}</strong> &#x26AC; <em>{{audio.artist}}</em></p>
@@ -27,7 +27,7 @@
     <ion-item [audioTrack]="track">    
       <ion-thumbnail item-left>
         <img src="{{track.art}}">
-        <audio-track-play light [audioTrack]="track"></audio-track-play>  
+        <audio-track-play light [audioTrack]="track"><ion-spinner></ion-spinner></audio-track-play> 
       </ion-thumbnail>
       
       <h2>{{track.title}}</h2>

@@ -327,7 +327,7 @@ export class AudioTrackComponent {
     <button clear (click)="toggle($event)" [disabled]="audioTrack.error || _isLoading">
       <ion-icon name="pause" *ngIf="_isPlaying && !_isLoading"></ion-icon>
       <ion-icon name="play" *ngIf="!_isPlaying && !_isLoading"></ion-icon>
-      <ion-icon name="time" *ngIf="_isLoading"></ion-icon>
+      <ng-content *ngIf="_isLoading"></ng-content>
     </button>
     `,
     directives: [Icon]
