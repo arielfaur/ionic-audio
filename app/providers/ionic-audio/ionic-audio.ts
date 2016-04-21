@@ -6,7 +6,9 @@ import {Http} from 'angular2/http';
 import {Icon} from 'ionic-angular';
 import {DragGesture} from 'ionic-angular/gestures/drag-gesture';
 
-declare var webkitAudioContext;
+declare let webkitAudioContext;
+declare let Media: any;
+
 export * from './ionic-audio.d.ts';
 
 @Injectable()
@@ -85,7 +87,7 @@ export class AudioTrack implements IAudioTrack {
     }, false);
     
     this.audio.addEventListener("canplay", () => {
-      console.log(`Track ${this.src} has finished loading`);
+      console.log(`Loaded track ${this.src}`);
       this._isLoading = false;
       this._hasLoaded = true;
     }, false);
@@ -207,6 +209,121 @@ export class AudioTrack implements IAudioTrack {
   destroy() {
     this.audio = undefined;  
     console.log(`Released track ${this.src}`);
+  }
+}
+
+@Injectable()
+export class CordovaAudioTrack implements IAudioTrack {
+  private audio: any;
+  public isPlaying: boolean = false;
+  public isFinished: boolean = false;
+  private _progress: number;
+  private _completed: number;
+  private _duration: number;
+  private _id: number;
+  private _isLoading: boolean;
+  private _hasLoaded: boolean;
+  private _timer: any;
+  
+  constructor(public src: string) {
+    if (window['cordova'] === undefined || window['Media'] === undefined) {
+      console.log('Cordova Media is not available');
+      return;
+    };
+    this.audio = new Media(src, () => {
+       console.log('Playback finished')  
+    }, (err) => {
+      console.log('Error', err)    
+    }, (status) => {
+      console.log('Status change', status)
+    });
+  }
+  
+  private startTimer() {
+    this._timer = setInterval(() => {  
+      if (this._duration===undefined || this._duration < 0) {
+        this._duration = this.audio.getDuration();
+        console.log(this._duration + " sec");
+      }  
+      
+      this.audio.getCurrentPosition((position) => {
+            if (position > -1) {
+              this._progress = position;
+              this._completed = this._duration > 0 ? this._progress / this._duration : 0; 
+              console.log((position) + " sec", 'Completed', this._completed);
+            }
+        }, (e) => {
+            console.log("Error getting position", e);
+        }
+      );
+    }, 1000);  
+  }
+  
+  private stopTimer() {
+    clearInterval(this._timer);
+  }
+  
+  /** public members */
+  
+  public get id() : number {
+    return this._id;
+  }
+  
+  public set id(v : number) {
+    this._id = v;
+  }
+  
+  public get duration() : number {
+    return this._duration;
+  }
+  
+  public get progress() : number {
+    return this._progress;
+  }
+  
+  public get completed() : number {
+    return this._completed;
+  }
+
+  public get error() : MediaError {
+    return this.audio.error;
+  }
+  
+  public get canPlay() : boolean {
+    return true;
+  }
+  
+  
+  public get isLoading() : boolean {
+    return this._isLoading;
+  }
+  
+  
+  public get hasLoaded() : boolean {
+    return this._hasLoaded;
+  }
+  
+  play() {
+    this.audio.play();
+    this.startTimer();
+  }
+  
+  pause() {
+    this.audio.pause();
+    this.stopTimer();  
+  }
+  
+  stop() {
+    this.audio.stop();
+    this.stopTimer();  
+  }
+  
+  seekTo(time: number) {
+    this.audio.seekTo(time);
+  }
+  
+  destroy() {
+    this.audio.release();  
   }
 }
 
