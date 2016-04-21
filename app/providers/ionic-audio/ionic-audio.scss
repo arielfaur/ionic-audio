@@ -89,7 +89,9 @@ audio-track {
         }
         
         button {
-          width: 100%;
+          width: 100% !important;              
+          height: inherit !important;
+          margin: 0 !important;
           
           &.light {
             background: map-get($colors, dark);
@@ -103,7 +105,7 @@ audio-track {
           }
           
           ion-icon {
-            font-size: 3em;
+            font-size: 3em !important;
           }
         }
           
