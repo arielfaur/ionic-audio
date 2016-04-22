@@ -11,57 +11,72 @@ declare let Media: any;
 
 export * from './ionic-audio.d.ts';
 
+export function audioFactory() {
+    return new WebAudioProvider();
+};
+
 @Injectable()
-export class WebAudioProvider implements IAudioProvider {
-  static tracks: IAudioTrack[] = [];
-  private _current: number;
+export abstract class AudioProvider implements IAudioProvider {
+  protected static tracks: IAudioTrack[] = [];
+  protected _current: number;
   
   constructor() {
   }
   
-  static createAudio(track: ITrackConstraint) {
-    let audioTrack = new AudioTrack(track.src, track.preload);  
-    Object.assign(audioTrack, track);
-    let trackId = WebAudioProvider.tracks.push(audioTrack);
-    audioTrack.id = trackId-1; 
-    return audioTrack;
+  create(track: ITrackConstraint) {
+    return null;
   }
   
   add(audioTrack: IAudioTrack) {
-    WebAudioProvider.tracks.push(audioTrack);  
+    AudioProvider.tracks.push(audioTrack);  
   };
   
   play(index: number) {
-    if (index===undefined || index > WebAudioProvider.tracks.length-1) return;
+    if (index===undefined || index > AudioProvider.tracks.length-1) return;
     this._current = index;
-    WebAudioProvider.tracks[index].play();  
+    AudioProvider.tracks[index].play();  
   };
   
   pause(index?: number) {
-    if (this._current===undefined || index > WebAudioProvider.tracks.length-1) return;
+    if (this._current===undefined || index > AudioProvider.tracks.length-1) return;
     index = index || this._current;
-    WebAudioProvider.tracks[index].pause();
+    AudioProvider.tracks[index].pause();
   };
   
   stop(index?: number) {
-    if (this._current===undefined || index > WebAudioProvider.tracks.length-1) return;
+    if (this._current===undefined || index > AudioProvider.tracks.length-1) return;
     index = index || this._current;
-    WebAudioProvider.tracks[index].stop();
+    AudioProvider.tracks[index].stop();
     this._current = undefined;
   };
   
-  
   public get tracks() : IAudioTrack[] {
-    return WebAudioProvider.tracks;
+    return AudioProvider.tracks;
   }
   
-    
   public get current() : number {
     return this._current;
   }
   
   public set current(v : number) {
     this._current = v;
+  }
+  
+}
+
+@Injectable()
+export class WebAudioProvider extends AudioProvider {
+  
+  constructor() {
+    super();
+  }
+  
+  create(track: ITrackConstraint) {
+    let audioTrack = new AudioTrack(track.src, track.preload);  
+    Object.assign(audioTrack, track);
+    let trackId = WebAudioProvider.tracks.push(audioTrack);
+    audioTrack.id = trackId-1; 
+    return audioTrack;
   }
   
 }
@@ -338,11 +353,11 @@ export class AudioTrackComponent {
   private _isFinished: boolean = false;
   private _audioTrack: IAudioTrack;
   
-  constructor(private _audioProvider: WebAudioProvider) {}
+  constructor(private _audioProvider: AudioProvider) {}
   
   ngOnInit() {
     if (!(this.track instanceof AudioTrack)) {
-      this._audioTrack = WebAudioProvider.createAudio(this.track); //new AudioTrack(this.track.src) 
+      this._audioTrack = this._audioProvider.create(this.track); 
     } else {
       Object.assign(this._audioTrack, this.track);
       this._audioProvider.add(this._audioTrack);

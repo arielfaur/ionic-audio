@@ -3,6 +3,7 @@ export interface IAudioProvider {
   current: number;
   tracks: IAudioTrack[];
   
+  create(track: ITrackConstraint): IAudioTrack;
   add(track: IAudioTrack);
   play(index: number);
   pause(index?: number);
