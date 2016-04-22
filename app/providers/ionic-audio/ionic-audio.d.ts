@@ -1,4 +1,10 @@
 
+/**
+ * Defines the audio provider contract
+ * 
+ * @export
+ * @interface IAudioProvider
+ */
 export interface IAudioProvider {
   current: number;
   tracks: IAudioTrack[];
@@ -10,6 +16,12 @@ export interface IAudioProvider {
   stop(index?: number);
 } 
 
+/**
+ * Defines the properties for JSON objects representing tracks to be played
+ * 
+ * @export
+ * @interface ITrackConstraint
+ */
 export interface ITrackConstraint {
   id?:number;
   src: string;
@@ -19,6 +31,13 @@ export interface ITrackConstraint {
   preload?: string;
 }
 
+/**
+ * Defines the audio track contract 
+ * 
+ * @export
+ * @interface IAudioTrack
+ * @extends {ITrackConstraint}
+ */
 export interface IAudioTrack extends ITrackConstraint {
   src: string;
   id: number;
