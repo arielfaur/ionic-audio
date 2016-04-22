@@ -5,11 +5,11 @@
   </ion-title>
 </ion-navbar>
 
-<ion-content class="page2">
+<ion-content padding class="page2">
   <ion-list>
     <audio-track #audio *ngFor="#track of myPodcasts"  [track]="track">
       <ion-item>  
-        <audio-track-play item-left light [audioTrack]="audio"></audio-track-play>
+        <audio-track-play item-left light [audioTrack]="audio"><ion-spinner></ion-spinner></audio-track-play>
         
         <h3 *ngIf="!audio.error">{{audio.title}}</h3><del *ngIf="audio.error">{{audio.title}}</del>
         <ion-note item-right>

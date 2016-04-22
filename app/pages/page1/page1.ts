@@ -8,7 +8,6 @@ import {Provider} from 'angular2/core';
   providers: [] //[new Provider(AudioTrack, {useClass: AudioTrack})] // alias for [AudioTrack]
 })
 export class Page1 {
-  track: IAudioTrack;
   myTracks: ITrackConstraint[];
   singleTrack: ITrackConstraint;
   allTracks: IAudioTrack[];
@@ -43,10 +42,7 @@ export class Page1 {
    
   }
   
-  ngAfterContentInit() {
-    // create an audio track instance to show API usage without directives
-    this.track = new CordovaAudioTrack('https://archive.org/download/swrembel2010-03-07.tlm170.flac16/swrembel2010-03-07s1t05.mp3');
-     
+  ngAfterContentInit() {     
     // get all tracks managed by WebAudioProvider so we can control playback via the API
     this.allTracks = this._audioProvider.tracks; 
   }
@@ -60,19 +56,7 @@ export class Page1 {
      // use WebAudioProvider to control selected track from view
      this._audioProvider.pause(this.selectedTrack);
   }
-    
-  play() {
-    this.track.play();
-  }
-  
-  pause() {
-    this.track.pause();
-  }
-  
-  stop() {
-    this.track.stop();
-  }
-    
+        
   onTrackFinished(track: any) {
     console.log('Track finished', track)
   }

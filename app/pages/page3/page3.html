@@ -1,10 +1,13 @@
 
 <ion-navbar *navbar>
   <ion-title>
-    Tab 3
+    API Usage
   </ion-title>
 </ion-navbar>
 
-<ion-content class="page3">
-
+<ion-content padding class="page3">
+  <h3>Using AudioTrack class</h3>
+  
+  <p><em *ngIf="track.completed > 0 && track.duration > 0">{{track.progress | audioTime}} / {{track.duration | audioTime}} - {{track.completed | percent}}</em></p>
+  <button outline (click)="play()">Play</button><button secondary outline (click)="pause()">Pause</button><button danger outline (click)="stop()">Stop</button>
 </ion-content>
