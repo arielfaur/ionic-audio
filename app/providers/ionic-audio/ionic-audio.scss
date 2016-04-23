@@ -11,15 +11,15 @@ $track-color: map-get($colors, primary);
 $thumb-color: map-get($colors, light);
 
 $thumb-radius: 50%;
-$thumb-height: 15px;
-$thumb-width: 15px;
+$thumb-height: 20px;
+$thumb-width: 20px;
 $thumb-shadow-size: 1px;
 $thumb-shadow-blur: 1px;
 $thumb-shadow-color: #111;
 $thumb-border-width: 1px;
 $thumb-border-color: #fff;
 
-$track-width: 90%;
+$track-width: 80%;
 $track-height: 5px;
 $track-shadow-size: 2px;
 $track-shadow-blur: 2px;
@@ -191,7 +191,7 @@ audio-track {
     }
     
     time {
-      font-size: .5em;
+      font-size: .8em;
     }
   }
 }
