@@ -1,5 +1,5 @@
 import {Page} from 'ionic-angular';
-import {WebAudioTrack, IAudioTrack, AudioTimePipe} from '../../providers/ionic-audio/ionic-audio';
+import {WebAudioTrack, IAudioTrack, AudioTimePipe} from '../../../../dist/ionic-audio';
 
 
 @Page({
