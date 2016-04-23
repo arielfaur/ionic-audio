@@ -8,7 +8,7 @@ import {Type, provide} from 'angular2/core';
 @App({
   template: '<ion-nav [root]="rootPage"></ion-nav>',
   config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
-  providers:  [provide(AudioProvider,  { useFactory: AudioProvider.factory })] //[WebAudioProvider]  
+  providers:  [provide(AudioProvider,  { useFactory: AudioProvider.factory })] // or use [WebAudioProvider] to force HTML5 Audio  
 })
 export class MyApp {
   rootPage: Type = TabsPage;

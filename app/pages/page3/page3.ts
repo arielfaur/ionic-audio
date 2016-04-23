@@ -1,5 +1,5 @@
 import {Page} from 'ionic-angular';
-import {AudioTrack, CordovaAudioTrack, AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, IAudioTrack, ITrackConstraint, AudioTimePipe, WebAudioProvider, AudioProvider} from '../../providers/ionic-audio/ionic-audio';
+import {WebAudioTrack, IAudioTrack, AudioTimePipe} from '../../providers/ionic-audio/ionic-audio';
 
 
 @Page({
@@ -11,7 +11,7 @@ export class Page3 {
   
   constructor() {
     // create an audio track instance to show API usage without using components
-    this.track = new AudioTrack('https://archive.org/download/JM2013-10-05.flac16/V0/jm2013-10-05-t12-MP3-V0.mp3');
+    this.track = new WebAudioTrack('https://archive.org/download/JM2013-10-05.flac16/V0/jm2013-10-05-t12-MP3-V0.mp3');
   }
   
   play() {

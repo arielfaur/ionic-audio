@@ -1,11 +1,11 @@
 import {Page} from 'ionic-angular';
-import {AudioTrack, CordovaAudioTrack, AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, IAudioTrack, ITrackConstraint, AudioTimePipe, WebAudioProvider, AudioProvider} from '../../providers/ionic-audio/ionic-audio';
+import {AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, IAudioTrack, ITrackConstraint, AudioTimePipe, AudioProvider} from '../../providers/ionic-audio/ionic-audio';
 import {Provider} from 'angular2/core';
 
 @Page({
   templateUrl: 'build/pages/page1/page1.html',
   directives: [AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent],
-  providers: [] //[new Provider(AudioTrack, {useClass: AudioTrack})] // alias for [AudioTrack]
+  providers: [] 
 })
 export class Page1 {
   myTracks: ITrackConstraint[];
@@ -43,17 +43,17 @@ export class Page1 {
   }
   
   ngAfterContentInit() {     
-    // get all tracks managed by WebAudioProvider so we can control playback via the API
+    // get all tracks managed by AudioProvider so we can control playback via the API
     this.allTracks = this._audioProvider.tracks; 
   }
   
   playSelectedTrack() {
-    // use WebAudioProvider to control selected track from view
+    // use AudioProvider to control selected track 
     this._audioProvider.play(this.selectedTrack);
   }
   
   pauseSelectedTrack() {
-     // use WebAudioProvider to control selected track from view
+     // use AudioProvider to control selected track 
      this._audioProvider.pause(this.selectedTrack);
   }
         

@@ -40,7 +40,7 @@ export abstract class AudioProvider implements IAudioProvider {
    * @return {IAudioProvider} An IAudioProvider instance 
    */
   static factory() {
-    return window.cordova && window.hasOwnProperty('Media') ? new CordovaAudioProvider() : new WebAudioProvider();
+    return window.cordova && window.hasOwnProperty('Media') ? new CordovaMediaProvider() : new WebAudioProvider();
   }
   
   constructor() {
@@ -55,6 +55,7 @@ export abstract class AudioProvider implements IAudioProvider {
    * @return null
    */
   create(track: ITrackConstraint) {
+    console.error('Not implemented in base class');
     return null;
   }
   
@@ -150,11 +151,11 @@ export class WebAudioProvider extends AudioProvider {
   
   constructor() {
     super();
-    console.log('Using WebAudioProvider');
+    console.log('Using Web Audio provider');
   }
   
   create(track: ITrackConstraint) {
-    let audioTrack = new AudioTrack(track.src, track.preload);  
+    let audioTrack = new WebAudioTrack(track.src, track.preload);  
     Object.assign(audioTrack, track);
     let trackId = WebAudioProvider.tracks.push(audioTrack);
     audioTrack.id = trackId-1; 
@@ -167,22 +168,22 @@ export class WebAudioProvider extends AudioProvider {
  * Creates a Cordova audio provider
  * 
  * @export
- * @class CordovaAudioProvider
+ * @class CordovaMediaProvider
  * @constructor
  * @extends {AudioProvider}
  */
 @Injectable()
-export class CordovaAudioProvider extends AudioProvider {
+export class CordovaMediaProvider extends AudioProvider {
   
   constructor() {
-    console.log('Using CordovaAudioProvider');
     super();
+    console.log('Using Cordova Media provider');
   }
   
   create(track: ITrackConstraint) {
     let audioTrack = new CordovaAudioTrack(track.src);  
     Object.assign(audioTrack, track);
-    let trackId = CordovaAudioProvider.tracks.push(audioTrack);
+    let trackId = CordovaMediaProvider.tracks.push(audioTrack);
     audioTrack.id = trackId-1; 
     return audioTrack;
   }
@@ -193,12 +194,12 @@ export class CordovaAudioProvider extends AudioProvider {
  * Creates an HTML5 audio track
  * 
  * @export
- * @class AudioTrack
+ * @class WebAudioTrack
  * @constructor
  * @implements {IAudioTrack}
  */
 @Injectable()
-export class AudioTrack implements IAudioTrack {
+export class WebAudioTrack implements IAudioTrack {
   private audio: HTMLAudioElement;
   public isPlaying: boolean = false;
   public isFinished: boolean = false;
@@ -690,7 +691,7 @@ export class AudioTrackComponent {
   constructor(private _audioProvider: AudioProvider) {}
   
   ngOnInit() {
-    if (!(this.track instanceof AudioTrack)) {
+    if (!(this.track instanceof WebAudioTrack)) {
       this._audioTrack = this._audioProvider.create(this.track); 
     } else {
       Object.assign(this._audioTrack, this.track);

@@ -17,8 +17,8 @@
         </ion-thumbnail>
         
         <p><strong>{{audio.title}}</strong> &#x26AC; <em>{{audio.artist}}</em></p>
-        <audio-track-progress-bar dark duration progress [audioTrack]="audio" [ngStyle]="{visibility: audio.completed > 0 ? 'visible' : 'hidden', 'width': '70%'}"></audio-track-progress-bar>
-        <em style="font-size:.8rem">Track ID: {{audio.id}}</em>
+        <audio-track-progress-bar dark duration progress [audioTrack]="audio" [ngStyle]="{visibility: audio.completed > 0 ? 'visible' : 'hidden'}"></audio-track-progress-bar>
+        <em style="font-size:.5em">Track ID: {{audio.id}}</em>
       </ion-item>    
     </audio-track>
   </ion-list>
@@ -32,7 +32,7 @@
       
       <h2>{{track.title}}</h2>
       <p><audio-track-progress [audioTrack]="track"></audio-track-progress></p>
-      <em style="font-size:.8rem">Track ID: {{track.id}}</em>
+      <em style="font-size:.5em">Track ID: {{track.id}}</em>
     </ion-item>    
   </audio-track>
   
