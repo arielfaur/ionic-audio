@@ -3,7 +3,7 @@
     "angular2": "2.0.0-beta.15",
     "es6-promise": "3.0.2",
     "es6-shim": "^0.35.0",
-    "ionic-angular": "2.0.0-beta.5",
+    "ionic-angular": "2.0.0-beta.6",
     "ionic-native": "^1.1.1",
     "ionicons": "3.0.0-alpha.3",
     "reflect-metadata": "0.1.2",
@@ -22,7 +22,7 @@
     "ionic-gulp-scripts-copy": "^1.0.1",
     "run-sequence": "1.1.5"
   },
-  "name": "ionic-audio 2 demo",
+  "name": "ionic-audio2",
   "description": "ionic-audio2 demo: An Ionic project",
   "cordovaPlugins": [
     "cordova-plugin-device",
