@@ -35,18 +35,20 @@ export class CordovaAudioTrack implements IAudioTrack {
   
   private createAudio() {
     this.audio = new Media(this.src, () => {
-       console.log('Playback finished');
+       console.log('Finished playback');
        this.stopTimer();
        this.isFinished = true;  
+       this.destroy();  // TODO add parameter to control whether to release audio on stop or finished
     }, (err) => {
-      console.log('Error', err)    
+      console.log(`Audio error => track ${this.src}`, err);   
     }, (status) => {
-      console.log('Status change', status);
       switch (status) {
         case Media.MEDIA_STARTING:
+          console.log(`Loaded track ${this.src}`);
           this._hasLoaded = true;
           break;
         case Media.MEDIA_RUNNING:
+          console.log(`Playing track ${this.src}`);
           this.isPlaying = true;
           this._isLoading = false;          
           break; 
@@ -205,18 +207,19 @@ export class CordovaAudioTrack implements IAudioTrack {
  * @method pause 
  */
   pause() {
+    if (!this.isPlaying) return;
+    console.log(`Pausing track ${this.src}`);
     this.audio.pause();
     this.stopTimer();  
   }
   
   /**
- * Stops current track
+ * Stops current track and releases audio
  *
  * @method stop 
  */
   stop() {
-    this.audio.stop();
-    this.stopTimer();  
+    this.audio.stop();  // calls Media onSuccess callback
   }
   
   /**
@@ -231,11 +234,12 @@ export class CordovaAudioTrack implements IAudioTrack {
   }
   
   /**
-   * Destroys this track instance
+   * Releases audio resources
    * 
    * @method destroy
    */
   destroy() {
     this.audio.release();  
+    console.log(`Released track ${this.src}`);
   }
 }

@@ -211,7 +211,7 @@ export class WebAudioTrack implements IAudioTrack {
   } 
   
   /**
-   * Stops current track
+   * Stops current track and releases audio
    *
    * @method stop 
    */
@@ -235,7 +235,7 @@ export class WebAudioTrack implements IAudioTrack {
   }
   
   /**
-   * Destroys this track instance
+   * Releases audio resources
    * 
    * @method destroy
    */
