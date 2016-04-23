@@ -29,27 +29,47 @@ export class CordovaAudioTrack implements IAudioTrack {
       console.log('Cordova Media is not available');
       return;
     };
-    this.audio = new Media(src, () => {
-       console.log('Playback finished')  
+    
+    this.createAudio(); 
+  }
+  
+  private createAudio() {
+    this.audio = new Media(this.src, () => {
+       console.log('Playback finished');
+       this.stopTimer();
+       this.isFinished = true;  
     }, (err) => {
       console.log('Error', err)    
     }, (status) => {
-      console.log('Status change', status)
-    });
+      console.log('Status change', status);
+      switch (status) {
+        case Media.MEDIA_STARTING:
+          this._hasLoaded = true;
+          break;
+        case Media.MEDIA_RUNNING:
+          this.isPlaying = true;
+          this._isLoading = false;          
+          break; 
+        case Media.MEDIA_PAUSED:
+          this.isPlaying = false;
+          break
+        case Media.MEDIA_STOPPED:
+          this.isPlaying = false;
+          break;
+      }
+    });  
   }
   
   private startTimer() {
     this._timer = setInterval(() => {  
       if (this._duration===undefined || this._duration < 0) {
         this._duration = Math.round(this.audio.getDuration()*100)/100;
-        console.log(this._duration + " sec");
       }  
       
       this.audio.getCurrentPosition((position) => {
             if (position > -1) {
               this._progress = Math.round(position*100)/100;
               this._completed = this._duration > 0 ? Math.round(this._progress / this._duration * 100)/100 : 0; 
-              console.log((position) + " sec", 'Completed', this._completed);
             }
         }, (e) => {
             console.log("Error getting position", e);
@@ -166,6 +186,15 @@ export class CordovaAudioTrack implements IAudioTrack {
  * @method play
  */
   play() {
+    if (!this.audio) {
+      this.createAudio(); 
+    }
+    
+    if (!this._hasLoaded) {
+      console.log(`Loading track ${this.src}`);
+      this._isLoading = true;
+    }
+    
     this.audio.play();
     this.startTimer();
   }
@@ -194,10 +223,11 @@ export class CordovaAudioTrack implements IAudioTrack {
  * Seeks to a new position within the track
  *
  * @method seekTo 
- * @param {number} time the new position to seek to
+ * @param {number} time the new position (milliseconds) to seek to
  */
   seekTo(time: number) {
-    this.audio.seekTo(time);
+    // Cordova Media reports duration and progress as seconds, so we need to multiply by 1000
+    this.audio.seekTo(time*1000);
   }
   
   /**
