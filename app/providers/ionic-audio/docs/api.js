@@ -3,13 +3,14 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "AudioProvider",
         "AudioTimePipe",
-        "AudioTrack",
         "AudioTrackComponent",
         "AudioTrackPlayComponent",
         "AudioTrackProgressBarComponent",
         "AudioTrackProgressComponent",
         "CordovaAudioTrack",
-        "WebAudioProvider"
+        "CordovaMediaProvider",
+        "WebAudioProvider",
+        "WebAudioTrack"
     ],
     "modules": [
         "ionic-audio"

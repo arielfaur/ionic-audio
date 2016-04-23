@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ionic-audio</title>
+    <title>ionic-audio-track-component.ts</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -93,110 +93,167 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>ionic-audio Module</h1>
-<div class="box clearfix meta">
+<h1 class="file-heading">File: ionic-audio-track-component.ts</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import {IAudioProvider, ITrackConstraint, IAudioTrack} from &#x27;./ionic-audio-interfaces&#x27;; 
+import {AudioProvider, WebAudioProvider, CordovaMediaProvider} from &#x27;./ionic-audio-providers&#x27;; 
+import {WebAudioTrack} from &#x27;./ionic-audio-web-track&#x27;; 
+import {CordovaAudioTrack} from &#x27;./ionic-audio-cordova-track&#x27;; 
+
+import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from &#x27;angular2/core&#x27;;
 
 
-        <div class="foundat">
-            Defined in: <a href="../files/ionic-audio-web-track.ts.html#l6"><code>ionic-audio-web-track.ts:6</code></a>
-        </div>
-
-</div>
-
-
-<div class="box intro">
-    <p>An audio player for Ionic 2 and Angular 2</p>
-
-</div>
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-3">
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-                <li class="module-class">
-                    <a href="../classes/AudioProvider.html">
-                        AudioProvider
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/AudioTimePipe.html">
-                        AudioTimePipe
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/AudioTrackComponent.html">
-                        AudioTrackComponent
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/AudioTrackPlayComponent.html">
-                        AudioTrackPlayComponent
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/AudioTrackProgressBarComponent.html">
-                        AudioTrackProgressBarComponent
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/AudioTrackProgressComponent.html">
-                        AudioTrackProgressComponent
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/CordovaAudioTrack.html">
-                        CordovaAudioTrack
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/CordovaMediaProvider.html">
-                        CordovaMediaProvider
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/WebAudioProvider.html">
-                        WebAudioProvider
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/WebAudioTrack.html">
-                        WebAudioTrack
-                    </a>
-                </li>
-            </ul>
-    </div>
-
-    <div class="yui3-u-1-3">
-        <p>This module provides the following elements:</p>
-
-        <ul class="module-elements">
-            <li class="module-element">
-                <a href="../elements/audio-track.html">
-                    &lt;audio-track&gt;
-                </a>
-            </li>
-            <li class="module-element">
-                <a href="../elements/audio-track-play.html">
-                    &lt;audio-track-play&gt;
-                </a>
-            </li>
-            <li class="module-element">
-                <a href="../elements/audio-track-progress.html">
-                    &lt;audio-track-progress&gt;
-                </a>
-            </li>
-            <li class="module-element">
-                <a href="../elements/audio-track-progress-bar.html">
-                    &lt;audio-track-progress-bar&gt;
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="yui3-u-1-3">
-    </div>
+/**
+ * # &#x60;&#x60;&#x60;&lt;audio-track&gt;&#x60;&#x60;&#x60; 
+ * 
+ * Creates a top level audio-track component
+ * 
+ * ## Usage
+ * 
+ * &#x60;&#x60;&#x60;&#x60;
+ *   &lt;audio-track #audio [track]=&quot;myTrack&quot; (onFinish)=&quot;onTrackFinished($event)&quot;&gt;
+ *   ...
+ *   &lt;/audio-track&gt;
+ * &#x60;&#x60;&#x60;&#x60;
+ * @element audio-track
+ * @export
+ * @class AudioTrackComponent
+ */
+@Component({
+    selector: &#x27;audio-track&#x27;,
+    template: &#x27;&lt;ng-content&gt;&lt;/ng-content&gt;&#x27;,
+    providers: []
+})
+export class AudioTrackComponent { 
+  /**
+   * Input property containing a JSON object with at least a src property
+   * &#x60;&#x60;&#x60;&#x60;
+   *   this.myTrack = {
+   *     src: &#x27;https://www,mysite.com/myTrack.mp3&#x27;,
+   *     artist: &#x27;Artist name&#x27;,
+   *     title: &#x27;...&#x27;,
+   *     art: &#x27;img/artist.jpg&#x27;,
+   *     preload: &#x27;metadata&#x27; // tell the plugin to preload metadata such as duration for this track
+   *   };
+   * &#x60;&#x60;&#x60;&#x60;
+   * @property track
+   * @type {ITrackConstraint}
+   */
+  @Input() track: ITrackConstraint;
+  
+  /**
+   * Output property expects an event handler to be notified whenever playback finishes
+   * 
+   * @property onFinish
+   * @type {EventEmitter}
+   */
+  @Output() onFinish = new EventEmitter&lt;ITrackConstraint&gt;();
+  
+  private _isFinished: boolean = false;
+  private _audioTrack: IAudioTrack;
+  
+  constructor(private _audioProvider: AudioProvider) {}
+  
+  ngOnInit() {
+    if (!(this.track instanceof WebAudioTrack) &amp;&amp; !(this.track instanceof CordovaAudioTrack)) {
+      this._audioTrack = this._audioProvider.create(this.track); 
+    } else {
+      Object.assign(this._audioTrack, this.track);
+      this._audioProvider.add(this._audioTrack);
+    }
+    
+    // update input track parameter with track is so we pass it to WebAudioProvider if needed
+    this.track.id = this._audioTrack.id; 
+  }
+  
+  play() {    
+    this._audioTrack.play();
+    this._audioProvider.current = this._audioTrack.id;
+  }
+  
+  pause() {
+    this._audioTrack.pause();
+    this._audioProvider.current = undefined;
+  }
+  
+  toggle() {
+    if (this._audioTrack.isPlaying) {
+      this.pause();
+    } else {
+      this.play();
+    }  
+  }
+  
+  seekTo(time:number) {
+    this._audioTrack.seekTo(time);  
+  }
+  
+  
+  public get id() : number {
+    return this._audioTrack.id;
+  }
+  
+  public get art() : string {
+    return this.track.art;
+  }
+  
+  
+  public get artist() : string {
+    return this.track.artist;
+  }
+  
+  
+  public get title() : string {
+    return this.track.title;
+  }
+    
+  public get progress() : number {
+    return this._audioTrack.progress;
+  }
+      
+  public get isPlaying() : boolean {
+    return this._audioTrack.isPlaying;
+  }
+  
+  public get duration() : number {
+    return this._audioTrack.duration;
+  }
+  
+  public get completed() : number {
+    return this._audioTrack.completed;
+  }
+  
+  public get canPlay() {
+    return this._audioTrack.canPlay;
+  }
+  
+  public get error() {
+    return this._audioTrack.error;
+  }
+  
+  public get isLoading() : boolean {
+    return this._audioTrack.isLoading;
+  }
+  
+  public get hasLoaded() : boolean {
+    return this.hasLoaded;
+  }
+  
+  ngDoCheck() {
+    if(!Object.is(this._audioTrack.isFinished, this._isFinished)) {
+      // some logic here to react to the change
+      this._isFinished = this._audioTrack.isFinished;
+      
+      // track has stopped, trigger finish event
+      if (this._isFinished) {
+        this.onFinish.emit(this.track);       
+      }
+    }
+  }
+}
+    </pre>
 </div>
                     </div>
                 </div>

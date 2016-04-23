@@ -1,10 +1,76 @@
 {
     "project": {},
     "files": {
-        "ionic-audio.d.ts": {
-            "name": "ionic-audio.d.ts",
+        "ionic-audio-cordova-track.ts": {
+            "name": "ionic-audio-cordova-track.ts",
+            "modules": {},
+            "classes": {
+                "CordovaAudioTrack": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ionic-audio-interfaces.ts": {
+            "name": "ionic-audio-interfaces.ts",
             "modules": {},
             "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ionic-audio-providers.ts": {
+            "name": "ionic-audio-providers.ts",
+            "modules": {},
+            "classes": {
+                "AudioProvider": 1,
+                "WebAudioProvider": 1,
+                "CordovaMediaProvider": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ionic-audio-time-pipe.ts": {
+            "name": "ionic-audio-time-pipe.ts",
+            "modules": {},
+            "classes": {
+                "AudioTimePipe": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ionic-audio-track-component.ts": {
+            "name": "ionic-audio-track-component.ts",
+            "modules": {},
+            "classes": {
+                "AudioTrackComponent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ionic-audio-track-play-component.ts": {
+            "name": "ionic-audio-track-play-component.ts",
+            "modules": {},
+            "classes": {
+                "AudioTrackPlayComponent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ionic-audio-track-progress-component.ts": {
+            "name": "ionic-audio-track-progress-component.ts",
+            "modules": {},
+            "classes": {
+                "AudioTrackProgressComponent": 1,
+                "AudioTrackProgressBarComponent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ionic-audio-web-track.ts": {
+            "name": "ionic-audio-web-track.ts",
+            "modules": {},
+            "classes": {
+                "WebAudioTrack": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -13,17 +79,7 @@
             "modules": {
                 "ionic-audio": 1
             },
-            "classes": {
-                "AudioProvider": 1,
-                "WebAudioProvider": 1,
-                "AudioTrack": 1,
-                "CordovaAudioTrack": 1,
-                "AudioTrackComponent": 1,
-                "AudioTrackPlayComponent": 1,
-                "AudioTimePipe": 1,
-                "AudioTrackProgressComponent": 1,
-                "AudioTrackProgressBarComponent": 1
-            },
+            "classes": {},
             "fors": {},
             "namespaces": {}
         }
@@ -39,25 +95,42 @@
                 "audio-track-progress-bar": 1
             },
             "classes": {
+                "CordovaAudioTrack": 1,
                 "AudioProvider": 1,
                 "WebAudioProvider": 1,
-                "AudioTrack": 1,
-                "CordovaAudioTrack": 1,
+                "CordovaMediaProvider": 1,
+                "AudioTimePipe": 1,
                 "AudioTrackComponent": 1,
                 "AudioTrackPlayComponent": 1,
-                "AudioTimePipe": 1,
                 "AudioTrackProgressComponent": 1,
-                "AudioTrackProgressBarComponent": 1
+                "AudioTrackProgressBarComponent": 1,
+                "WebAudioTrack": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "ionic-audio.ts",
-            "line": 909,
+            "file": "ionic-audio-web-track.ts",
+            "line": 6,
             "description": "An audio player for Ionic 2 and Angular 2"
         }
     },
     "classes": {
+        "CordovaAudioTrack": {
+            "name": "CordovaAudioTrack",
+            "shortname": "CordovaAudioTrack",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ionic-audio",
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 6,
+            "description": "Cordova Media audio track",
+            "export": "",
+            "is_constructor": 1,
+            "implements": "{IAudioTrack}"
+        },
         "AudioProvider": {
             "name": "AudioProvider",
             "shortname": "AudioProvider",
@@ -67,9 +140,8 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "ionic-audio",
-            "namespace": "",
-            "file": "ionic-audio.ts",
-            "line": 20,
+            "file": "ionic-audio-providers.ts",
+            "line": 7,
             "description": "Base class for audio providers",
             "export": "",
             "abstract": "",
@@ -84,47 +156,43 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "ionic-audio",
-            "namespace": "",
-            "file": "ionic-audio.ts",
-            "line": 140,
+            "file": "ionic-audio-providers.ts",
+            "line": 128,
             "description": "Creates an HTML5 audio provider",
             "export": "",
             "is_constructor": 1,
             "extends": "{AudioProvider}"
         },
-        "AudioTrack": {
-            "name": "AudioTrack",
-            "shortname": "AudioTrack",
+        "CordovaMediaProvider": {
+            "name": "CordovaMediaProvider",
+            "shortname": "CordovaMediaProvider",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
             "module": "ionic-audio",
-            "namespace": "",
-            "file": "ionic-audio.ts",
-            "line": 165,
-            "description": "Creates an HTML5 audio track",
+            "file": "ionic-audio-providers.ts",
+            "line": 154,
+            "description": "Creates a Cordova audio provider",
             "export": "",
             "is_constructor": 1,
-            "implements": "{IAudioTrack}"
+            "extends": "{AudioProvider}"
         },
-        "CordovaAudioTrack": {
-            "name": "CordovaAudioTrack",
-            "shortname": "CordovaAudioTrack",
+        "AudioTimePipe": {
+            "name": "AudioTimePipe",
+            "shortname": "AudioTimePipe",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
             "module": "ionic-audio",
-            "namespace": "",
-            "file": "ionic-audio.ts",
-            "line": 407,
-            "description": "Cordova Media audio track",
+            "file": "ionic-audio-time-pipe.ts",
+            "line": 3,
+            "description": "A pipe to convert milliseconds to a string representation",
             "export": "",
-            "is_constructor": 1,
-            "implements": "{IAudioTrack}"
+            "implements": "{PipeTransform}"
         },
         "AudioTrackComponent": {
             "name": "AudioTrackComponent",
@@ -135,9 +203,8 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "ionic-audio",
-            "namespace": "",
-            "file": "ionic-audio.ts",
-            "line": 614,
+            "file": "ionic-audio-track-component.ts",
+            "line": 9,
             "description": "# ```<audio-track>``` \n\nCreates a top level audio-track component\n\n## Usage\n\n````\n  <audio-track #audio [track]=\"myTrack\" (onFinish)=\"onTrackFinished($event)\">\n  ...\n  </audio-track>\n````",
             "export": ""
         },
@@ -150,28 +217,11 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "ionic-audio",
-            "namespace": "",
-            "file": "ionic-audio.ts",
-            "line": 763,
+            "file": "ionic-audio-track-play-component.ts",
+            "line": 6,
             "description": "# ```<audio-track-play>``` \n\nRenders a play/pause button that optionally displays a loading spinner\n\n## Usage\n````\n<audio-track #audio [track]=\"myTrack\" (onFinish)=\"onTrackFinished($event)\">\n <ion-item>  \n   <audio-track-play item-left [audioTrack]=\"audio\"><ion-spinner></ion-spinner></audio-track-play>\n   <h3>{{audio.title}}</h3>\n </ion-item>    \n</audio-track>\n````\nIf placed within a ```<ion-thumnbail>``` component it will render as a semi-transparent button layover (see live demo). \nPassing a ```<ion-spinner>``` as a child element will display a loading spinner while loading.\n\n````\n<audio-track #audio [track]=\"track\" (onFinish)=\"onTrackFinished($event)\">\n  <ion-item>  \n      <ion-thumbnail item-left>\n        <img src=\"{{audio.art}}\">\n        <audio-track-play dark [audioTrack]=\"audio\"><ion-spinner></ion-spinner></audio-track-play>  \n      </ion-thumbnail>\n      <p><strong>{{audio.title}}</strong></p>\n  </ion-item>    \n</audio-track>\n````",
             "parents": "audio-track",
             "export": ""
-        },
-        "AudioTimePipe": {
-            "name": "AudioTimePipe",
-            "shortname": "AudioTimePipe",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "ionic-audio",
-            "namespace": "",
-            "file": "ionic-audio.ts",
-            "line": 853,
-            "description": "A pipe to convert milliseconds to a string representation",
-            "export": "",
-            "implements": "{PipeTransform}"
         },
         "AudioTrackProgressComponent": {
             "name": "AudioTrackProgressComponent",
@@ -182,9 +232,8 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "ionic-audio",
-            "namespace": "",
-            "file": "ionic-audio.ts",
-            "line": 879,
+            "file": "ionic-audio-track-progress-component.ts",
+            "line": 7,
             "description": "# ```<audio-track-progress>``` \n\nRenders a timer component displaying track progress and duration \n\n## Usage\n````\n<audio-track-progress [audioTrack]=\"track\"></audio-track-progress>\n````",
             "parents": "audio-track",
             "export": ""
@@ -198,12 +247,27 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "ionic-audio",
-            "namespace": "",
-            "file": "ionic-audio.ts",
-            "line": 909,
+            "file": "ionic-audio-track-progress-component.ts",
+            "line": 37,
             "description": "# ```<audio-track-progress-bar>```\n\nRenders a progress bar with optional timer, duration and progress indicator that allow seeking\n\n## Usage\n````\n <audio-track-progress-bar dark duration progress [audioTrack]=\"audio\"></audio-track-progress-bar>\n````",
             "parents": "audio-track",
             "export": ""
+        },
+        "WebAudioTrack": {
+            "name": "WebAudioTrack",
+            "shortname": "WebAudioTrack",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ionic-audio",
+            "file": "ionic-audio-web-track.ts",
+            "line": 6,
+            "description": "Creates an HTML5 audio track",
+            "export": "",
+            "is_constructor": 1,
+            "implements": "{IAudioTrack}"
         }
     },
     "elements": {
@@ -211,8 +275,8 @@
             "name": "audio-track",
             "attributes": [],
             "module": "ionic-audio",
-            "file": "ionic-audio.ts",
-            "line": 614,
+            "file": "ionic-audio-track-component.ts",
+            "line": 9,
             "description": "# ```<audio-track>``` \n\nCreates a top level audio-track component\n\n## Usage\n\n````\n  <audio-track #audio [track]=\"myTrack\" (onFinish)=\"onTrackFinished($event)\">\n  ...\n  </audio-track>\n````",
             "export": ""
         },
@@ -220,8 +284,8 @@
             "name": "audio-track-play",
             "attributes": [],
             "module": "ionic-audio",
-            "file": "ionic-audio.ts",
-            "line": 763,
+            "file": "ionic-audio-track-play-component.ts",
+            "line": 6,
             "description": "# ```<audio-track-play>``` \n\nRenders a play/pause button that optionally displays a loading spinner\n\n## Usage\n````\n<audio-track #audio [track]=\"myTrack\" (onFinish)=\"onTrackFinished($event)\">\n <ion-item>  \n   <audio-track-play item-left [audioTrack]=\"audio\"><ion-spinner></ion-spinner></audio-track-play>\n   <h3>{{audio.title}}</h3>\n </ion-item>    \n</audio-track>\n````\nIf placed within a ```<ion-thumnbail>``` component it will render as a semi-transparent button layover (see live demo). \nPassing a ```<ion-spinner>``` as a child element will display a loading spinner while loading.\n\n````\n<audio-track #audio [track]=\"track\" (onFinish)=\"onTrackFinished($event)\">\n  <ion-item>  \n      <ion-thumbnail item-left>\n        <img src=\"{{audio.art}}\">\n        <audio-track-play dark [audioTrack]=\"audio\"><ion-spinner></ion-spinner></audio-track-play>  \n      </ion-thumbnail>\n      <p><strong>{{audio.title}}</strong></p>\n  </ion-item>    \n</audio-track>\n````",
             "parents": "audio-track",
             "export": ""
@@ -230,8 +294,8 @@
             "name": "audio-track-progress",
             "attributes": [],
             "module": "ionic-audio",
-            "file": "ionic-audio.ts",
-            "line": 879,
+            "file": "ionic-audio-track-progress-component.ts",
+            "line": 7,
             "description": "# ```<audio-track-progress>``` \n\nRenders a timer component displaying track progress and duration \n\n## Usage\n````\n<audio-track-progress [audioTrack]=\"track\"></audio-track-progress>\n````",
             "parents": "audio-track",
             "export": ""
@@ -240,8 +304,8 @@
             "name": "audio-track-progress-bar",
             "attributes": [],
             "module": "ionic-audio",
-            "file": "ionic-audio.ts",
-            "line": 909,
+            "file": "ionic-audio-track-progress-component.ts",
+            "line": 37,
             "description": "# ```<audio-track-progress-bar>```\n\nRenders a progress bar with optional timer, duration and progress indicator that allow seeking\n\n## Usage\n````\n <audio-track-progress-bar dark duration progress [audioTrack]=\"audio\"></audio-track-progress-bar>\n````",
             "parents": "audio-track",
             "export": ""
@@ -249,7 +313,146 @@
     },
     "classitems": [
         {
-            "file": "ionic-audio.d.ts",
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 87,
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 89,
+            "description": "Gets the track id",
+            "itemtype": "property",
+            "name": "id",
+            "type": "{number}",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 99,
+            "description": "Sets the track id",
+            "itemtype": "property",
+            "name": "id",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 108,
+            "description": "Gets the track duration, or -1 if it cannot be determined",
+            "itemtype": "property",
+            "name": "duration",
+            "readonly": "",
+            "type": "{number}",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 119,
+            "description": "Gets current track time (progress)",
+            "itemtype": "property",
+            "name": "progress",
+            "readonly": "",
+            "type": "{number}",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 130,
+            "description": "Gets current track progress as a percentage",
+            "itemtype": "property",
+            "name": "completed",
+            "readonly": "",
+            "type": "{number}",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 141,
+            "description": "Gets any errors logged by HTML5 audio",
+            "itemtype": "property",
+            "name": "error",
+            "readonly": "",
+            "type": "{MediaError}",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 152,
+            "description": "Gets a boolean value indicating whether the current source can be played",
+            "itemtype": "property",
+            "name": "canPlay",
+            "readonly": "",
+            "type": "{boolean}",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 163,
+            "description": "Gets a boolean value indicating whether the track is in loading state",
+            "itemtype": "property",
+            "name": "isLoading",
+            "readonly": "",
+            "type": "{boolean}",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 174,
+            "description": "Gets a boolean value indicating whether the track has finished loading",
+            "itemtype": "property",
+            "name": "hadLoaded",
+            "readonly": "",
+            "type": "{boolean}",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 185,
+            "description": "Plays current track",
+            "itemtype": "method",
+            "name": "play",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 204,
+            "description": "Pauses current track",
+            "itemtype": "method",
+            "name": "pause",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 216,
+            "description": "Stops current track and releases audio",
+            "itemtype": "method",
+            "name": "stop",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 225,
+            "description": "Seeks to a new position within the track",
+            "itemtype": "method",
+            "name": "seekTo",
+            "params": [
+                {
+                    "name": "time",
+                    "description": "the new position (milliseconds) to seek to",
+                    "type": "Number"
+                }
+            ],
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-cordova-track.ts",
+            "line": 236,
+            "description": "Releases audio resources",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "CordovaAudioTrack"
+        },
+        {
+            "file": "ionic-audio-interfaces.ts",
             "line": 2,
             "description": "Defines the audio provider contract",
             "export": "",
@@ -257,7 +460,7 @@
             "class": "AudioProvider"
         },
         {
-            "file": "ionic-audio.d.ts",
+            "file": "ionic-audio-interfaces.ts",
             "line": 19,
             "description": "Defines the properties for JSON objects representing tracks to be played",
             "export": "",
@@ -265,7 +468,7 @@
             "class": "AudioProvider"
         },
         {
-            "file": "ionic-audio.d.ts",
+            "file": "ionic-audio-interfaces.ts",
             "line": 34,
             "description": "Defines the audio track contract",
             "export": "",
@@ -274,8 +477,8 @@
             "class": "AudioProvider"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 33,
+            "file": "ionic-audio-providers.ts",
+            "line": 20,
             "description": "Creates an audio provider based on the environment.\nIf running from within a browser, then defaults to HTML5 Audio. If running on a device, it will check for Cordova and Media plugins and use\na native audio player, otherwise falls back to HTML5 audio.",
             "itemtype": "method",
             "name": "factory",
@@ -284,12 +487,11 @@
                 "description": "An IAudioProvider instance",
                 "type": "IAudioProvider"
             },
-            "class": "AudioProvider",
-            "module": "ionic-audio"
+            "class": "AudioProvider"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 49,
+            "file": "ionic-audio-providers.ts",
+            "line": 36,
             "description": "Creates an IAudioTrack instance from a JSON object.\nNot implemented in base class.",
             "itemtype": "method",
             "name": "create",
@@ -303,12 +505,11 @@
             "return": {
                 "description": "null"
             },
-            "class": "AudioProvider",
-            "module": "ionic-audio"
+            "class": "AudioProvider"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 61,
+            "file": "ionic-audio-providers.ts",
+            "line": 49,
             "description": "Adds an existing IAudioTrack instance to the array of managed tracks.",
             "itemtype": "method",
             "name": "add",
@@ -319,12 +520,11 @@
                     "type": "IAudioTrack"
                 }
             ],
-            "class": "AudioProvider",
-            "module": "ionic-audio"
+            "class": "AudioProvider"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 71,
+            "file": "ionic-audio-providers.ts",
+            "line": 59,
             "description": "Plays a given track.",
             "itemtype": "method",
             "name": "play",
@@ -335,12 +535,11 @@
                     "type": "Number"
                 }
             ],
-            "class": "AudioProvider",
-            "module": "ionic-audio"
+            "class": "AudioProvider"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 83,
+            "file": "ionic-audio-providers.ts",
+            "line": 71,
             "description": "Pauses a given track.",
             "itemtype": "method",
             "name": "pause",
@@ -352,12 +551,11 @@
                     "optional": true
                 }
             ],
-            "class": "AudioProvider",
-            "module": "ionic-audio"
+            "class": "AudioProvider"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 95,
+            "file": "ionic-audio-providers.ts",
+            "line": 83,
             "description": "Stops a given track.",
             "itemtype": "method",
             "name": "stop",
@@ -369,394 +567,38 @@
                     "optional": true
                 }
             ],
-            "class": "AudioProvider",
-            "module": "ionic-audio"
+            "class": "AudioProvider"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 108,
+            "file": "ionic-audio-providers.ts",
+            "line": 96,
             "description": "Gets an array of tracks managed by this provider",
             "itemtype": "property",
             "name": "tracks",
             "readonly": "",
             "type": "{IAudioTrack[]}",
-            "class": "AudioProvider",
-            "module": "ionic-audio"
+            "class": "AudioProvider"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 119,
+            "file": "ionic-audio-providers.ts",
+            "line": 107,
             "description": "Gets current track id",
             "itemtype": "property",
             "name": "current",
             "type": "{number}",
-            "class": "AudioProvider",
-            "module": "ionic-audio"
+            "class": "AudioProvider"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 129,
+            "file": "ionic-audio-providers.ts",
+            "line": 117,
             "description": "Sets current track id",
             "itemtype": "property",
             "name": "current",
-            "class": "AudioProvider",
-            "module": "ionic-audio"
+            "class": "AudioProvider"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 240,
-            "description": "Gets the track id",
-            "itemtype": "property",
-            "name": "id",
-            "type": "{number}",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 250,
-            "description": "Sets the track id",
-            "itemtype": "property",
-            "name": "id",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 259,
-            "description": "Gets the track duration, or -1 if it cannot be determined",
-            "itemtype": "property",
-            "name": "duration",
-            "readonly": "",
-            "type": "{number}",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 270,
-            "description": "Gets current track time (progress)",
-            "itemtype": "property",
-            "name": "progress",
-            "readonly": "",
-            "type": "{number}",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 281,
-            "description": "Gets current track progress as a percentage",
-            "itemtype": "property",
-            "name": "completed",
-            "readonly": "",
-            "type": "{number}",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 292,
-            "description": "Gets any errors logged by HTML5 audio",
-            "itemtype": "property",
-            "name": "error",
-            "readonly": "",
-            "type": "{MediaError}",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 303,
-            "description": "Gets a boolean value indicating whether the current source can be played",
-            "itemtype": "property",
-            "name": "canPlay",
-            "readonly": "",
-            "type": "{boolean}",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 316,
-            "description": "Gets a boolean value indicating whether the track is in loading state",
-            "itemtype": "property",
-            "name": "isLoading",
-            "readonly": "",
-            "type": "{boolean}",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 328,
-            "description": "Gets a boolean value indicating whether the track has finished loading",
-            "itemtype": "property",
-            "name": "hadLoaded",
-            "readonly": "",
-            "type": "{boolean}",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 340,
-            "description": "Plays current track",
-            "itemtype": "method",
-            "name": "play",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 360,
-            "description": "Pauses current track",
-            "itemtype": "method",
-            "name": "pause",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 372,
-            "description": "Stops current track",
-            "itemtype": "method",
-            "name": "stop",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 386,
-            "description": "Seeks to a new position within the track",
-            "itemtype": "method",
-            "name": "seekTo",
-            "params": [
-                {
-                    "name": "time",
-                    "description": "the new position to seek to",
-                    "type": "Number"
-                }
-            ],
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 396,
-            "description": "Destroys this track instance",
-            "itemtype": "method",
-            "name": "destroy",
-            "class": "AudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 466,
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 468,
-            "description": "Gets the track id",
-            "itemtype": "property",
-            "name": "id",
-            "type": "{number}",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 478,
-            "description": "Sets the track id",
-            "itemtype": "property",
-            "name": "id",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 487,
-            "description": "Gets the track duration, or -1 if it cannot be determined",
-            "itemtype": "property",
-            "name": "duration",
-            "readonly": "",
-            "type": "{number}",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 498,
-            "description": "Gets current track time (progress)",
-            "itemtype": "property",
-            "name": "progress",
-            "readonly": "",
-            "type": "{number}",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 509,
-            "description": "Gets current track progress as a percentage",
-            "itemtype": "property",
-            "name": "completed",
-            "readonly": "",
-            "type": "{number}",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 520,
-            "description": "Gets any errors logged by HTML5 audio",
-            "itemtype": "property",
-            "name": "error",
-            "readonly": "",
-            "type": "{MediaError}",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 531,
-            "description": "Gets a boolean value indicating whether the current source can be played",
-            "itemtype": "property",
-            "name": "canPlay",
-            "readonly": "",
-            "type": "{boolean}",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 542,
-            "description": "Gets a boolean value indicating whether the track is in loading state",
-            "itemtype": "property",
-            "name": "isLoading",
-            "readonly": "",
-            "type": "{boolean}",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 553,
-            "description": "Gets a boolean value indicating whether the track has finished loading",
-            "itemtype": "property",
-            "name": "hadLoaded",
-            "readonly": "",
-            "type": "{boolean}",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 564,
-            "description": "Plays current track",
-            "itemtype": "method",
-            "name": "play",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 574,
-            "description": "Pauses current track",
-            "itemtype": "method",
-            "name": "pause",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 584,
-            "description": "Stops current track",
-            "itemtype": "method",
-            "name": "stop",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 594,
-            "description": "Seeks to a new position within the track",
-            "itemtype": "method",
-            "name": "seekTo",
-            "params": [
-                {
-                    "name": "time",
-                    "description": "the new position to seek to",
-                    "type": "Number"
-                }
-            ],
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 604,
-            "description": "Destroys this track instance",
-            "itemtype": "method",
-            "name": "destroy",
-            "class": "CordovaAudioTrack",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 636,
-            "description": "Input property containing a JSON object with at least a src property\n````\n  this.myTrack = {\n    src: 'https://www,mysite.com/myTrack.mp3',\n    artist: 'Artist name',\n    title: '...',\n    art: 'img/artist.jpg',\n    preload: 'metadata' // tell the plugin to preload metadata such as duration for this track\n  };\n````",
-            "itemtype": "property",
-            "name": "track",
-            "type": "{ITrackConstraint}",
-            "class": "AudioTrackComponent",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 652,
-            "description": "Output property expects an event handler to be notified whenever playback finishes",
-            "itemtype": "property",
-            "name": "onFinish",
-            "type": "{EventEmitter}",
-            "class": "AudioTrackComponent",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 812,
-            "description": "The AudioTrackComponent parent instance created by ```<audio-track>```",
-            "itemtype": "property",
-            "name": "@Input() audioTrack",
-            "type": "{IAudioTrack}",
-            "class": "AudioTrackPlayComponent",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 820,
-            "description": "Renders the component using the light theme",
-            "itemtype": "property",
-            "name": "@Input() light",
-            "type": "{boolean}",
-            "class": "AudioTrackPlayComponent",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 831,
-            "description": "Renders the component using the dark theme",
-            "itemtype": "property",
-            "name": "@Input() dark",
-            "type": "{boolean}",
-            "class": "AudioTrackPlayComponent",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 863,
+            "file": "ionic-audio-time-pipe.ts",
+            "line": 13,
             "description": "Transforms milliseconds to hh:mm:ss",
             "itemtype": "method",
             "name": "transform",
@@ -772,138 +614,314 @@
                 "description": "hh:mm:ss",
                 "type": "String"
             },
-            "class": "AudioTimePipe",
-            "module": "ionic-audio"
+            "class": "AudioTimePipe"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 900,
+            "file": "ionic-audio-track-component.ts",
+            "line": 31,
+            "description": "Input property containing a JSON object with at least a src property\n````\n  this.myTrack = {\n    src: 'https://www,mysite.com/myTrack.mp3',\n    artist: 'Artist name',\n    title: '...',\n    art: 'img/artist.jpg',\n    preload: 'metadata' // tell the plugin to preload metadata such as duration for this track\n  };\n````",
+            "itemtype": "property",
+            "name": "track",
+            "type": "{ITrackConstraint}",
+            "class": "AudioTrackComponent"
+        },
+        {
+            "file": "ionic-audio-track-component.ts",
+            "line": 47,
+            "description": "Output property expects an event handler to be notified whenever playback finishes",
+            "itemtype": "property",
+            "name": "onFinish",
+            "type": "{EventEmitter}",
+            "class": "AudioTrackComponent"
+        },
+        {
+            "file": "ionic-audio-track-play-component.ts",
+            "line": 55,
             "description": "The AudioTrackComponent parent instance created by ```<audio-track>```",
             "itemtype": "property",
             "name": "@Input() audioTrack",
             "type": "{IAudioTrack}",
-            "class": "AudioTrackProgressComponent",
-            "module": "ionic-audio"
+            "class": "AudioTrackPlayComponent"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 934,
-            "description": "The AudioTrackComponent parent instance created by ```<audio-track>```",
-            "itemtype": "property",
-            "name": "@Input() audioTrack",
-            "type": "{IAudioTrack}",
-            "class": "AudioTrackProgressBarComponent",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 949,
-            "description": "Input property indicating whether to display track progress",
-            "itemtype": "property",
-            "name": "@Input() progress",
-            "type": "{boolean}",
-            "class": "AudioTrackProgressBarComponent",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 960,
-            "description": "Input property indicating whether to display track duration",
-            "itemtype": "property",
-            "name": "@Input() duration",
-            "type": "{boolean}",
-            "class": "AudioTrackProgressBarComponent",
-            "module": "ionic-audio"
-        },
-        {
-            "file": "ionic-audio.ts",
-            "line": 971,
+            "file": "ionic-audio-track-play-component.ts",
+            "line": 63,
             "description": "Renders the component using the light theme",
             "itemtype": "property",
             "name": "@Input() light",
             "type": "{boolean}",
-            "class": "AudioTrackProgressBarComponent",
-            "module": "ionic-audio"
+            "class": "AudioTrackPlayComponent"
         },
         {
-            "file": "ionic-audio.ts",
-            "line": 982,
+            "file": "ionic-audio-track-play-component.ts",
+            "line": 74,
             "description": "Renders the component using the dark theme",
             "itemtype": "property",
             "name": "@Input() dark",
             "type": "{boolean}",
-            "class": "AudioTrackProgressBarComponent",
-            "module": "ionic-audio"
+            "class": "AudioTrackPlayComponent"
+        },
+        {
+            "file": "ionic-audio-track-progress-component.ts",
+            "line": 28,
+            "description": "The AudioTrackComponent parent instance created by ```<audio-track>```",
+            "itemtype": "property",
+            "name": "@Input() audioTrack",
+            "type": "{IAudioTrack}",
+            "class": "AudioTrackProgressComponent"
+        },
+        {
+            "file": "ionic-audio-track-progress-component.ts",
+            "line": 62,
+            "description": "The AudioTrackComponent parent instance created by ```<audio-track>```",
+            "itemtype": "property",
+            "name": "@Input() audioTrack",
+            "type": "{IAudioTrack}",
+            "class": "AudioTrackProgressBarComponent"
+        },
+        {
+            "file": "ionic-audio-track-progress-component.ts",
+            "line": 77,
+            "description": "Input property indicating whether to display track progress",
+            "itemtype": "property",
+            "name": "@Input() progress",
+            "type": "{boolean}",
+            "class": "AudioTrackProgressBarComponent"
+        },
+        {
+            "file": "ionic-audio-track-progress-component.ts",
+            "line": 88,
+            "description": "Input property indicating whether to display track duration",
+            "itemtype": "property",
+            "name": "@Input() duration",
+            "type": "{boolean}",
+            "class": "AudioTrackProgressBarComponent"
+        },
+        {
+            "file": "ionic-audio-track-progress-component.ts",
+            "line": 99,
+            "description": "Renders the component using the light theme",
+            "itemtype": "property",
+            "name": "@Input() light",
+            "type": "{boolean}",
+            "class": "AudioTrackProgressBarComponent"
+        },
+        {
+            "file": "ionic-audio-track-progress-component.ts",
+            "line": 110,
+            "description": "Renders the component using the dark theme",
+            "itemtype": "property",
+            "name": "@Input() dark",
+            "type": "{boolean}",
+            "class": "AudioTrackProgressBarComponent"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 81,
+            "description": "Gets the track id",
+            "itemtype": "property",
+            "name": "id",
+            "type": "{number}",
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 91,
+            "description": "Sets the track id",
+            "itemtype": "property",
+            "name": "id",
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 100,
+            "description": "Gets the track duration, or -1 if it cannot be determined",
+            "itemtype": "property",
+            "name": "duration",
+            "readonly": "",
+            "type": "{number}",
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 111,
+            "description": "Gets current track time (progress)",
+            "itemtype": "property",
+            "name": "progress",
+            "readonly": "",
+            "type": "{number}",
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 122,
+            "description": "Gets current track progress as a percentage",
+            "itemtype": "property",
+            "name": "completed",
+            "readonly": "",
+            "type": "{number}",
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 133,
+            "description": "Gets any errors logged by HTML5 audio",
+            "itemtype": "property",
+            "name": "error",
+            "readonly": "",
+            "type": "{MediaError}",
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 144,
+            "description": "Gets a boolean value indicating whether the current source can be played",
+            "itemtype": "property",
+            "name": "canPlay",
+            "readonly": "",
+            "type": "{boolean}",
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 157,
+            "description": "Gets a boolean value indicating whether the track is in loading state",
+            "itemtype": "property",
+            "name": "isLoading",
+            "readonly": "",
+            "type": "{boolean}",
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 169,
+            "description": "Gets a boolean value indicating whether the track has finished loading",
+            "itemtype": "property",
+            "name": "hadLoaded",
+            "readonly": "",
+            "type": "{boolean}",
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 181,
+            "description": "Plays current track",
+            "itemtype": "method",
+            "name": "play",
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 201,
+            "description": "Pauses current track",
+            "itemtype": "method",
+            "name": "pause",
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 213,
+            "description": "Stops current track and releases audio",
+            "itemtype": "method",
+            "name": "stop",
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 227,
+            "description": "Seeks to a new position within the track",
+            "itemtype": "method",
+            "name": "seekTo",
+            "params": [
+                {
+                    "name": "time",
+                    "description": "the new position to seek to",
+                    "type": "Number"
+                }
+            ],
+            "class": "WebAudioTrack"
+        },
+        {
+            "file": "ionic-audio-web-track.ts",
+            "line": 237,
+            "description": "Releases audio resources",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "WebAudioTrack"
         }
     ],
     "warnings": [
         {
             "message": "unknown tag: export",
-            "line": " ionic-audio.d.ts:2"
+            "line": " ionic-audio-cordova-track.ts:6"
         },
         {
             "message": "unknown tag: export",
-            "line": " ionic-audio.d.ts:19"
+            "line": " ionic-audio-interfaces.ts:2"
         },
         {
             "message": "unknown tag: export",
-            "line": " ionic-audio.d.ts:34"
+            "line": " ionic-audio-interfaces.ts:19"
         },
         {
             "message": "unknown tag: export",
-            "line": " ionic-audio.ts:20"
+            "line": " ionic-audio-interfaces.ts:34"
+        },
+        {
+            "message": "unknown tag: export",
+            "line": " ionic-audio-providers.ts:7"
         },
         {
             "message": "unknown tag: abstract",
-            "line": " ionic-audio.ts:20"
+            "line": " ionic-audio-providers.ts:7"
         },
         {
             "message": "unknown tag: export",
-            "line": " ionic-audio.ts:140"
+            "line": " ionic-audio-providers.ts:128"
         },
         {
             "message": "unknown tag: export",
-            "line": " ionic-audio.ts:165"
+            "line": " ionic-audio-providers.ts:154"
         },
         {
             "message": "unknown tag: export",
-            "line": " ionic-audio.ts:407"
+            "line": " ionic-audio-time-pipe.ts:3"
         },
         {
             "message": "unknown tag: export",
-            "line": " ionic-audio.ts:614"
+            "line": " ionic-audio-track-component.ts:9"
         },
         {
             "message": "unknown tag: export",
-            "line": " ionic-audio.ts:763"
+            "line": " ionic-audio-track-play-component.ts:6"
         },
         {
             "message": "unknown tag: export",
-            "line": " ionic-audio.ts:853"
+            "line": " ionic-audio-track-progress-component.ts:7"
         },
         {
             "message": "unknown tag: export",
-            "line": " ionic-audio.ts:879"
+            "line": " ionic-audio-track-progress-component.ts:37"
         },
         {
             "message": "unknown tag: export",
-            "line": " ionic-audio.ts:909"
-        },
-        {
-            "message": "Missing item type\nDefines the audio provider contract",
-            "line": " ionic-audio.d.ts:2"
-        },
-        {
-            "message": "Missing item type\nDefines the properties for JSON objects representing tracks to be played",
-            "line": " ionic-audio.d.ts:19"
-        },
-        {
-            "message": "Missing item type\nDefines the audio track contract",
-            "line": " ionic-audio.d.ts:34"
+            "line": " ionic-audio-web-track.ts:6"
         },
         {
             "message": "Missing item type",
-            "line": " ionic-audio.ts:466"
+            "line": " ionic-audio-cordova-track.ts:87"
+        },
+        {
+            "message": "Missing item type\nDefines the audio provider contract",
+            "line": " ionic-audio-interfaces.ts:2"
+        },
+        {
+            "message": "Missing item type\nDefines the properties for JSON objects representing tracks to be played",
+            "line": " ionic-audio-interfaces.ts:19"
+        },
+        {
+            "message": "Missing item type\nDefines the audio track contract",
+            "line": " ionic-audio-interfaces.ts:34"
         }
     ]
 }

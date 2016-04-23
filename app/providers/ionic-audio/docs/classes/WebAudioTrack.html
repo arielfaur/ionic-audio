@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>AudioTrack</title>
+    <title>WebAudioTrack</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -41,13 +41,14 @@
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/AudioProvider.html">AudioProvider</a></li>
                                 <li><a href="../classes/AudioTimePipe.html">AudioTimePipe</a></li>
-                                <li><a href="../classes/AudioTrack.html">AudioTrack</a></li>
                                 <li><a href="../classes/AudioTrackComponent.html">AudioTrackComponent</a></li>
                                 <li><a href="../classes/AudioTrackPlayComponent.html">AudioTrackPlayComponent</a></li>
                                 <li><a href="../classes/AudioTrackProgressBarComponent.html">AudioTrackProgressBarComponent</a></li>
                                 <li><a href="../classes/AudioTrackProgressComponent.html">AudioTrackProgressComponent</a></li>
                                 <li><a href="../classes/CordovaAudioTrack.html">CordovaAudioTrack</a></li>
+                                <li><a href="../classes/CordovaMediaProvider.html">CordovaMediaProvider</a></li>
                                 <li><a href="../classes/WebAudioProvider.html">WebAudioProvider</a></li>
+                                <li><a href="../classes/WebAudioTrack.html">WebAudioTrack</a></li>
                             </ul>
                 
                                 <ul id="api-elements" class="apis elements">
@@ -92,12 +93,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>AudioTrack Class</h1>
+<h1>WebAudioTrack Class</h1>
 <div class="box meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/ionic-audio.ts.html#l165"><code>ionic-audio.ts:165</code></a>
+            Defined in: <a href="../files/ionic-audio-web-track.ts.html#l6"><code>ionic-audio-web-track.ts:6</code></a>
         </div>
 
             Module: <a href="../modules/ionic-audio.html">ionic-audio</a>
@@ -112,8 +113,8 @@
 
     <div class="constructor">
         <h2>Constructor</h2>
-<div id="method_AudioTrack" class="method item">
-    <h3 class="name"><code>AudioTrack</code></h3>
+<div id="method_WebAudioTrack" class="method item">
+    <h3 class="name"><code>WebAudioTrack</code></h3>
 
         <span class="paren">()</span>
 
@@ -127,7 +128,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l165"><code>ionic-audio.ts:165</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l6"><code>ionic-audio-web-track.ts:6</code></a>
         </p>
 
 
@@ -247,7 +248,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l396"><code>ionic-audio.ts:396</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l237"><code>ionic-audio-web-track.ts:237</code></a>
         </p>
 
 
@@ -255,7 +256,7 @@
     </div>
 
     <div class="description">
-        <p>Destroys this track instance</p>
+        <p>Releases audio resources</p>
 
     </div>
 
@@ -278,7 +279,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l360"><code>ionic-audio.ts:360</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l201"><code>ionic-audio-web-track.ts:201</code></a>
         </p>
 
 
@@ -309,7 +310,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l340"><code>ionic-audio.ts:340</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l181"><code>ionic-audio-web-track.ts:181</code></a>
         </p>
 
 
@@ -346,7 +347,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l386"><code>ionic-audio.ts:386</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l227"><code>ionic-audio-web-track.ts:227</code></a>
         </p>
 
 
@@ -394,7 +395,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l372"><code>ionic-audio.ts:372</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l213"><code>ionic-audio-web-track.ts:213</code></a>
         </p>
 
 
@@ -402,7 +403,7 @@
     </div>
 
     <div class="description">
-        <p>Stops current track</p>
+        <p>Stops current track and releases audio</p>
 
     </div>
 
@@ -426,7 +427,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l303"><code>ionic-audio.ts:303</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l144"><code>ionic-audio-web-track.ts:144</code></a>
         </p>
 
 
@@ -451,7 +452,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l281"><code>ionic-audio.ts:281</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l122"><code>ionic-audio-web-track.ts:122</code></a>
         </p>
 
 
@@ -476,7 +477,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l259"><code>ionic-audio.ts:259</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l100"><code>ionic-audio-web-track.ts:100</code></a>
         </p>
 
 
@@ -501,7 +502,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l292"><code>ionic-audio.ts:292</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l133"><code>ionic-audio-web-track.ts:133</code></a>
         </p>
 
 
@@ -526,7 +527,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l328"><code>ionic-audio.ts:328</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l169"><code>ionic-audio-web-track.ts:169</code></a>
         </p>
 
 
@@ -551,7 +552,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l240"><code>ionic-audio.ts:240</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l81"><code>ionic-audio-web-track.ts:81</code></a>
         </p>
 
 
@@ -576,7 +577,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l250"><code>ionic-audio.ts:250</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l91"><code>ionic-audio-web-track.ts:91</code></a>
         </p>
 
 
@@ -601,7 +602,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l316"><code>ionic-audio.ts:316</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l157"><code>ionic-audio-web-track.ts:157</code></a>
         </p>
 
 
@@ -626,7 +627,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/ionic-audio.ts.html#l270"><code>ionic-audio.ts:270</code></a>
+        <a href="../files/ionic-audio-web-track.ts.html#l111"><code>ionic-audio-web-track.ts:111</code></a>
         </p>
 
 

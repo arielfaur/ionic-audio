@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ionic-audio.d.ts</title>
+    <title>CordovaMediaProvider</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -41,13 +41,14 @@
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/AudioProvider.html">AudioProvider</a></li>
                                 <li><a href="../classes/AudioTimePipe.html">AudioTimePipe</a></li>
-                                <li><a href="../classes/AudioTrack.html">AudioTrack</a></li>
                                 <li><a href="../classes/AudioTrackComponent.html">AudioTrackComponent</a></li>
                                 <li><a href="../classes/AudioTrackPlayComponent.html">AudioTrackPlayComponent</a></li>
                                 <li><a href="../classes/AudioTrackProgressBarComponent.html">AudioTrackProgressBarComponent</a></li>
                                 <li><a href="../classes/AudioTrackProgressComponent.html">AudioTrackProgressComponent</a></li>
                                 <li><a href="../classes/CordovaAudioTrack.html">CordovaAudioTrack</a></li>
+                                <li><a href="../classes/CordovaMediaProvider.html">CordovaMediaProvider</a></li>
                                 <li><a href="../classes/WebAudioProvider.html">WebAudioProvider</a></li>
+                                <li><a href="../classes/WebAudioTrack.html">WebAudioTrack</a></li>
                             </ul>
                 
                                 <ul id="api-elements" class="apis elements">
@@ -92,72 +93,80 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: ionic-audio.d.ts</h1>
+<h1>CordovaMediaProvider Class</h1>
+<div class="box meta">
 
-<div class="file">
-    <pre class="code prettyprint linenums">
+        <div class="extends">
+            Extends <a href="../classes/AudioProvider.html" class="crosslink">AudioProvider</a>
+        </div>
 
-/**
- * Defines the audio provider contract
- * 
- * @export
- * @interface IAudioProvider
- */
-export interface IAudioProvider {
-  current: number;
-  tracks: IAudioTrack[];
-  
-  create(track: ITrackConstraint): IAudioTrack;
-  add(track: IAudioTrack);
-  play(index: number);
-  pause(index?: number);
-  stop(index?: number);
-} 
+        <div class="foundat">
+            Defined in: <a href="../files/ionic-audio-providers.ts.html#l154"><code>ionic-audio-providers.ts:154</code></a>
+        </div>
 
-/**
- * Defines the properties for JSON objects representing tracks to be played
- * 
- * @export
- * @interface ITrackConstraint
- */
-export interface ITrackConstraint {
-  id?:number;
-  src: string;
-  title?: string;
-  artist?: string;
-  art?: string;  
-  preload?: string;
-}
+            Module: <a href="../modules/ionic-audio.html">ionic-audio</a>
 
-/**
- * Defines the audio track contract 
- * 
- * @export
- * @interface IAudioTrack
- * @extends {ITrackConstraint}
- */
-export interface IAudioTrack extends ITrackConstraint {
-  src: string;
-  id: number;
-  isPlaying: boolean; 
-  isLoading: boolean;
-  isFinished: boolean;
-  duration: number;
-  progress: number;
-  completed: number;
-  canPlay:  boolean;
-  error: MediaError;
-  
-  play();
-  pause();
-  stop();
-  seekTo(time: number);
-  destroy();
-}
+</div>
+
+
+<div class="box intro">
+    <p>Creates a Cordova audio provider</p>
+
+</div>
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+<div id="method_CordovaMediaProvider" class="method item">
+    <h3 class="name"><code>CordovaMediaProvider</code></h3>
+
+        <span class="paren">()</span>
 
 
 
-    </pre>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/ionic-audio-providers.ts.html#l154"><code>ionic-audio-providers.ts:154</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+
+
+
+</div>
+    </div>
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+
+
+
+        </div>
+
+
+
+
+    </div>
 </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ionic-audio</title>
+    <title>ionic-audio-track-progress-component.ts</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -93,110 +93,150 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>ionic-audio Module</h1>
-<div class="box clearfix meta">
+<h1 class="file-heading">File: ionic-audio-track-progress-component.ts</h1>
 
+<div class="file">
+    <pre class="code prettyprint linenums">
+import {IAudioProvider, ITrackConstraint, IAudioTrack} from &#x27;./ionic-audio-interfaces&#x27;; 
+import {AudioTimePipe} from &#x27;./ionic-audio-time-pipe&#x27;;
 
-        <div class="foundat">
-            Defined in: <a href="../files/ionic-audio-web-track.ts.html#l6"><code>ionic-audio-web-track.ts:6</code></a>
-        </div>
+import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from &#x27;angular2/core&#x27;;
+import {NgStyle} from &#x27;angular2/common&#x27;;
 
-</div>
+/**
+ * # &#x60;&#x60;&#x60;&lt;audio-track-progress&gt;&#x60;&#x60;&#x60; 
+ * 
+ * Renders a timer component displaying track progress and duration 
+ * 
+ * ## Usage
+ * &#x60;&#x60;&#x60;&#x60;
+ * &lt;audio-track-progress [audioTrack]=&quot;track&quot;&gt;&lt;/audio-track-progress&gt;
+ * &#x60;&#x60;&#x60;&#x60;
+ * 
+ * @element audio-track-progress
+ * @parents audio-track
+ * @export
+ * @class AudioTrackProgressComponent
+ */
+@Component({
+    selector: &#x27;audio-track-progress&#x27;,
+    template: &#x27;&lt;em *ngIf=&quot;audioTrack.completed &gt; 0&quot;&gt;{{audioTrack.progress | audioTime}} / &lt;/em&gt;&lt;em&gt;{{audioTrack.duration | audioTime}}&lt;/em&gt;&#x27;,
+    pipes: [AudioTimePipe]
+})
+export class AudioTrackProgressComponent {
+  /**
+   * The AudioTrackComponent parent instance created by &#x60;&#x60;&#x60;&lt;audio-track&gt;&#x60;&#x60;&#x60;
+   * 
+   * @property @Input() audioTrack
+   * @type {IAudioTrack}
+   */
+  @Input() audioTrack: IAudioTrack;  
+}
 
-
-<div class="box intro">
-    <p>An audio player for Ionic 2 and Angular 2</p>
-
-</div>
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-3">
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-                <li class="module-class">
-                    <a href="../classes/AudioProvider.html">
-                        AudioProvider
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/AudioTimePipe.html">
-                        AudioTimePipe
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/AudioTrackComponent.html">
-                        AudioTrackComponent
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/AudioTrackPlayComponent.html">
-                        AudioTrackPlayComponent
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/AudioTrackProgressBarComponent.html">
-                        AudioTrackProgressBarComponent
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/AudioTrackProgressComponent.html">
-                        AudioTrackProgressComponent
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/CordovaAudioTrack.html">
-                        CordovaAudioTrack
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/CordovaMediaProvider.html">
-                        CordovaMediaProvider
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/WebAudioProvider.html">
-                        WebAudioProvider
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/WebAudioTrack.html">
-                        WebAudioTrack
-                    </a>
-                </li>
-            </ul>
-    </div>
-
-    <div class="yui3-u-1-3">
-        <p>This module provides the following elements:</p>
-
-        <ul class="module-elements">
-            <li class="module-element">
-                <a href="../elements/audio-track.html">
-                    &lt;audio-track&gt;
-                </a>
-            </li>
-            <li class="module-element">
-                <a href="../elements/audio-track-play.html">
-                    &lt;audio-track-play&gt;
-                </a>
-            </li>
-            <li class="module-element">
-                <a href="../elements/audio-track-progress.html">
-                    &lt;audio-track-progress&gt;
-                </a>
-            </li>
-            <li class="module-element">
-                <a href="../elements/audio-track-progress-bar.html">
-                    &lt;audio-track-progress-bar&gt;
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="yui3-u-1-3">
-    </div>
+/**
+ * # &#x60;&#x60;&#x60;&lt;audio-track-progress-bar&gt;&#x60;&#x60;&#x60;
+ * 
+ * Renders a progress bar with optional timer, duration and progress indicator that allow seeking
+ * 
+ * ## Usage
+ * &#x60;&#x60;&#x60;&#x60;
+ *  &lt;audio-track-progress-bar dark duration progress [audioTrack]=&quot;audio&quot;&gt;&lt;/audio-track-progress-bar&gt;
+ * &#x60;&#x60;&#x60;&#x60;
+ * 
+ * @element audio-track-progress-bar
+ * @parents audio-track
+ * @export
+ * @class AudioTrackProgressBarComponent
+ */
+@Component({
+    selector: &#x27;audio-track-progress-bar&#x27;,
+    template: &#x60;&lt;time *ngIf=&quot;_showProgress&quot;&gt;{{audioTrack.progress | audioTime}}&lt;/time&gt;
+    &lt;input type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; step=&quot;1&quot; [(ngModel)]=&quot;_range&quot; [ngStyle]=&quot;{&#x27;visibility&#x27;: _completed &gt; 0 ? &#x27;visible&#x27; : &#x27;hidden&#x27;}&quot;&gt;
+    &lt;time *ngIf=&quot;_showDuration&quot;&gt;{{audioTrack.duration | audioTime}}&lt;/time&gt;
+    &#x60;,
+    pipes: [AudioTimePipe],
+    directives: [NgStyle]
+})
+export class AudioTrackProgressBarComponent {
+  /**
+   * The AudioTrackComponent parent instance created by &#x60;&#x60;&#x60;&lt;audio-track&gt;&#x60;&#x60;&#x60;
+   * 
+   * @property @Input() audioTrack
+   * @type {IAudioTrack}
+   */
+  @Input() audioTrack: IAudioTrack;
+  
+  private _completed: number = 0;
+  private _range: number = 0;
+  private _showDuration: boolean;
+  private _showProgress: boolean;
+  constructor(private el: ElementRef) { 
+  }
+  
+  /**
+   * Input property indicating whether to display track progress 
+   * 
+   * @property @Input() progress
+   * @type {boolean}
+   */
+  @Input()
+  public set progress(v : boolean) {
+    this._showProgress = true;
+  }
+  
+  /**
+   * Input property indicating whether to display track duration 
+   * 
+   * @property @Input() duration
+   * @type {boolean}
+   */
+  @Input()
+  public set duration(v:  boolean) {
+    this._showDuration = true;
+  }
+  
+  /**
+   * Renders the component using the light theme
+   * 
+   * @property @Input() light
+   * @type {boolean}
+   */
+  @Input()
+  set light(val: boolean) {
+    this.el.nativeElement.querySelector(&quot;input&quot;).classList.add(&#x27;light&#x27;);
+  }
+  
+  /**
+   * Renders the component using the dark theme
+   * 
+   * @property @Input() dark
+   * @type {boolean}
+   */
+  @Input()
+  set dark(val: boolean) {
+    this.el.nativeElement.querySelector(&quot;input&quot;).classList.add(&#x27;dark&#x27;); 
+  }
+  
+  ngOnInit() {
+    this.el.nativeElement.querySelector(&quot;input&quot;).addEventListener(&quot;input&quot;, (e) =&gt; { 
+      this.seekTo();
+    }, false);
+        
+  }
+  
+  ngDoCheck() {
+    if(this.audioTrack.completed &gt; 0 &amp;&amp; !Object.is(this.audioTrack.completed, this._completed)) {
+      this._completed = this.audioTrack.completed; 
+      this._range = Math.round(this._completed*100*100)/100;
+    }
+  }
+  
+  seekTo() {
+    let seekTo: number = Math.round(this.audioTrack.duration*this._range)/100;
+    this.audioTrack.seekTo(seekTo);   
+  }
+}
+    </pre>
 </div>
                     </div>
                 </div>
