@@ -1,7 +1,6 @@
 import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
 
 import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from 'angular2/core';
-import {Icon} from 'ionic-angular';
 
 /**
  * # ```<audio-track-play>``` 
@@ -45,8 +44,7 @@ import {Icon} from 'ionic-angular';
       <ion-icon name="play" *ngIf="!audioTrack.isPlaying && !audioTrack.isLoading"></ion-icon>
       <ng-content *ngIf="audioTrack.isLoading && !audioTrack.error"></ng-content>
     </button>
-    `,
-    directives: [Icon]
+    `
 })
 export class AudioTrackPlayComponent {
   private _isPlaying: boolean = false;
