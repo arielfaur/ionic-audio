@@ -1,5 +1,5 @@
 import {Page} from 'ionic-angular';
-import {AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, IAudioTrack, ITrackConstraint, AudioTimePipe} from 'ionic-audio/dist/ionic-audio';
+import {AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, AudioTimePipe} from 'ionic-audio/dist/ionic-audio';
 import {Provider} from 'angular2/core';
 
 @Page({
@@ -7,7 +7,7 @@ import {Provider} from 'angular2/core';
   directives: [AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent]
 })
 export class Page2 {
-  myPodcasts: ITrackConstraint[];
+  myPodcasts: any[];
   
   constructor() {
     this.myPodcasts = [{  

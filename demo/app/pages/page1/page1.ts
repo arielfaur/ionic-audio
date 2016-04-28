@@ -1,5 +1,5 @@
 import {Page} from 'ionic-angular';
-import {AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, IAudioTrack, ITrackConstraint, AudioTimePipe, AudioProvider} from 'ionic-audio/dist/ionic-audio';
+import {AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, AudioTimePipe, AudioProvider} from 'ionic-audio/dist/ionic-audio';
 import {Provider} from 'angular2/core';
 
 @Page({
@@ -8,9 +8,9 @@ import {Provider} from 'angular2/core';
   providers: [] 
 })
 export class Page1 {
-  myTracks: ITrackConstraint[];
-  singleTrack: ITrackConstraint;
-  allTracks: IAudioTrack[];
+  myTracks: any[];
+  singleTrack: any;
+  allTracks: any[];
   selectedTrack: number;
    
   constructor(private _audioProvider: AudioProvider) {
