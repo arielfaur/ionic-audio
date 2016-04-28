@@ -1,6 +1,6 @@
 import {App, Platform} from 'ionic-angular';
 import {TabsPage} from './pages/tabs/tabs';
-import {AudioProvider, WebAudioProvider} from '../../dist/ionic-audio';
+import {AudioProvider, WebAudioProvider} from 'ionic-audio/dist/ionic-audio';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
 import {Type, provide} from 'angular2/core';

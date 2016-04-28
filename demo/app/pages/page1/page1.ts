@@ -1,5 +1,5 @@
 import {Page} from 'ionic-angular';
-import {AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, IAudioTrack, ITrackConstraint, AudioTimePipe, AudioProvider} from '../../../../dist/ionic-audio';
+import {AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, IAudioTrack, ITrackConstraint, AudioTimePipe, AudioProvider} from 'ionic-audio/dist/ionic-audio';
 import {Provider} from 'angular2/core';
 
 @Page({
