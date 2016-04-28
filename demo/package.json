@@ -24,6 +24,7 @@
   },
   "name": "ionic-audio2",
   "description": "ionic-audio2 demo: An Ionic project",
+  "version": "1.0.0",
   "cordovaPlugins": [
     "cordova-plugin-device",
     "cordova-plugin-console",
