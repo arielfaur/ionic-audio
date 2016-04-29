@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <title>Ionic-audio by arielfaur</title>
+
+  <link rel="stylesheet" href="../stylesheets/styles.css">
+  <link rel="stylesheet" href="../stylesheets/github-light.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Ionic-audio</h1>
+      <h2>for Ionic 2 / Angular 2</h2>
+      <p>An audio player plugin for Ionic that works out of the box in the browser and device using an underlying audio provider
+        depending on the environment. When running inside the browser the plugin will default to a Web Audio provider, whereas
+        on a device it will switch to Cordova Media if cordova-plugin-media is available, otherwise falls back to web audio.</p>
+
+      <p class="view"><a href="https://github.com/arielfaur/ionic-audio/tree/2.0">View the Project on GitHub <small>arielfaur/ionic-audio</small></a></p>
+
+      <ul>
+        <li><a href="https://github.com/arielfaur/ionic-audio/archive/2.0.zip">Download <strong>ZIP File</strong></a></li>
+        <li><a href="https://github.com/arielfaur/ionic-audio/tree/2.0">View On <strong>GitHub</strong></a></li>
+      </ul>
+      <br />
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <input type="hidden" name="cmd" value="_s-xclick">
+        <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+">
+        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG_global.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+      </form>
+
+      <p>
+        If you've found this project useful please consider donating to support further development. Thank you!
+      </p>
+    </header>
+    <section>
+      <ul>
+        <li>
+          <h2><a href="http://arielfaur.github.io/ionic-audio-example" target="_blank">Demo</a></h2></li>
+        <li>
+          <h2><a href="docs/modules/ionic-audio.html" target="_blank">API Documentation</a></h2></li>
+        <li>
+          <h2>Usage</h2>
+          <ul>
+            <li><h3>Install module from NPM:</h3>
+              <p><pre>npm install ionic-audio --save</pre></p>
+              <p>Alternatively, add ionic-audio to package.json
+<pre><code>
+"dependencies": {
+  "angular2": "2.0.0-beta.15",
+  "es6-promise": "3.0.2",
+  "es6-shim": "^0.35.0",
+  "ionic-angular": "2.0.0-beta.6",
+  "ionic-native": "^1.1.1",
+  "ionicons": "3.0.0-alpha.3",
+  "reflect-metadata": "0.1.2",
+  "rxjs": "5.0.0-beta.2",
+  "zone.js": "^0.6.11",
+  <strong>"ionic-audio": "2.0.2"</strong>
+}
+ </code></pre>
+              </p>
+            </li>
+            <li><h3>Add ionic-audio.ts to default watch and build gulp tasks in gulpfile.js:</h3>
+              <p>
+  <pre><code>
+gulp.task('watch', ['clean'], function(done){
+  runSequence(
+    ['sass', 'html', 'fonts', 'scripts'],
+    function(){
+      gulpWatch('app/**/*.scss', function(){ gulp.start('sass'); });
+      gulpWatch('app/**/*.html', function(){ gulp.start('html'); });
+      <strong>buildBrowserify({ 
+        watch: true, 
+        src: ['./app/app.ts', './node_modules/ionic-audio/dist/ionic-audio.ts', './typings/main.d.ts'] 
+      }).on('end', done);</strong>
+    }
+  );
+});
+
+gulp.task('build', ['clean'], function(done){
+  runSequence(
+    ['sass', 'html', 'fonts', 'scripts'],
+    function(){
+      <strong>buildBrowserify({
+        src: ['./app/app.ts', './node_modules/ionic-audio/dist/ionic-audio.ts', './typings/main.d.ts']
+      }).on('end', done);</strong>
+    }
+  );
+});
+  </code></pre>
+              </p>
+            </li>
+            <li><h3>Add providers to app.ts using AudioProvider.factory function to automatically inject an audio provider in real-time
+              based on the current environment or force a specific provider by using either [WebAudioProvider] or [CordovaAudioProvider]:</h3>
+
+              <p>
+  <pre><code>
+import {App, Platform} from 'ionic-angular';
+import {TabsPage} from './pages/tabs/tabs';
+<strong>import {AudioProvider, WebAudioProvider} from 'ionic-audio/dist/ionic-audio';</strong>
+
+// https://angular.io/docs/ts/latest/api/core/Type-interface.html
+import {Type, provide} from 'angular2/core';
+
+
+@App({
+  template: '<ion-nav [root]="rootPage"></ion-nav>',
+  config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
+  <strong>providers:  [provide(AudioProvider,  { useFactory: AudioProvider.factory })]</strong> // or use [WebAudioProvider] to force HTML5 Audio  
+})
+export class MyApp {
+  rootPage: Type = TabsPage;
+
+  constructor(platform: Platform) {
+    platform.ready().then(() => {
+      // The platform is now ready. Note: if this callback fails to fire, follow
+      // the Troubleshooting guide for a number of possible solutions:
+      //
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      //
+      // First, let's hide the keyboard accessory bar (only works natively) since
+      // that's a better default:
+      //
+      // Keyboard.setAccessoryBarVisible(false);
+      //
+      // For example, we might change the StatusBar color. This one below is
+      // good for dark backgrounds and light text:
+      // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
+    });
+  }
+}      
+  </code></pre>
+               </p>
+            </li>
+            <li><h3>Import ionic-audio components and directives in every page you need it (only highlighted code is necessary):</h3>
+              <p>
+  <pre><code>
+import {Page} from 'ionic-angular';
+<strong>import {AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, AudioTimePipe, AudioProvider} from 'ionic-audio/dist/ionic-audio';</strong>
+import {Provider} from 'angular2/core';
+
+@Page({
+  templateUrl: 'build/pages/page1/page1.html',
+  <strong>directives: [AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent],</strong>
+  providers: [] 
+})
+export class Page1 {
+  <strong>myTracks: any[];</strong>
+  allTracks: any[];
+  
+  /**
+  AudioProvider can be injected in every page to control playback
+  */
+  constructor(<strong>private _audioProvider: AudioProvider</strong>) {
+    
+    // plugin won't preload data by default, unless preload property is defined within json object - defaults to 'none'
+    <strong>
+    this.myTracks = [{
+      src: 'https://archive.org/download/JM2013-10-05.flac16/V0/jm2013-10-05-t12-MP3-V0.mp3',
+      artist: 'John Mayer',
+      title: 'Why Georgia',
+      art: 'img/johnmayer.jpg',
+      //preload: 'none'
+    },
+    {
+      src: 'https://archive.org/download/JM2013-10-05.flac16/V0/jm2013-10-05-t30-MP3-V0.mp3',
+      artist: 'John Mayer',
+      title: 'Who Says',
+      art: 'img/johnmayer.jpg',
+      //preload: 'none'
+    }];
+    
+    this.singleTrack = {
+      src: 'https://archive.org/download/swrembel2010-03-07.tlm170.flac16/swrembel2010-03-07s1t05.mp3',
+      artist: 'Stephane Wrembel',
+      title: 'Stephane Wrembel Live',
+      art: 'img/Stephane.jpg',
+      preload: 'metadata' // tell the plugin to preload metadata such as duration for this track
+    };
+    </strong>
+  }
+  
+  ngAfterContentInit() {     
+    // get all tracks managed by AudioProvider so we can control playback via the API
+    this.allTracks = this._audioProvider.tracks; 
+  }
+  
+  playSomeTrack(selectedTrackIndex: number) {
+    // do something with the track in response to some action
+    this._audioProvider.play(selectedTrackIndex);
+  }
+        
+  onTrackFinished(track: any) {
+    console.log('Track finished', track)
+  }
+  
+}
+  </code></pre>
+              </p>
+            </li>
+            <li><h3>Add components to views:</h3>
+              <p>
+  <pre><code>
+&lt;ion-list&gt;
+  &lt;audio-track #audio *ngFor="#track of myTracks"  [track]="track" (onFinish)="onTrackFinished($event)"&gt;
+    &lt;ion-item&gt;  
+      &lt;ion-thumbnail item-left&gt;
+        &lt;img src="{{audio.art}}"&gt;
+        &lt;audio-track-play dark [audioTrack]="audio"&gt;&lt;ion-spinner&gt;&lt;/ion-spinner&gt;&lt;/audio-track-play&gt;  
+      &lt;/ion-thumbnail&gt;
+      
+      &lt;p&gt;&lt;strong&gt;{{audio.title}}&lt;/strong&gt; &#x26AC; &lt;em&gt;{{audio.artist}}&lt;/em&gt;&lt;/p&gt;
+      &lt;audio-track-progress-bar dark duration progress [audioTrack]="audio" [ngStyle]="{visibility: audio.completed &gt; 0 ? 'visible' : 'hidden'}"&gt;&lt;/audio-track-progress-bar&gt;
+    &lt;/ion-item&gt;    
+  &lt;/audio-track&gt;
+&lt;/ion-list&gt;
+  </code></pre>
+                </p>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+    </section>
+    <footer>
+      <p>This project is maintained by <a href="https://github.com/arielfaur">arielfaur</a></p>
+      <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </footer>
+  </div>
+  <script src="../javascripts/scale.fix.js"></script>
+
+</body>
+
+</html>
