@@ -5,5 +5,5 @@ to Cordova Media if ```cordova-plugin-media``` is available, otherwise falls bac
 
 See [demo] (http://arielfaur.github.io/ionic-audio-example)
 
-[Documentation] (http://arielfaur.github.io/ionic-audio-example/docs.html)
+[Documentation] (http://arielfaur.github.io/ionic-audio/2.0/index.html)
 
