@@ -56,12 +56,7 @@ export class Page1 {
      // use AudioProvider to control selected track 
      this._audioProvider.pause(this.selectedTrack);
   }
-  
-  stopSelectedTrack() {
-     // use AudioProvider to control selected track 
-     this._audioProvider.stop(this.selectedTrack);
-  }
-        
+         
   onTrackFinished(track: any) {
     console.log('Track finished', track)
   }
