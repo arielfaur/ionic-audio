@@ -1,7 +1,8 @@
 import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
 import {Injectable, Inject, Optional} from 'angular2/core';
 
-declare let webkitAudioContext;
+declare let window;
+window.AudioContext = window['AudioContext'] || window['webkitAudioContext'];
 
 /**
  * Creates an HTML5 audio track
@@ -22,7 +23,10 @@ export class WebAudioTrack implements IAudioTrack {
   private _id: number;
   private _isLoading: boolean;
   private _hasLoaded: boolean;
-  constructor(public src: string, @Optional() public preload: string = 'none', @Optional() private ctx: AudioContext = new (AudioContext || webkitAudioContext)()) {
+  constructor(public src: string, @Optional() public preload: string = 'none', @Optional() private ctx: AudioContext) {
+    // audio context not needed for now
+    // this.ctx = this.ctx || new AudioContext();
+    
     this.createAudio(); 
   }
   
