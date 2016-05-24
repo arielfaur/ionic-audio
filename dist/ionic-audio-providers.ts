@@ -1,5 +1,5 @@
 import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
-import {Injectable, Inject, Optional} from 'angular2/core';
+import {Injectable, Inject, Optional} from '@angular/core';
 import {WebAudioTrack} from './ionic-audio-web-track';
 import {CordovaAudioTrack} from './ionic-audio-cordova-track';
 
@@ -27,7 +27,7 @@ export abstract class AudioProvider implements IAudioProvider {
    * @return {IAudioProvider} An IAudioProvider instance 
    */
   static factory() {
-    return window.cordova && window.hasOwnProperty('Media') ? new CordovaMediaProvider() : new WebAudioProvider();
+    return window.hasOwnProperty('cordova') && window.hasOwnProperty('Media') ? new CordovaMediaProvider() : new WebAudioProvider();
   }
   
   constructor() {

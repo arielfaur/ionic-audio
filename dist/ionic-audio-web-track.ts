@@ -1,5 +1,5 @@
 import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
-import {Injectable, Inject, Optional} from 'angular2/core';
+import {Injectable, Inject, Optional} from '@angular/core';
 
 declare let window;
 window.AudioContext = window['AudioContext'] || window['webkitAudioContext'];

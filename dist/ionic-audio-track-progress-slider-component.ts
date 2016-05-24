@@ -1,8 +1,8 @@
 import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
 
-import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from 'angular2/core';
+import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from '@angular/core';
 import {DragGesture} from 'ionic-angular/gestures/drag-gesture';
-import {NgStyle} from 'angular2/common';
+import {NgStyle} from '@angular/common';
 
 @Component({
     selector: 'audio-track-progress-slider',

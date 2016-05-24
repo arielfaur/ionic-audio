@@ -1,6 +1,6 @@
 import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
 
-import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from 'angular2/core';
+import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from '@angular/core';
 
 /**
  * # ```<audio-track-play>``` 

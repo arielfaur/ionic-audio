@@ -9,7 +9,7 @@
   </p>
   
   <ion-list>
-    <audio-track #audio *ngFor="#track of myTracks"  [track]="track" (onFinish)="onTrackFinished($event)">
+    <audio-track #audio *ngFor="let track of myTracks"  [track]="track" (onFinish)="onTrackFinished($event)">
       <ion-item>  
         <ion-thumbnail item-left>
           <img src="{{audio.art}}">
@@ -42,7 +42,7 @@
     <ion-item>
       <ion-label>Select track to play</ion-label>
       <ion-select [(ngModel)]="selectedTrack">
-        <ion-option *ngFor="#track of allTracks" value="{{track.id}}">{{track.title}}</ion-option>
+        <ion-option *ngFor="let track of allTracks" value="{{track.id}}">{{track.title}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>

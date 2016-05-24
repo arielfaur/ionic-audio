@@ -1,8 +1,8 @@
 import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
 import {AudioTimePipe} from './ionic-audio-time-pipe';
 
-import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from 'angular2/core';
-import {NgStyle} from 'angular2/common';
+import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from '@angular/core';
+import {NgStyle} from '@angular/common';
 
 /**
  * # ```<audio-track-progress>``` 

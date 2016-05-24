@@ -3,7 +3,7 @@ import {AudioProvider, WebAudioProvider, CordovaMediaProvider} from './ionic-aud
 import {WebAudioTrack} from './ionic-audio-web-track'; 
 import {CordovaAudioTrack} from './ionic-audio-cordova-track'; 
 
-import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from 'angular2/core';
+import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from '@angular/core';
 
 
 /**
