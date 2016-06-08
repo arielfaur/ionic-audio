@@ -1,8 +1,8 @@
-import {Page} from 'ionic-angular';
+import {Component, Provider} from '@angular/core';
 import {WebAudioTrack, IAudioTrack, AudioTimePipe} from 'ionic-audio/dist/ionic-audio';
 
 
-@Page({
+@Component({
   templateUrl: 'build/pages/page3/page3.html',
   pipes: [AudioTimePipe]
 })

@@ -1,8 +1,7 @@
-import {Page} from 'ionic-angular';
 import {AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, AudioTimePipe, AudioProvider} from 'ionic-audio/dist/ionic-audio';
-import {Provider} from '@angular/core';
+import {Component, Provider} from '@angular/core';
 
-@Page({
+@Component({
   templateUrl: 'build/pages/page1/page1.html',
   directives: [AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent],
   providers: [] 
