@@ -37,11 +37,11 @@ export class AudioTrackProgressComponent {
 /**
  * # ```<audio-track-progress-bar>```
  * 
- * Renders a progress bar with optional timer, duration and progress indicator that allow seeking
+ * Renders a progress bar with optional timer, duration and progress indicator
  * 
  * ## Usage
  * ````
- *  <audio-track-progress-bar dark duration progress [audioTrack]="audio"></audio-track-progress-bar>
+ *  <audio-track-progress-bar duration progress [audioTrack]="audio"></audio-track-progress-bar>
  * ````
  * 
  * @element audio-track-progress-bar
@@ -51,9 +51,11 @@ export class AudioTrackProgressComponent {
  */
 @Component({
     selector: 'audio-track-progress-bar',
-    template: `<time *ngIf="_showProgress">{{audioTrack.progress | audioTime}}</time>
-    <input type="range" min="0" max="100" step="1" [(ngModel)]="_range" [ngStyle]="{'visibility': _completed > 0 ? 'visible' : 'hidden'}">
-    <time *ngIf="_showDuration">{{audioTrack.duration | audioTime}}</time>
+    template: `
+    <ion-range [(ngModel)]="_range" min="0" max="100" (ionChange)="seekTo()">
+      <time *ngIf="_showProgress" range-left>{{audioTrack.progress | audioTime}}</time>
+      <time *ngIf="_showDuration" range-right>{{audioTrack.duration | audioTime}}</time>
+    </ion-range>
     `,
     pipes: [AudioTimePipe],
     directives: [NgStyle]
@@ -71,7 +73,7 @@ export class AudioTrackProgressBarComponent {
   private _range: number = 0;
   private _showDuration: boolean;
   private _showProgress: boolean;
-  constructor(private el: ElementRef) { 
+  constructor(private el: ElementRef, private renderer: Renderer) { 
   }
   
   /**
@@ -96,33 +98,8 @@ export class AudioTrackProgressBarComponent {
     this._showDuration = true;
   }
   
-  /**
-   * Renders the component using the light theme
-   * 
-   * @property @Input() light
-   * @type {boolean}
-   */
-  @Input()
-  set light(val: boolean) {
-    this.el.nativeElement.querySelector("input").classList.add('light');
-  }
-  
-  /**
-   * Renders the component using the dark theme
-   * 
-   * @property @Input() dark
-   * @type {boolean}
-   */
-  @Input()
-  set dark(val: boolean) {
-    this.el.nativeElement.querySelector("input").classList.add('dark'); 
-  }
-  
   ngOnInit() {
-    this.el.nativeElement.querySelector("input").addEventListener("input", (e) => { 
-      this.seekTo();
-    }, false);
-        
+    this.renderer.setElementStyle(this.el.nativeElement, 'width', '100%');       
   }
   
   ngDoCheck() {
@@ -134,6 +111,6 @@ export class AudioTrackProgressBarComponent {
   
   seekTo() {
     let seekTo: number = Math.round(this.audioTrack.duration*this._range)/100;
-    this.audioTrack.seekTo(seekTo);   
+    if (!Number.isNaN(seekTo)) this.audioTrack.seekTo(seekTo);     
   }
 }

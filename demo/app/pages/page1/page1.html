@@ -15,10 +15,11 @@
           <img src="{{audio.art}}">
           <audio-track-play dark [audioTrack]="audio"><ion-spinner></ion-spinner></audio-track-play>  
         </ion-thumbnail>
-        
-        <p><strong>{{audio.title}}</strong> &#x26AC; <em>{{audio.artist}}</em></p>
-        <audio-track-progress-bar dark duration progress [audioTrack]="audio" [ngStyle]="{visibility: audio.completed > 0 ? 'visible' : 'hidden'}"></audio-track-progress-bar>
-        <em style="font-size:.5em">Track ID: {{audio.id}}</em>
+        <div item-content style="width:100%">
+          <p><strong>{{audio.title}}</strong> &#x26AC; <em>{{audio.artist}}</em></p>
+          <audio-track-progress-bar duration progress [audioTrack]="audio"></audio-track-progress-bar>
+          <em style="font-size:.5em">Track ID: {{audio.id}}</em>
+        </div>
       </ion-item>    
     </audio-track>
   </ion-list>

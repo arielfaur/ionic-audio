@@ -18,7 +18,7 @@ export class AudioTimePipe implements PipeTransform {
    * @return {string} hh:mm:ss
    */
   transform(value?:number) : string {    
-    if (!value) return '';
+    if (value===undefined || Number.isNaN(value)) return '';
     let s = Math.trunc(value % 60);
     let m = Math.trunc((value / 60) % 60);
     let h = Math.trunc(((value / 60) / 60) % 60);  

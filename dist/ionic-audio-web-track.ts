@@ -17,8 +17,8 @@ export class WebAudioTrack implements IAudioTrack {
   private audio: HTMLAudioElement;
   public isPlaying: boolean = false;
   public isFinished: boolean = false;
-  private _progress: number;
-  private _completed: number;
+  private _progress: number = 0;
+  private _completed: number = 0;
   private _duration: number;
   private _id: number;
   private _isLoading: boolean;

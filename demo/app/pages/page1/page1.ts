@@ -20,14 +20,14 @@ export class Page1 {
       artist: 'John Mayer',
       title: 'Why Georgia',
       art: 'img/johnmayer.jpg',
-      //preload: 'none'
+      preload: 'metadata' // tell the plugin to preload metadata such as duration for this track, set to 'none' to turn off
     },
     {
       src: 'https://archive.org/download/JM2013-10-05.flac16/V0/jm2013-10-05-t30-MP3-V0.mp3',
       artist: 'John Mayer',
       title: 'Who Says',
       art: 'img/johnmayer.jpg',
-      //preload: 'none'
+      preload: 'metadata' // tell the plugin to preload metadata such as duration for this track,  set to 'none' to turn off
     }];
     
     this.singleTrack = {
@@ -35,7 +35,7 @@ export class Page1 {
       artist: 'Stephane Wrembel',
       title: 'Stephane Wrembel Live',
       art: 'img/Stephane.jpg',
-      preload: 'metadata' // tell the plugin to preload metadata such as duration for this track
+      preload: 'metadata' // tell the plugin to preload metadata such as duration for this track,  set to 'none' to turn off
     };
     
    
