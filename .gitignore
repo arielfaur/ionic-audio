@@ -1,0 +1,8 @@
+node_modules/
+www/build/
+platforms/
+plugins/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
