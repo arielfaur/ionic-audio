@@ -56,21 +56,26 @@
               <p>Alternatively, add ionic-audio to package.json
 <pre><code>
 "dependencies": {
-  "angular2": "2.0.0-beta.15",
-  "es6-promise": "3.0.2",
+  "@angular/common": "^2.0.0-rc.3",
+  "@angular/compiler": "^2.0.0-rc.3",
+  "@angular/core": "^2.0.0-rc.3",
+  "@angular/http": "^2.0.0-rc.3",
+  "@angular/platform-browser": "^2.0.0-rc.3",
+  "@angular/platform-browser-dynamic": "^2.0.0-rc.3",
+  "@angular/router": "^2.0.0-rc.2",
   "es6-shim": "^0.35.0",
-  "ionic-angular": "2.0.0-beta.6",
+  "ionic-angular": "^2.0.0-beta.10",
   "ionic-native": "^1.1.1",
-  "ionicons": "3.0.0-alpha.3",
-  "reflect-metadata": "0.1.2",
-  "rxjs": "5.0.0-beta.2",
-  "zone.js": "^0.6.11",
-  <strong>"ionic-audio": "2.0.6"</strong>
+  "ionicons": "3.0.0",
+  "reflect-metadata": "^0.1.3",
+  "rxjs": "5.0.0-beta.6",
+  "zone.js": "^0.6.12",
+  <strong>"ionic-audio": "2.0.8"</strong>
 }
  </code></pre>
               </p>
             </li>
-            <li><h3>Add ionic-audio.ts to default watch and build gulp tasks in gulpfile.js:</h3>
+            <li><h3>Edit gulpfile.js to add ionic-audio.ts to src list in watch and build tasks:</h3>
               <p>
   <pre><code>
 gulp.task('watch', ['clean'], function(done){
@@ -92,6 +97,13 @@ gulp.task('build', ['clean'], function(done){
     ['sass', 'html', 'fonts', 'scripts'],
     function(){
       <strong>buildBrowserify({
+        minify: isRelease,
+        browserifyOptions: {
+          debug: !isRelease
+        },
+        uglifyOptions: {
+          mangle: false
+        },
         src: ['./app/app.ts', './node_modules/ionic-audio/dist/ionic-audio.ts', './typings/main.d.ts']
       }).on('end', done);</strong>
     }
@@ -100,111 +112,88 @@ gulp.task('build', ['clean'], function(done){
   </code></pre>
               </p>
             </li>
-            <li><h3>Add providers to app.ts using AudioProvider.factory function to automatically inject an audio provider in real-time
-              based on the current environment or force a specific provider by using either [WebAudioProvider] or [CordovaAudioProvider]:</h3>
+            <li><h3>Choose an audio provider for your app by injecting either [WebAudioProvider] or [CordovaAudioProvider] for native audio in your app.ts file. Or alternatively use the AudioProvider.factory function to automatically inject an audio provider in real-time
+              based on the current environment (native audio requires the cordova-plugin-media to be installed):</h3>
 
               <p>
   <pre><code>
-import {App, Platform} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ionicBootstrap, Platform} from 'ionic-angular';
+import {StatusBar} from 'ionic-native';
 import {TabsPage} from './pages/tabs/tabs';
-<strong>import {AudioProvider, WebAudioProvider} from 'ionic-audio/dist/ionic-audio';</strong>
+
+<strong>import {AudioProvider} from 'ionic-audio/dist/ionic-audio';</strong>
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
-import {Type, provide} from 'angular2/core';
+import {Type, provide} from '@angular/core';
 
-
-@App({
-  template: '<ion-nav [root]="rootPage"></ion-nav>',
-  config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
-  <strong>providers:  [provide(AudioProvider,  { useFactory: AudioProvider.factory })]</strong> // or use [WebAudioProvider] to force HTML5 Audio  
+@Component({
+  template: '&lt;ion-nav [root]="rootPage"&gt;&lt;/ion-nav&gt;'
 })
 export class MyApp {
-  rootPage: Type = TabsPage;
+  rootPage: any = TabsPage;
 
   constructor(platform: Platform) {
     platform.ready().then(() => {
-      // The platform is now ready. Note: if this callback fails to fire, follow
-      // the Troubleshooting guide for a number of possible solutions:
-      //
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      //
-      // First, let's hide the keyboard accessory bar (only works natively) since
-      // that's a better default:
-      //
-      // Keyboard.setAccessoryBarVisible(false);
-      //
-      // For example, we might change the StatusBar color. This one below is
-      // good for dark backgrounds and light text:
-      // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
+      StatusBar.styleDefault();
     });
   }
-}      
+}
+
+// Pass the main app component as the first argument
+// Pass any providers for your app in the second argument
+// Set any config for your app as the third argument:
+// http://ionicframework.com/docs/v2/api/config/Config/
+
+ionicBootstrap(MyApp, <strong>[provide(AudioProvider,  { useFactory: AudioProvider.factory })]</strong>, {
+
+});  
   </code></pre>
                </p>
             </li>
             <li><h3>Import ionic-audio components and directives in every page where needed:</h3>
               <p>
   <pre><code>
-import {Page} from 'ionic-angular';
+import {Component, Provider} from '@angular/core';
 <strong>import {AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, AudioTimePipe, AudioProvider} from 'ionic-audio/dist/ionic-audio';</strong>
-import {Provider} from 'angular2/core';
 
-@Page({
+@Component({
   templateUrl: 'build/pages/page1/page1.html',
-  <strong>directives: [AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent],</strong>
+  directives: [AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent],
   providers: [] 
 })
 export class Page1 {
-  <strong>myTracks: any[];</strong>
+  myTracks: any[];
   allTracks: any[];
-  
-  /**
-  AudioProvider can be injected in every page to control playback
-  */
-  constructor(<strong>private _audioProvider: AudioProvider</strong>) {
-    
+   
+  constructor(private _audioProvider: AudioProvider) { 
     // plugin won't preload data by default, unless preload property is defined within json object - defaults to 'none'
-    <strong>
     this.myTracks = [{
       src: 'https://archive.org/download/JM2013-10-05.flac16/V0/jm2013-10-05-t12-MP3-V0.mp3',
       artist: 'John Mayer',
       title: 'Why Georgia',
       art: 'img/johnmayer.jpg',
-      //preload: 'none'
+      preload: 'metadata' // tell the plugin to preload metadata such as duration for this track, set to 'none' to turn off
     },
     {
       src: 'https://archive.org/download/JM2013-10-05.flac16/V0/jm2013-10-05-t30-MP3-V0.mp3',
       artist: 'John Mayer',
       title: 'Who Says',
       art: 'img/johnmayer.jpg',
-      //preload: 'none'
+      preload: 'metadata' // tell the plugin to preload metadata such as duration for this track,  set to 'none' to turn off
     }];
-    
-    this.singleTrack = {
-      src: 'https://archive.org/download/swrembel2010-03-07.tlm170.flac16/swrembel2010-03-07s1t05.mp3',
-      artist: 'Stephane Wrembel',
-      title: 'Stephane Wrembel Live',
-      art: 'img/Stephane.jpg',
-      preload: 'metadata' // tell the plugin to preload metadata such as duration for this track
-    };
-    </strong>
   }
   
   ngAfterContentInit() {     
     // get all tracks managed by AudioProvider so we can control playback via the API
     this.allTracks = this._audioProvider.tracks; 
   }
-  
-  playSomeTrack(selectedTrackIndex: number) {
-    // do something with the track in response to some action
-    this._audioProvider.play(selectedTrackIndex);
-  }
-        
+         
   onTrackFinished(track: any) {
     console.log('Track finished', track)
-  }
-  
+  } 
 }
   </code></pre>
               </p>
@@ -213,7 +202,7 @@ export class Page1 {
               <p>
   <pre><code>
 &lt;ion-list&gt;
-  &lt;audio-track #audio *ngFor="#track of myTracks"  [track]="track" (onFinish)="onTrackFinished($event)"&gt;
+  &lt;audio-track #audio *ngFor="let track of myTracks"  [track]="track" (onFinish)="onTrackFinished($event)"&gt;
     &lt;ion-item&gt;  
       &lt;ion-thumbnail item-left&gt;
         &lt;img src="{{audio.art}}"&gt;
