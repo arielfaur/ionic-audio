@@ -75,7 +75,7 @@
  </code></pre>
               </p>
             </li>
-            <li><h3>Edit gulpfile.js to add ionic-audio.ts to src list in watch and build tasks:</h3>
+            <li><h3>Edit <code>gulpfile.js</code> and add <code>ionic-audio.ts</code> to <code>src</code> array in both watch and build tasks:</h3>
               <p>
   <pre><code>
 gulp.task('watch', ['clean'], function(done){
@@ -84,10 +84,10 @@ gulp.task('watch', ['clean'], function(done){
     function(){
       gulpWatch('app/**/*.scss', function(){ gulp.start('sass'); });
       gulpWatch('app/**/*.html', function(){ gulp.start('html'); });
-      <strong>buildBrowserify({ 
+      buildBrowserify({ 
         watch: true, 
-        src: ['./app/app.ts', './node_modules/ionic-audio/dist/ionic-audio.ts', './typings/main.d.ts'] 
-      }).on('end', done);</strong>
+        <strong>src: ['./app/app.ts', './node_modules/ionic-audio/dist/ionic-audio.ts', './typings/main.d.ts']</strong> 
+      }).on('end', done);
     }
   );
 });
@@ -96,7 +96,7 @@ gulp.task('build', ['clean'], function(done){
   runSequence(
     ['sass', 'html', 'fonts', 'scripts'],
     function(){
-      <strong>buildBrowserify({
+      buildBrowserify({
         minify: isRelease,
         browserifyOptions: {
           debug: !isRelease
@@ -104,16 +104,17 @@ gulp.task('build', ['clean'], function(done){
         uglifyOptions: {
           mangle: false
         },
-        src: ['./app/app.ts', './node_modules/ionic-audio/dist/ionic-audio.ts', './typings/main.d.ts']
-      }).on('end', done);</strong>
+        <strong>src: ['./app/app.ts', './node_modules/ionic-audio/dist/ionic-audio.ts', './typings/main.d.ts']</strong>
+      }).on('end', done);
     }
   );
 });
   </code></pre>
               </p>
             </li>
-            <li><h3>Choose an audio provider for your app by injecting either [WebAudioProvider] or [CordovaAudioProvider] for native audio in your app.ts file. Or alternatively use the AudioProvider.factory function to automatically inject an audio provider in real-time
-              based on the current environment (native audio requires the cordova-plugin-media to be installed):</h3>
+            <li><h3>Choose an audio provider for your app by injecting either <code>[WebAudioProvider]</code> for HTML5 audio, or <code>[CordovaAudioProvider]</code> for native audio in your <code>app.ts</code> file.<br> 
+            Alternatively, use the <code>AudioProvider.factory</code> function to automatically inject an audio provider in real-time
+            based on the current environment (native audio requires the <code>cordova-plugin-media</code> to be installed):</h3>
 
               <p>
   <pre><code>
@@ -161,7 +162,7 @@ import {Component, Provider} from '@angular/core';
 
 @Component({
   templateUrl: 'build/pages/page1/page1.html',
-  directives: [AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent],
+  <strong>directives: [AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent]</strong>,
   providers: [] 
 })
 export class Page1 {
@@ -202,7 +203,7 @@ export class Page1 {
               <p>
   <pre><code>
 &lt;ion-list&gt;
-  &lt;audio-track #audio *ngFor="let track of myTracks"  [track]="track" (onFinish)="onTrackFinished($event)"&gt;
+  <strong>&lt;audio-track #audio *ngFor="let track of myTracks"  [track]="track" (onFinish)="onTrackFinished($event)"&gt;
     &lt;ion-item&gt;  
       &lt;ion-thumbnail item-left&gt;
         &lt;img src="{{audio.art}}"&gt;
@@ -212,7 +213,7 @@ export class Page1 {
       &lt;p&gt;&lt;strong&gt;{{audio.title}}&lt;/strong&gt; &#x26AC; &lt;em&gt;{{audio.artist}}&lt;/em&gt;&lt;/p&gt;
       &lt;audio-track-progress-bar dark duration progress [audioTrack]="audio" [ngStyle]="{visibility: audio.completed &gt; 0 ? 'visible' : 'hidden'}"&gt;&lt;/audio-track-progress-bar&gt;
     &lt;/ion-item&gt;    
-  &lt;/audio-track&gt;
+  &lt;/audio-track&gt;</strong>
 &lt;/ion-list&gt;
   </code></pre>
                 </p>
