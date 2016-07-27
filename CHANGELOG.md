@@ -1,3 +1,7 @@
+## v1.3.1
+
+- fix minor bug where track is undefined when placing a progress bar outside the scope of ```ion-audio-track```
+
 ## v1.3.0
 
 - make tracks observable to allow dynamic assignment of scope variable ```track``` in ```ion-audio-track```

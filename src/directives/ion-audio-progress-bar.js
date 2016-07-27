@@ -4,7 +4,7 @@ function ionAudioProgressBar(MediaManager) {
     return {
         restrict: 'E',
         scope: {
-            track: '='
+            track: '=?'
         },
         template:
             '<h2 class="ion-audio-track-info" ng-style="displayTrackInfo()">{{track.title}} - {{track.artist}}</h2>' +
@@ -50,7 +50,7 @@ function ionAudioProgressBar(MediaManager) {
 
         // hide/show track info if available
         scope.displayTrackInfo = function() {
-            return { visibility: angular.isDefined(attrs.displayInfo) && (scope.track.title || scope.track.artist) ? 'visible' : 'hidden'}
+            return { visibility: angular.isDefined(attrs.displayInfo) && angular.isDefined(scope.track) && (scope.track.title || scope.track.artist) ? 'visible' : 'hidden'}
         };
 
         // handle track seek-to
