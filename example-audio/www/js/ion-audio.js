@@ -1,5 +1,5 @@
 /*
-ionic-audio v1.3.0
+ionic-audio v1.3.1
  
 Copyright 2016 Ariel Faur (https://github.com/arielfaur)
 
