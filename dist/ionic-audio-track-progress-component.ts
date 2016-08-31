@@ -21,7 +21,7 @@ import {NgStyle} from '@angular/common';
  */
 @Component({
     selector: 'audio-track-progress',
-    template: '<em *ngIf="audioTrack.completed > 0">{{audioTrack.progress | audioTime}} / </em><em>{{audioTrack.duration | audioTime}}</em>',
+    template: '<em *ngIf="audioTrack.duration > 0">{{audioTrack.progress | audioTime}} / </em><em>{{audioTrack.duration | audioTime}}</em>',
     pipes: [AudioTimePipe]
 })
 export class AudioTrackProgressComponent {
