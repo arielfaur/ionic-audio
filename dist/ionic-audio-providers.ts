@@ -92,7 +92,10 @@ export abstract class AudioProvider implements IAudioProvider {
     AudioProvider.tracks[index].stop();
     this._current = undefined;
   };
-  
+  seekTo(time){
+    var index;
+    AudioProvider.tracks[index].seekTo(time);
+  }
   /**
    * Gets an array of tracks managed by this provider
    * 
@@ -135,20 +138,19 @@ export abstract class AudioProvider implements IAudioProvider {
  */
 @Injectable()
 export class WebAudioProvider extends AudioProvider {
-  
+  public audioTrack;
   constructor() {
     super();
     console.log('Using Web Audio provider');
   }
   
   create(track: ITrackConstraint) {
-    let audioTrack = new WebAudioTrack(track.src, track.preload);  
-    Object.assign(audioTrack, track);
-    let trackId = WebAudioProvider.tracks.push(audioTrack);
-    audioTrack.id = trackId-1; 
-    return audioTrack;
+    this.audioTrack = new WebAudioTrack(track.src, track.preload);  
+    Object.assign(this.audioTrack, track);
+    let trackId = WebAudioProvider.tracks.push(this.audioTrack);
+    this.audioTrack.id = trackId-1; 
+    return this.audioTrack;
   }
-  
 }
 
 /**

@@ -39,7 +39,7 @@ import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, R
 @Component({
     selector: 'audio-track-play',
     template: `
-    <button clear (click)="toggle($event)" [disabled]="audioTrack.error || audioTrack.isLoading">
+    <button class="player" clear (click)="toggle($event)" [disabled]="audioTrack.error || audioTrack.isLoading">
       <ion-icon name="pause" *ngIf="audioTrack.isPlaying && !audioTrack.isLoading"></ion-icon>
       <ion-icon name="play" *ngIf="!audioTrack.isPlaying && !audioTrack.isLoading"></ion-icon>
       <ng-content *ngIf="audioTrack.isLoading && !audioTrack.error"></ng-content>

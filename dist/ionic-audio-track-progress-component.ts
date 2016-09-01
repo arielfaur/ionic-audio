@@ -52,7 +52,7 @@ export class AudioTrackProgressComponent {
 @Component({
     selector: 'audio-track-progress-bar',
     template: `
-    <ion-range [(ngModel)]="_range" min="0" max="100" (ionChange)="seekTo()">
+    <ion-range class="range" [(ngModel)]="_range" min="0" max="100" (ionChange)="seekTo()">
       <time *ngIf="_showProgress" range-left>{{audioTrack.progress | audioTime}}</time>
       <time *ngIf="_showDuration" range-right>{{audioTrack.duration | audioTime}}</time>
     </ion-range>
@@ -112,5 +112,13 @@ export class AudioTrackProgressBarComponent {
   seekTo() {
     let seekTo: number = Math.round(this.audioTrack.duration*this._range)/100;
     if (!Number.isNaN(seekTo)) this.audioTrack.seekTo(seekTo);     
+  }
+
+  ngOnChanges(change){
+    console.log(change);
+    if(change.audioTrack){
+      this._completed=0;
+      this._range=0;
+    }
   }
 }

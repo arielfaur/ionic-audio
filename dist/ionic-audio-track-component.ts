@@ -86,6 +86,7 @@ export class AudioTrackComponent {
       this.play();
     }  
   }
+
   
   seekTo(time:number) {
     this._audioTrack.seekTo(time);  
@@ -130,9 +131,9 @@ export class AudioTrackComponent {
     return this._audioTrack.canPlay;
   }
   
-  public get error() {
-    return this._audioTrack.error;
-  }
+  // public get error() {
+  //   return this._audioTrack.error;
+  // }
   
   public get isLoading() : boolean {
     return this._audioTrack.isLoading;
@@ -151,6 +152,19 @@ export class AudioTrackComponent {
       if (this._isFinished) {
         this.onFinish.emit(this.track);       
       }
+    }
+  }
+  ngOnChanges(change) {
+    if(change.track) {
+      if (!(this.track instanceof WebAudioTrack) && !(this.track instanceof CordovaAudioTrack)) {
+        this._audioTrack = this._audioProvider.create(this.track); 
+      } else {
+        Object.assign(this._audioTrack, this.track);
+      this._audioProvider.add(this._audioTrack);
+      }
+    
+    // update input track parameter with track is so we pass it to WebAudioProvider if needed
+    this.track.id = this._audioTrack.id; 
     }
   }
 }

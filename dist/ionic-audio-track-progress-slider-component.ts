@@ -38,5 +38,13 @@ export class AudioTrackProgressSliderComponent extends DragGesture {
   onDragEnd(ev) {
     this.onSeek.emit(ev);
     return super.onDragEnd(ev);
-  };  
+  };
+
+  ngOnChanges(change){
+    console.log(change);
+    if(change.audioTrack){
+      this._completed=0;
+      //this._range=0;
+    }
+  }  
 }
