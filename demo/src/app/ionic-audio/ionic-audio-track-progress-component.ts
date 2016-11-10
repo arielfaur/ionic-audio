@@ -1,8 +1,5 @@
-import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
-import {AudioTimePipe} from './ionic-audio-time-pipe';
-
-import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from '@angular/core';
-import {NgStyle} from '@angular/common';
+import {IAudioTrack} from './ionic-audio-interfaces'; 
+import {Component, DoCheck,  ElementRef, Renderer, Input } from '@angular/core';
 
 /**
  * # ```<audio-track-progress>``` 
@@ -51,13 +48,13 @@ export class AudioTrackProgressComponent {
 @Component({
     selector: 'audio-track-progress-bar',
     template: `
-    <ion-range [(ngModel)]="_range" min="0" max="100" (ionChange)="seekTo()" name="progress" ngDefaultControl>
-      <time *ngIf="_showProgress" range-left>{{audioTrack.progress | audioTime}}</time>
-      <time *ngIf="_showDuration" range-right>{{audioTrack.duration | audioTime}}</time>
+    <ion-range [(ngModel)]="range" min="0" max="100" (ionChange)="seekTo()" name="progress" ngDefaultControl>
+      <time *ngIf="showProgress" range-left>{{audioTrack.progress | audioTime}}</time>
+      <time *ngIf="showDuration" range-right>{{audioTrack.duration | audioTime}}</time>
     </ion-range>
     `
 })
-export class AudioTrackProgressBarComponent {
+export class AudioTrackProgressBarComponent implements DoCheck {
   /**
    * The AudioTrackComponent parent instance created by ```<audio-track>```
    * 
@@ -66,10 +63,10 @@ export class AudioTrackProgressBarComponent {
    */
   @Input() audioTrack: IAudioTrack;
   
-  private _completed: number = 0;
-  private _range: number = 0;
-  private _showDuration: boolean;
-  private _showProgress: boolean;
+  public completed: number = 0;
+  public range: number = 0;
+  public showDuration: boolean;
+  public showProgress: boolean;
   constructor(private el: ElementRef, private renderer: Renderer) { 
   }
   
@@ -81,7 +78,7 @@ export class AudioTrackProgressBarComponent {
    */
   @Input()
   public set progress(v : boolean) {
-    this._showProgress = true;
+    this.showProgress = true;
   }
   
   /**
@@ -92,7 +89,7 @@ export class AudioTrackProgressBarComponent {
    */
   @Input()
   public set duration(v:  boolean) {
-    this._showDuration = true;
+    this.showDuration = true;
   }
   
   ngOnInit() {
@@ -100,14 +97,14 @@ export class AudioTrackProgressBarComponent {
   }
   
   ngDoCheck() {
-    if(this.audioTrack.completed > 0 && !Object.is(this.audioTrack.completed, this._completed)) {
-      this._completed = this.audioTrack.completed; 
-      this._range = Math.round(this._completed*100*100)/100;
+    if(this.audioTrack.completed > 0 && !Object.is(this.audioTrack.completed, this.completed)) {
+      this.completed = this.audioTrack.completed; 
+      this.range = Math.round(this.completed*100*100)/100;
     }
   }
   
   seekTo() {
-    let seekTo: number = Math.round(this.audioTrack.duration*this._range)/100;
+    let seekTo: number = Math.round(this.audioTrack.duration*this.range)/100;
     if (!Number.isNaN(seekTo)) this.audioTrack.seekTo(seekTo);     
   }
 }

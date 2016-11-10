@@ -6,7 +6,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { IonicAudioModule, AudioProvider, WebAudioProvider, CordovaMediaProvider } from './ionic-audio/ionic-audio.module';
+import { IonicAudioModule, AudioProvider, audioProviderfactory } from './ionic-audio/ionic-audio.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import { IonicAudioModule, AudioProvider, WebAudioProvider, CordovaMediaProvider
     HomePage,
     TabsPage
   ],
-  providers: [ { provide: AudioProvider, useFactory: AudioProvider.factory }],
+  providers: [ { provide: AudioProvider, useFactory: audioProviderfactory }],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule {}

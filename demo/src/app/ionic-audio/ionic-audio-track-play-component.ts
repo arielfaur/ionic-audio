@@ -1,6 +1,5 @@
-import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
-
-import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from '@angular/core';
+import {IAudioTrack} from './ionic-audio-interfaces'; 
+import {Component, ElementRef, Input} from '@angular/core';
 
 /**
  * # ```<audio-track-play>``` 
@@ -47,8 +46,6 @@ import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, R
     `
 })
 export class AudioTrackPlayComponent {
-  private _isPlaying: boolean = false;
-  private _isLoading: boolean = false;
   
   /**
    * The AudioTrackComponent parent instance created by ```<audio-track>```
@@ -82,7 +79,7 @@ export class AudioTrackPlayComponent {
   
   constructor(private el: ElementRef) {}
   
-  toggle(){    
+  toggle(event: Event){    
     if (this.audioTrack.isPlaying) {
       this.audioTrack.pause()
     } else {
