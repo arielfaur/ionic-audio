@@ -1,5 +1,5 @@
-import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
-import {Injectable, Inject, Optional} from '@angular/core';
+import {IAudioTrack} from './ionic-audio-interfaces'; 
+import {Injectable} from '@angular/core';
 
 declare let Media: any;
 

@@ -1,8 +1,20 @@
 import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
-import {Injectable, Inject, Optional} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {WebAudioTrack} from './ionic-audio-web-track';
 import {CordovaAudioTrack} from './ionic-audio-cordova-track';
 
+/**
+ * Creates an audio provider based on the environment.
+ * If running from within a browser, then defaults to HTML5 Audio. If running on a device, it will check for Cordova and Media plugins and use
+ * a native audio player, otherwise falls back to HTML5 audio.  
+ * 
+ * @method factory
+ * @static
+ * @return {IAudioProvider} An IAudioProvider instance 
+ */
+export function audioProviderfactory() {
+  return window.hasOwnProperty('cordova') && window.hasOwnProperty('Media') ? new CordovaMediaProvider() : new WebAudioProvider();
+}
 
 /**
  * Base class for audio providers
@@ -16,20 +28,7 @@ import {CordovaAudioTrack} from './ionic-audio-cordova-track';
 export abstract class AudioProvider implements IAudioProvider {
   protected static tracks: IAudioTrack[] = [];
   protected _current: number;
-  
-  /**
-   * Creates an audio provider based on the environment.
-   * If running from within a browser, then defaults to HTML5 Audio. If running on a device, it will check for Cordova and Media plugins and use
-   * a native audio player, otherwise falls back to HTML5 audio.  
-   * 
-   * @method factory
-   * @static
-   * @return {IAudioProvider} An IAudioProvider instance 
-   */
-  static factory() {
-    return window.hasOwnProperty('cordova') && window.hasOwnProperty('Media') ? new CordovaMediaProvider() : new WebAudioProvider();
-  }
-  
+    
   constructor() {
   }
   

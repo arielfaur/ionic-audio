@@ -1,9 +1,9 @@
-import {IAudioProvider, ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
-import {AudioProvider, WebAudioProvider, CordovaMediaProvider} from './ionic-audio-providers'; 
+import {ITrackConstraint, IAudioTrack} from './ionic-audio-interfaces'; 
+import {AudioProvider} from './ionic-audio-providers'; 
 import {WebAudioTrack} from './ionic-audio-web-track'; 
 import {CordovaAudioTrack} from './ionic-audio-cordova-track'; 
 
-import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, Renderer, Output, Input, Injectable, Inject, Optional, Pipe, PipeTransform} from '@angular/core';
+import {Component, DoCheck, EventEmitter, Output, Input} from '@angular/core';
 
 
 /**
@@ -26,7 +26,7 @@ import {Component, Directive, DoCheck, SimpleChange, EventEmitter, ElementRef, R
     selector: 'audio-track',
     template: '<ng-content></ng-content>'
 })
-export class AudioTrackComponent { 
+export class AudioTrackComponent implements DoCheck { 
   /**
    * Input property containing a JSON object with at least a src property
    * ````

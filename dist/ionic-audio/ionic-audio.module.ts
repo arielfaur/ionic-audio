@@ -3,10 +3,6 @@ import { CommonModule }       from '@angular/common';
 import { FormsModule }        from '@angular/forms';
 import { IonicModule } from 'ionic-angular';
 
-import {IAudioTrack, IAudioProvider, ITrackConstraint} from './ionic-audio-interfaces';
-import {AudioProvider, WebAudioProvider, CordovaMediaProvider} from './ionic-audio-providers';
-import {WebAudioTrack} from './ionic-audio-web-track';
-import {CordovaAudioTrack} from './ionic-audio-cordova-track';
 import {AudioTrackComponent} from './ionic-audio-track-component';
 import {AudioTrackProgressComponent, AudioTrackProgressBarComponent} from './ionic-audio-track-progress-component';
 import {AudioTrackPlayComponent} from './ionic-audio-track-play-component';
