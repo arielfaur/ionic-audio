@@ -26,7 +26,7 @@
     "rxjs": "5.0.0-beta.12",
     "sw-toolbox": "3.4.0",
     "zone.js": "0.6.26",
-    "ionic-audio": "2.2.0"
+    "ionic-audio": "2.3.0"
   },
   "devDependencies": {
     "@ionic/app-scripts": "1.0.0",
