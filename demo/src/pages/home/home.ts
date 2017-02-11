@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
-import { AudioProvider } from '../../app/ionic-audio/ionic-audio.module';
+import { AudioProvider } from '../../app/ionic-audio';
 
 @Component({
   selector: 'page-home',

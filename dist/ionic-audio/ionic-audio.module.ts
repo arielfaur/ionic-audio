@@ -1,15 +1,15 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA }           from '@angular/core';
+import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA }           from '@angular/core';
 import { CommonModule }       from '@angular/common';
-import { FormsModule }        from '@angular/forms';
 import { IonicModule } from 'ionic-angular';
 
 import {AudioTrackComponent} from './ionic-audio-track-component';
 import {AudioTrackProgressComponent, AudioTrackProgressBarComponent} from './ionic-audio-track-progress-component';
 import {AudioTrackPlayComponent} from './ionic-audio-track-play-component';
 import {AudioTimePipe} from './ionic-audio-time-pipe';
+import {AudioProvider, audioProviderfactory} from './ionic-audio-providers';
 
 @NgModule({
-  imports:      [ CommonModule, FormsModule, IonicModule  ],
+  imports:      [ CommonModule, IonicModule  ],
   declarations: [ 
     AudioTrackComponent,
     AudioTrackProgressComponent, 
@@ -27,13 +27,20 @@ import {AudioTimePipe} from './ionic-audio-time-pipe';
   providers:    [],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
-export class IonicAudioModule { }
-
-export * from './ionic-audio-interfaces';
-export * from './ionic-audio-providers';
-export * from './ionic-audio-web-track';
-export * from './ionic-audio-cordova-track';
-export * from './ionic-audio-track-component';
-export * from './ionic-audio-track-progress-component';
-export * from './ionic-audio-track-play-component';
-export * from './ionic-audio-time-pipe';
+export class IonicAudioModule { 
+  /**
+   * Configures Ionic Audio to use either Cordova or HTML5 audio.
+   * If no ```audioProvider``` is set it will automatically choose one based on the current environment
+   */
+  static forRoot(audioProvider?: AudioProvider): ModuleWithProviders {
+    let audioProviderInit = audioProvider ? 
+      { provide: AudioProvider, useValue: audioProvider } : 
+      { provide: AudioProvider, useFactory: audioProviderfactory };
+    return {
+      ngModule: IonicAudioModule,
+      providers: [
+        audioProviderInit
+      ]
+    };
+  }
+}
