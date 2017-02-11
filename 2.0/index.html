@@ -71,100 +71,94 @@
     "reflect-metadata": "^0.1.3",
     "rxjs": "5.0.0-beta.6",
     "zone.js": "0.6.12",
-    <strong>"ionic-audio": "2.0.9"</strong>
+    <strong>"ionic-audio": "2.3.0"</strong>
 }
  </code></pre>
               </p>
             </li>
-            <li><h3>Edit <code>gulpfile.js</code> and add <code>ionic-audio.ts</code> to <code>src</code> array in both watch and build tasks:</h3>
+            <li><h3>Edit <code>tsconfig.json</code> and add <code>ionic-audio</code> to the <code>files</code> array:</h3>
               <p>
   <pre><code>
-gulp.task('watch', ['clean'], function(done){
-  runSequence(
-    ['sass', 'html', 'fonts', 'scripts'],
-    function(){
-      gulpWatch('app/**/*.scss', function(){ gulp.start('sass'); });
-      gulpWatch('app/**/*.html', function(){ gulp.start('html'); });
-      buildBrowserify({ 
-        watch: true, 
-        <strong>src: ['./app/app.ts', './node_modules/ionic-audio/dist/ionic-audio.ts', './typings/main.d.ts']</strong> 
-      }).on('end', done);
-    }
-  );
-});
-
-gulp.task('build', ['clean'], function(done){
-  runSequence(
-    ['sass', 'html', 'fonts', 'scripts'],
-    function(){
-      buildBrowserify({
-        minify: isRelease,
-        browserifyOptions: {
-          debug: !isRelease
-        },
-        uglifyOptions: {
-          mangle: false
-        },
-        <strong>src: ['./app/app.ts', './node_modules/ionic-audio/dist/ionic-audio.ts', './typings/main.d.ts']</strong>
-      }).on('end', done);
-    }
-  );
-});
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "target": "es5"
+  },
+  <strong>
+  "files": [
+    "node_modules/ionic-audio/dist/index.ts"
+  ],
+  </strong>
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
+  }
+}
   </code></pre>
               </p>
             </li>
-            <li><h3>Choose an audio provider for your app by injecting either <code>[WebAudioProvider]</code> for HTML5 audio, or <code>[CordovaAudioProvider]</code> for native audio in your <code>app.ts</code> file.<br> 
-            Alternatively, use the <code>AudioProvider.factory</code> function to automatically inject an audio provider in real-time
-            based on the current environment (native audio requires the <code>cordova-plugin-media</code> to be installed):</h3>
+            <li><h3>Add <code>IonicAudioModule</code> to your app's <code>app.module.ts</code>.<br> 
+            <code>IonicAudioModule.forRoot()</code> will automatically inject an audio provider in real-time
+            based on the current environment (native audio requires the <code>cordova-plugin-media</code> to be installed).
+              Alternatively, you can pass a specific provider instance to the <code>forRoot()</code> method.
+              </h3>
 
               <p>
   <pre><code>
-import {Component} from '@angular/core';
-import {ionicBootstrap, Platform} from 'ionic-angular';
-import {StatusBar} from 'ionic-native';
-import {TabsPage} from './pages/tabs/tabs';
+import { IonicAudioModule } from 'ionic-audio/dist';
 
-<strong>import {AudioProvider} from 'ionic-audio/dist/ionic-audio';</strong>
-
-// https://angular.io/docs/ts/latest/api/core/Type-interface.html
-import {Type, provide} from '@angular/core';
-
-@Component({
-  template: '&lt;ion-nav [root]="rootPage"&gt;&lt;/ion-nav&gt;'
+@NgModule({
+  declarations: [
+    MyApp,
+    AboutPage,
+    ContactPage,
+    HomePage,
+    TabsPage
+  ],
+  imports: [
+    IonicModule.forRoot(MyApp),
+    <strong>IonicAudioModule.forRoot()</strong>
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    AboutPage,
+    ContactPage,
+    HomePage,
+    TabsPage
+  ],
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
-export class MyApp {
-  rootPage: any = TabsPage;
+export class AppModule {}
 
-  constructor(platform: Platform) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
-    });
-  }
-}
-
-// Pass the main app component as the first argument
-// Pass any providers for your app in the second argument
-// Set any config for your app as the third argument:
-// http://ionicframework.com/docs/v2/api/config/Config/
-
-ionicBootstrap(MyApp, <strong>[provide(AudioProvider,  { useFactory: AudioProvider.factory })]</strong>, {
-
-});  
   </code></pre>
                </p>
             </li>
-            <li><h3>Import ionic-audio components and directives in every page where needed:</h3>
+            <li><h3>Import and inject AudioProvider where needed (optional):</h3>
               <p>
   <pre><code>
 import {Component, Provider} from '@angular/core';
-<strong>import {AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent, AudioTimePipe, AudioProvider} from 'ionic-audio/dist/ionic-audio';</strong>
+<strong>import { AudioProvider } from 'ionic-audio/dist';</strong>
 
 @Component({
-  templateUrl: 'build/pages/page1/page1.html',
-  <strong>directives: [AudioTrackComponent, AudioTrackPlayComponent, AudioTrackProgressComponent, AudioTrackProgressBarComponent]</strong>,
-  providers: [] 
+  templateUrl: 'build/pages/page1/page1.html'
 })
 export class Page1 {
   myTracks: any[];
@@ -191,6 +185,16 @@ export class Page1 {
   ngAfterContentInit() {     
     // get all tracks managed by AudioProvider so we can control playback via the API
     this.allTracks = this._audioProvider.tracks; 
+  }
+  
+  playSelectedTrack() {
+    // use AudioProvider to control selected track 
+    this._audioProvider.play(this.selectedTrack);
+  }
+  
+  pauseSelectedTrack() {
+     // use AudioProvider to control selected track 
+     this._audioProvider.pause(this.selectedTrack);
   }
          
   onTrackFinished(track: any) {
