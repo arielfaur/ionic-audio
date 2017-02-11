@@ -6,7 +6,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { IonicAudioModule } from './ionic-audio/ionic-audio.module';
+import { IonicAudioModule } from 'ionic-audio/dist';
 
 @NgModule({
   declarations: [
