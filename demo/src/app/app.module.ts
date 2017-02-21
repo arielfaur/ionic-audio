@@ -6,7 +6,14 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { IonicAudioModule } from 'ionic-audio/dist';
+import { IonicAudioModule, AudioProvider, WebAudioProvider, audioProviderFactory } from 'ionic-audio/dist';
+
+/**
+ * Sample custom factory function to use with ionic-audio
+ */
+export function myCustomAudioProviderFactory() {
+  return new WebAudioProvider();
+}
 
 @NgModule({
   declarations: [
@@ -18,7 +25,9 @@ import { IonicAudioModule } from 'ionic-audio/dist';
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    IonicAudioModule.forRoot()
+    IonicAudioModule.forRoot({ provide: AudioProvider, useFactory: audioProviderFactory }), 
+    // or use custom function above to force a specific provider
+    // { provide: AudioProvider, useFactory: myCustomAudioProviderFactory }
   ],
   bootstrap: [IonicApp],
   entryComponents: [
