@@ -25,9 +25,8 @@ export function myCustomAudioProviderFactory() {
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    IonicAudioModule.forRoot({ provide: AudioProvider, useFactory: audioProviderFactory }), 
-    // or use custom function above to force a specific provider
-    // { provide: AudioProvider, useFactory: myCustomAudioProviderFactory }
+    IonicAudioModule.forRoot(),
+    // or use custom function above as forRoot argument to force a specific provider
   ],
   bootstrap: [IonicApp],
   entryComponents: [
