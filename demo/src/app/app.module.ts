@@ -6,7 +6,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { IonicAudioModule, AudioProvider, WebAudioProvider, audioProviderFactory } from 'ionic-audio/dist';
+import { IonicAudioModule, AudioProvider, WebAudioProvider } from 'ionic-audio/dist';
 
 /**
  * Sample custom factory function to use with ionic-audio
