@@ -13,9 +13,6 @@
     "sourceMap": true,
     "target": "es5"
   },
-  "files": [
-    "node_modules/ionic-audio/dist/index.ts"
-  ],
   "include": [
     "src/**/*.ts"
   ],
