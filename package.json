@@ -2,9 +2,28 @@
   "name": "ionic-audio",
   "version": "2.3.1",
   "description": "An audio player for Ionic 2 and Angular 2",
-  "main": "dist/ionic-audio/ionic-audio.module.ts",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "scripts": {
+    "prepublish": "tsc -p ./",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@angular/common": "2.2.1",
+    "@angular/compiler": "2.2.1",
+    "@angular/compiler-cli": "2.2.1",
+    "@angular/core": "2.2.1",
+    "@angular/forms": "2.2.1",
+    "@angular/http": "2.2.1",
+    "@angular/platform-browser": "2.2.1",
+    "@angular/platform-browser-dynamic": "2.2.1",
+    "@angular/platform-server": "2.2.1",
+    "ionic-angular": "2.1.0",
+    "rxjs": "5.0.0-beta.12",
+    "zone.js": "0.6.26"
+  },
+  "devDependencies": {
+    "typescript": "2.0.9"
   },
   "repository": {
     "type": "git",
