@@ -57,6 +57,9 @@ export class AudioTrackComponent implements DoCheck {
   constructor(private _audioProvider: AudioProvider) {}
   
   ngOnInit() {
+     this.render();
+  }
+  render() {
     if (!(this.track instanceof WebAudioTrack) && !(this.track instanceof CordovaAudioTrack)) {
       this._audioTrack = this._audioProvider.create(this.track); 
     } else {
@@ -65,7 +68,7 @@ export class AudioTrackComponent implements DoCheck {
     }
     
     // update input track parameter with track is so we pass it to WebAudioProvider if needed
-    this.track.id = this._audioTrack.id; 
+    this.track.id = this._audioTrack.id;
   }
   
   play() {    
@@ -150,6 +153,12 @@ export class AudioTrackComponent implements DoCheck {
       if (this._isFinished) {
         this.onFinish.emit(this.track);       
       }
+    }
+  }
+  //two way biding enable with ioic-audio
+  ngOnChanges(change) {
+    if(change.track) {
+      this.render();
     }
   }
 }
