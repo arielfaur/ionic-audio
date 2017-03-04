@@ -178,9 +178,10 @@ export class Page1 {
         &lt;img src="{{audio.art}}"&gt;
         &lt;audio-track-play dark [audioTrack]="audio"&gt;&lt;ion-spinner&gt;&lt;/ion-spinner&gt;&lt;/audio-track-play&gt;  
       &lt;/ion-thumbnail&gt;
-      
-      &lt;p&gt;&lt;strong&gt;{{audio.title}}&lt;/strong&gt; &#x26AC; &lt;em&gt;{{audio.artist}}&lt;/em&gt;&lt;/p&gt;
-      &lt;audio-track-progress-bar dark duration progress [audioTrack]="audio" [ngStyle]="{visibility: audio.completed &gt; 0 ? 'visible' : 'hidden'}"&gt;&lt;/audio-track-progress-bar&gt;
+      &lt;div item-content style="width:100%"&gt;
+        &lt;p&gt;&lt;strong&gt;{{audio.title}}&lt;/strong&gt; &#x26AC; &lt;em&gt;{{audio.artist}}&lt;/em&gt;&lt;/p&gt;
+        &lt;audio-track-progress-bar dark duration progress [audioTrack]="audio" [ngStyle]="{visibility: audio.completed &gt; 0 ? 'visible' : 'hidden'}"&gt;&lt;/audio-track-progress-bar&gt;
+      &lt;/div&gt;
     &lt;/ion-item&gt;    
   &lt;/audio-track&gt;</strong>
 &lt;/ion-list&gt;
