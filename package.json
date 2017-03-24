@@ -6,23 +6,24 @@
   "typings": "./dist/index.d.ts",
   "scripts": {
     "prepublish": "tsc -p ./",
+    "build": "npm install && npm run prepublish",
+    "release": "npm run build && npm publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "@angular/common": "2.2.1",
-    "@angular/compiler": "2.2.1",
-    "@angular/compiler-cli": "2.2.1",
-    "@angular/core": "2.2.1",
-    "@angular/forms": "2.2.1",
-    "@angular/http": "2.2.1",
-    "@angular/platform-browser": "2.2.1",
-    "@angular/platform-browser-dynamic": "2.2.1",
-    "@angular/platform-server": "2.2.1",
-    "ionic-angular": "2.1.0",
-    "rxjs": "5.0.0-beta.12",
-    "zone.js": "0.6.26"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@angular/core": "2.4.8",
+    "@angular/common": "2.4.8",
+    "@angular/compiler": "2.4.8",
+    "@angular/compiler-cli": "2.4.8", 
+    "@angular/forms": "2.4.8",
+    "@angular/http": "2.4.8",
+    "@angular/platform-browser": "2.4.8",
+    "@angular/platform-browser-dynamic": "2.4.8",
+    "@angular/platform-server": "2.4.8",
+    "ionic-angular": "2.2.0",
+    "rxjs": "5.0.1",
+    "zone.js": "0.7.2",
     "typescript": "2.0.9"
   },
   "repository": {
