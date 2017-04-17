@@ -6,12 +6,12 @@ audio-track {
       top: 0;
       position: absolute;
       .md & {
-        @import "../../../node_modules/ionic-angular/components/item/item.md";
+        @import "node_modules/ionic-angular/components/item/item.md";
         margin-top: ($item-md-padding-right / 2);
       }
       
       .ios & {
-        @import "../../../node_modules/ionic-angular/components/item/item.ios";
+        @import "node_modules/ionic-angular/components/item/item.ios";
         margin-top: ($item-ios-padding-right / 2);
       }
     }
@@ -21,14 +21,14 @@ audio-track {
         display: inline-flex;
           
         .md & {
-          @import "../../../node_modules/ionic-angular/components/item/item.md";
+          @import "node_modules/ionic-angular/components/item/item.md";
           min-width: $item-md-thumbnail-size;
           min-height: $item-md-thumbnail-size;
           margin: ($item-md-padding-right / 2) $item-md-padding-right ($item-md-padding-right / 2) 0;
         }
         
         .ios & {
-          @import "../../../node_modules/ionic-angular/components/item/item.ios";
+          @import "node_modules/ionic-angular/components/item/item.ios";
           min-width: $item-ios-thumbnail-size;
           min-height: $item-ios-thumbnail-size;
           margin: ($item-ios-padding-right / 2) $item-ios-padding-right ($item-ios-padding-right / 2) 0;
