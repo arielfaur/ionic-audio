@@ -1,4 +1,4 @@
-# Ionic Audio for Ionic 2
+# Ionic Audio for Ionic 3
 
 An audio player plugin for Ionic that works out of the box in the browser and device using an underlying audio provider depending on the environment. When running inside the browser the plugin will default to a Web Audio provider, whereas on a device it will switch to Cordova Media if cordova-plugin-media is available, otherwise falls back to web audio.
 
@@ -18,9 +18,9 @@ Make sure you have Ionic and Angular installed.
 npm install --save ionic-audio
 ```
 
-**For Ionic 2 version 2.0.0 to 2.1.0:**
+**For Ionic 3:**
 ```
-npm install --save ionic-audio@2.3.4
+npm install --save ionic-audio@3.0.0
 ```
 
 

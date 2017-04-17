@@ -1,7 +1,7 @@
 {
   "name": "ionic-audio",
   "version": "3.0.0",
-  "description": "An audio player for Ionic 2 and Angular 2",
+  "description": "An audio player for Ionic 3 and Angular 4",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
