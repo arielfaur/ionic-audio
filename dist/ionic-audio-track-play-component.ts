@@ -38,12 +38,11 @@ import {Component, ElementRef, Input} from '@angular/core';
 @Component({
     selector: 'audio-track-play',
     template: `
-    <button ion-button icon-only clear (click)="toggle($event)" [disabled]="audioTrack.error || audioTrack.isLoading">
-      <ion-icon name="pause" *ngIf="audioTrack.isPlaying && !audioTrack.isLoading"></ion-icon>
-      <ion-icon name="play" *ngIf="!audioTrack.isPlaying && !audioTrack.isLoading"></ion-icon>
-      <ng-content *ngIf="audioTrack.isLoading && !audioTrack.error"></ng-content>
-    </button>
-    `
+    <button class="btn-play-pause" ion-button round icon-only color="secondary" (click)="toggleStop()">
+        <ion-icon name="pause" *ngIf="audioTrack.isPlaying && !audioTrack.isLoading"></ion-icon>
+        <ion-icon name="play" *ngIf="!audioTrack.isPlaying && !audioTrack.isLoading"></ion-icon>
+        <ng-content *ngIf="audioTrack.isLoading && !audioTrack.error"></ng-content>
+    </button>`
 })
 export class AudioTrackPlayComponent {
   
@@ -78,12 +77,20 @@ export class AudioTrackPlayComponent {
   }
   
   constructor(private el: ElementRef) {}
-  
-  toggle(event: Event){    
+
+  toggle(event: Event){
     if (this.audioTrack.isPlaying) {
       this.audioTrack.pause()
     } else {
       this.audioTrack.play()
-    } 
+    }
+  }
+
+  toggleStop(event: Event){
+    if (this.audioTrack.isPlaying) {
+        this.audioTrack.stop();
+    } else {
+      this.audioTrack.play();
+    }
   }
 }

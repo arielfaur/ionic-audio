@@ -247,6 +247,8 @@ export class WebAudioTrack implements IAudioTrack {
    * @method destroy
    */
   destroy() {
+    this.isLoaded = false;
+    this._hasLoaded = false;
     this.audio = undefined;  
     console.log(`Released track ${this.src}`);
   }

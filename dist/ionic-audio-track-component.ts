@@ -83,18 +83,31 @@ export class AudioTrackComponent implements DoCheck {
     this._audioTrack.play();
     this._audioProvider.current = this._audioTrack.id;
   }
-  
+
   pause() {
     this._audioTrack.pause();
     this._audioProvider.current = undefined;
   }
-  
+
+  stop() {
+    this._audioTrack.stop();
+    this._audioProvider.current = undefined;
+  }
+
   toggle() {
     if (this._audioTrack.isPlaying) {
       this.pause();
     } else {
       this.play();
-    }  
+    }
+  }
+
+  toggleStop() {
+    if (this._audioTrack.isPlaying) {
+      this.stop();
+    } else {
+      this.play();
+    }
   }
   
   seekTo(time:number) {
