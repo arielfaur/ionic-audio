@@ -44,6 +44,7 @@ export interface IAudioTrack extends ITrackConstraint {
   isPlaying: boolean; 
   isLoading: boolean;
   isFinished: boolean;
+  isLoaded: boolean;
   duration: number;
   progress: number;
   completed: number;

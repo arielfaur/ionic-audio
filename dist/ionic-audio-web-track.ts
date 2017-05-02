@@ -17,6 +17,7 @@ export class WebAudioTrack implements IAudioTrack {
   private audio: HTMLAudioElement;
   public isPlaying: boolean = false;
   public isFinished: boolean = false;
+  public isLoaded: boolean = false;
   private _progress: number = 0;
   private _completed: number = 0;
   private _duration: number;
@@ -48,6 +49,7 @@ export class WebAudioTrack implements IAudioTrack {
     this.audio.addEventListener("canplay", () => {
       console.log(`Loaded track ${this.src}`);
       this._isLoading = false;
+      this.isLoaded = true;
       this._hasLoaded = true;
     }, false);
     

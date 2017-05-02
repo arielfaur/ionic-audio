@@ -52,6 +52,17 @@ export class AudioTrackComponent implements DoCheck {
   @Output() onFinish = new EventEmitter<ITrackConstraint>();
   
   private _isFinished: boolean = false;
+
+  /**
+   * Output property expects an event handler to be notified whenever playback has loaded
+   *
+   * @property onLoaded
+   * @type {EventEmitter}
+   */
+  @Output() onLoaded: EventEmitter <ITrackConstraint> = new EventEmitter();
+
+  private _isLoaded: boolean = false;
+
   private _audioTrack: IAudioTrack;
   
   constructor(private _audioProvider: AudioProvider) {}
@@ -149,6 +160,12 @@ export class AudioTrackComponent implements DoCheck {
       // track has stopped, trigger finish event
       if (this._isFinished) {
         this.onFinish.emit(this.track);       
+      }
+    }
+    if(!Object.is(this._audioTrack.isLoaded, this._isLoaded)) {
+      this._isLoaded = this._audioTrack.isLoaded;
+      if (this._isLoaded) {
+        this.onLoaded.emit(this.track);
       }
     }
   }

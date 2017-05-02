@@ -16,6 +16,7 @@ export class CordovaAudioTrack implements IAudioTrack {
   private audio: any;
   public isPlaying: boolean = false;
   public isFinished: boolean = false;
+  public isLoaded: boolean = false;
   private _progress: number = 0;
   private _completed: number = 0;
   private _duration: number;
@@ -46,6 +47,7 @@ export class CordovaAudioTrack implements IAudioTrack {
         case Media.MEDIA_STARTING:
           console.log(`Loaded track ${this.src}`);
           this._hasLoaded = true;
+          this.isLoaded = true;
           break;
         case Media.MEDIA_RUNNING:
           console.log(`Playing track ${this.src}`);
