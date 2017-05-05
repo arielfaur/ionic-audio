@@ -51,6 +51,14 @@ export class CordovaAudioTrack implements IAudioTrack {
   onStop: Subject<IAudioTrack> = new Subject<IAudioTrack>();
 
   /**
+   * Notifies when playback has paused
+   *
+   * @property onPlayBegin
+   * @type {EventEmitter}
+   */
+  onPause: Subject<IAudioTrack> = new Subject<IAudioTrack>();
+
+  /**
    * Notifies when playback has completed
    *
    * @property onPlayBegin
@@ -109,6 +117,7 @@ export class CordovaAudioTrack implements IAudioTrack {
           break;
         case Media.MEDIA_PAUSED:
           this.isPlaying = false;
+          this.onPause.next(this);
           break
         case Media.MEDIA_STOPPED:
           this.isPlaying = false;

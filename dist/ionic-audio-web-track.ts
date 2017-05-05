@@ -52,6 +52,14 @@ export class WebAudioTrack implements IAudioTrack {
   onStop: Subject<IAudioTrack> = new Subject<IAudioTrack>();
 
   /**
+   * Notifies when playback has paused
+   *
+   * @property onPlayBegin
+   * @type {EventEmitter}
+   */
+  onPause: Subject<IAudioTrack> = new Subject<IAudioTrack>();
+
+  /**
    * Notifies when playback has completed
    *
    * @property onPlayBegin
@@ -271,6 +279,7 @@ export class WebAudioTrack implements IAudioTrack {
     console.log(`Pausing track ${this.src}`);
     this.audio.pause();
     this.isPlaying = false;
+    this.onPause.next(this);
   }
 
   /**

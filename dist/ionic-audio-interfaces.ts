@@ -61,6 +61,7 @@ export interface IAudioTrack extends ITrackConstraint {
   onLoaded: Subject<IAudioTrack>;
   onPlaying: Subject<IAudioTrack>;
   onStop: Subject<IAudioTrack>;
+  onPause: Subject<IAudioTrack>;
   onFinished: Subject<IAudioTrack>;
   onProgressChange: Subject<IAudioTrack>;
   onError: Subject<IAudioTrackError>;
