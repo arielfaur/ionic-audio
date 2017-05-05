@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 /**
  * Defines the audio provider contract
@@ -58,12 +58,12 @@ export interface IAudioTrack extends ITrackConstraint {
   seekTo(time: number);
   destroy();
 
-  onLoaded: EventEmitter<IAudioTrack>;
-  onPlaying: EventEmitter<IAudioTrack>;
-  onStop: EventEmitter<IAudioTrack>;
-  onFinished: EventEmitter<IAudioTrack>;
-  onProgressChange: EventEmitter<IAudioTrack>;
-  onError: EventEmitter<IAudioTrackError>;
+  onLoaded: Subject<IAudioTrack>;
+  onPlaying: Subject<IAudioTrack>;
+  onStop: Subject<IAudioTrack>;
+  onFinished: Subject<IAudioTrack>;
+  onProgressChange: Subject<IAudioTrack>;
+  onError: Subject<IAudioTrackError>;
 }
 
 /**

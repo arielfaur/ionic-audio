@@ -1,5 +1,6 @@
 import {IAudioTrack, IAudioTrackError} from './ionic-audio-interfaces';
-import {Injectable, EventEmitter} from '@angular/core';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs/Subject';
 
 declare let Media: any;
 
@@ -31,7 +32,7 @@ export class CordovaAudioTrack implements IAudioTrack {
    * @property onPlayBegin
    * @type {EventEmitter}
    */
-  onLoaded: EventEmitter<IAudioTrack> = new EventEmitter();
+  onLoaded: Subject<IAudioTrack> = new Subject<IAudioTrack>();
 
   /**
    * Notifies when playback has begun
@@ -39,15 +40,15 @@ export class CordovaAudioTrack implements IAudioTrack {
    * @property onPlayBegin
    * @type {EventEmitter}
    */
-  onPlaying: EventEmitter<IAudioTrack> = new EventEmitter();
+  onPlaying: Subject<IAudioTrack> = new Subject<IAudioTrack>();
 
   /**
-   * Notifies when playback has begun
+   * Notifies when playback has stopped
    *
    * @property onPlayBegin
    * @type {EventEmitter}
    */
-  onStop: EventEmitter<IAudioTrack> = new EventEmitter();
+  onStop: Subject<IAudioTrack> = new Subject<IAudioTrack>();
 
   /**
    * Notifies when playback has completed
@@ -55,15 +56,15 @@ export class CordovaAudioTrack implements IAudioTrack {
    * @property onPlayBegin
    * @type {EventEmitter}
    */
-  onFinished: EventEmitter<IAudioTrack> = new EventEmitter();
+  onFinished: Subject<IAudioTrack> = new Subject<IAudioTrack>();
 
   /**
-   * Notifies when playback has begun
+   * Notifies when playback progress has changed
    *
    * @property onPlayBegin
    * @type {EventEmitter}
    */
-  onProgressChange: EventEmitter<IAudioTrack> = new EventEmitter();
+  onProgressChange: Subject<IAudioTrack> = new Subject<IAudioTrack>();
 
   /**
    * Notifies when the media has experienced an error
@@ -71,7 +72,7 @@ export class CordovaAudioTrack implements IAudioTrack {
    * @property onPlayBegin
    * @type {EventEmitter}
    */
-  onError: EventEmitter<IAudioTrackError> = new EventEmitter();
+  onError: Subject<IAudioTrackError> = new Subject<IAudioTrackError>();
 
   constructor(public src: string) {
     if (window['cordova'] === undefined || window['Media'] === undefined) {
@@ -87,31 +88,31 @@ export class CordovaAudioTrack implements IAudioTrack {
        console.log('Finished playback');
        this.stopTimer();
        this.isFinished = true;
-       this.onFinished.emit(this);
+       this.onFinished.next(this);
        this.destroy();  // TODO add parameter to control whether to release audio on stop or finished
     }, (err) => {
       console.log(`Audio error => track ${this.src}`, err);
-      this.onError.emit({track: this, error: err});
+      this.onError.next({track: this, error: err});
     }, (status) => {
       switch (status) {
         case Media.MEDIA_STARTING:
           console.log(`Loaded track ${this.src}`);
           this._hasLoaded = true;
           this.isLoaded = true;
-          this.onLoaded.emit(this);
+          this.onLoaded.next(this);
           break;
         case Media.MEDIA_RUNNING:
           console.log(`Playing track ${this.src}`);
           this.isPlaying = true;
           this._isLoading = false;
-          this.onPlaying.emit(this);
+          this.onPlaying.next(this);
           break;
         case Media.MEDIA_PAUSED:
           this.isPlaying = false;
           break
         case Media.MEDIA_STOPPED:
           this.isPlaying = false;
-          this.onStop.emit(this);
+          this.onStop.next(this);
           break;
       }
     });
@@ -127,7 +128,7 @@ export class CordovaAudioTrack implements IAudioTrack {
             if (position > -1) {
               this._progress = Math.round(position*100)/100;
               this._completed = this._duration > 0 ? Math.round(this._progress / this._duration * 100)/100 : 0;
-              this.onProgressChange.emit(this);
+              this.onProgressChange.next(this);
             }
         }, (e) => {
             console.log("Error getting position", e);

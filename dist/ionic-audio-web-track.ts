@@ -1,5 +1,6 @@
 import {IAudioTrack, IAudioTrackError} from './ionic-audio-interfaces';
-import {Injectable, Optional, EventEmitter} from '@angular/core';
+import {Injectable, Optional} from '@angular/core';
+import {Subject} from 'rxjs/Subject';
 
 declare let window;
 window.AudioContext = window['AudioContext'] || window['webkitAudioContext'];
@@ -32,7 +33,7 @@ export class WebAudioTrack implements IAudioTrack {
    * @property onPlayBegin
    * @type {EventEmitter}
    */
-  onLoaded: EventEmitter<IAudioTrack> = new EventEmitter();
+  onLoaded: Subject<IAudioTrack> = new Subject<IAudioTrack>();
 
   /**
    * Notifies when playback has begun
@@ -40,7 +41,7 @@ export class WebAudioTrack implements IAudioTrack {
    * @property onPlayBegin
    * @type {EventEmitter}
    */
-  onPlaying: EventEmitter<IAudioTrack> = new EventEmitter();
+  onPlaying: Subject<IAudioTrack> = new Subject<IAudioTrack>();
 
   /**
    * Notifies when playback has stopped
@@ -48,7 +49,7 @@ export class WebAudioTrack implements IAudioTrack {
    * @property onPlayBegin
    * @type {EventEmitter}
    */
-  onStop: EventEmitter<IAudioTrack> = new EventEmitter();
+  onStop: Subject<IAudioTrack> = new Subject<IAudioTrack>();
 
   /**
    * Notifies when playback has completed
@@ -56,7 +57,7 @@ export class WebAudioTrack implements IAudioTrack {
    * @property onPlayBegin
    * @type {EventEmitter}
    */
-  onFinished: EventEmitter<IAudioTrack> = new EventEmitter();
+  onFinished: Subject<IAudioTrack> = new Subject<IAudioTrack>();
 
   /**
    * Notifies when playback progress has changed
@@ -64,7 +65,7 @@ export class WebAudioTrack implements IAudioTrack {
    * @property onPlayBegin
    * @type {EventEmitter}
    */
-  onProgressChange: EventEmitter<IAudioTrack> = new EventEmitter();
+  onProgressChange: Subject<IAudioTrack> = new Subject<IAudioTrack>();
 
   /**
    * Notifies when the media has experienced an error
@@ -72,7 +73,7 @@ export class WebAudioTrack implements IAudioTrack {
    * @property onPlayBegin
    * @type {EventEmitter}
    */
-  onError: EventEmitter<IAudioTrackError> = new EventEmitter();
+  onError: Subject<IAudioTrackError> = new Subject<IAudioTrackError>();
 
   constructor(public src: string, @Optional() public preload: string = 'none') {
     // audio context not needed for now
@@ -94,7 +95,7 @@ export class WebAudioTrack implements IAudioTrack {
     this.audio.addEventListener("error", (err) => {
       console.log(`Audio error => track ${this.src}`, err);
       this.isPlaying = false;
-      this.onError.emit({track: this, error: err});
+      this.onError.next({track: this, error: err});
     }, false);
 
     this.audio.addEventListener("canplay", () => {
@@ -102,20 +103,20 @@ export class WebAudioTrack implements IAudioTrack {
       this._isLoading = false;
       this.isLoaded = true;
       this._hasLoaded = true;
-      this.onLoaded.emit(this);
+      this.onLoaded.next(this);
     }, false);
 
     this.audio.addEventListener("playing", () => {
       console.log(`Playing track ${this.src}`);
       this.isFinished = false;
       this.isPlaying = true;
-      this.onPlaying.emit(this);
+      this.onPlaying.next(this);
     }, false);
 
     this.audio.addEventListener("ended", () => {
       this.isPlaying = false;
       this.isFinished = true;
-      this.onFinished.emit(this);
+      this.onFinished.next(this);
       console.log('Finished playback');
     }, false);
 
@@ -128,7 +129,7 @@ export class WebAudioTrack implements IAudioTrack {
     if (this.isPlaying && this.audio.currentTime > 0) {
       this._progress = this.audio.currentTime;
       this._completed = this.audio.duration > 0 ? Math.trunc (this.audio.currentTime / this.audio.duration * 100)/100 : 0;
-      this.onProgressChange.emit(this);
+      this.onProgressChange.next(this);
     }
   }
 
