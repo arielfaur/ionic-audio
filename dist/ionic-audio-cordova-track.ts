@@ -17,6 +17,7 @@ export class CordovaAudioTrack implements IAudioTrack {
   public isPlaying: boolean = false;
   public isFinished: boolean = false;
   public isLoaded: boolean = false;
+  public hasError: boolean = false;
   private _progress: number = 0;
   private _completed: number = 0;
   private _duration: number;
@@ -38,27 +39,32 @@ export class CordovaAudioTrack implements IAudioTrack {
     this.audio = new Media(this.src, () => {
        console.log('Finished playback');
        this.stopTimer();
-       this.isFinished = true;  
+       this.isFinished = true;
        this.destroy();  // TODO add parameter to control whether to release audio on stop or finished
     }, (err) => {
-      console.log(`Audio error => track ${this.src}`, err);   
+      console.log(`Audio error => track ${this.src}`, err);
+      this.hasError = true;
     }, (status) => {
       switch (status) {
         case Media.MEDIA_STARTING:
           console.log(`Loaded track ${this.src}`);
           this._hasLoaded = true;
           this.isLoaded = true;
+          this.hasError = false;
           break;
         case Media.MEDIA_RUNNING:
           console.log(`Playing track ${this.src}`);
           this.isPlaying = true;
-          this._isLoading = false;          
+          this._isLoading = false;
+          this.hasError = false;
           break; 
         case Media.MEDIA_PAUSED:
           this.isPlaying = false;
-          break
+          this.hasError = false;
+          break;
         case Media.MEDIA_STOPPED:
           this.isPlaying = false;
+          this.hasError = false;
           break;
       }
     });  
@@ -241,6 +247,7 @@ export class CordovaAudioTrack implements IAudioTrack {
    * @method destroy
    */
   destroy() {
+    this.hasError = false;
     this.isLoaded = false;
     this._hasLoaded = false;
     this.audio.release();  

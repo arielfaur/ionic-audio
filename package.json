@@ -5,6 +5,8 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
+    "watch": "nodemon -e ts -x \"npm run build\"",
+    "build": "node_modules/.bin/tsc -p ./",
     "prepublish": "tsc -p ./",
     "release": "npm run prepublish && npm publish",
     "test": "echo \"Error: no test specified\" && exit 1"

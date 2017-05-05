@@ -63,6 +63,16 @@ export class AudioTrackComponent implements DoCheck {
 
   private _isLoaded: boolean = false;
 
+  /**
+   * Output property expects an event handler to be notified whenever playback has detected an error
+   *
+   * @property onLoaded
+   * @type {EventEmitter}
+   */
+  @Output() onError: EventEmitter <Error> = new EventEmitter();
+
+  private _hasError: boolean = false;
+
   private _audioTrack: IAudioTrack;
   
   constructor(private _audioProvider: AudioProvider) {}
@@ -179,6 +189,12 @@ export class AudioTrackComponent implements DoCheck {
       this._isLoaded = this._audioTrack.isLoaded;
       if (this._isLoaded) {
         this.onLoaded.emit(this.track);
+      }
+    }
+    if(!Object.is(this._audioTrack.hasError, this._hasError)) {
+      this._hasError = this._audioTrack.hasError;
+      if (this._hasError) {
+        this.onError.emit(new Error('Error when reading audio'));
       }
     }
   }
