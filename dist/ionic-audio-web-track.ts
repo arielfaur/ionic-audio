@@ -283,7 +283,7 @@ export class WebAudioTrack implements IAudioTrack {
     this.pause();
     this.audio.removeEventListener("timeupdate", (e) => { this.onTimeUpdate(e); });
     this.isFinished = true;
-    this.onStop.emit(this);
+    this.onStop.next(this);
     this.destroy();
   }
 
