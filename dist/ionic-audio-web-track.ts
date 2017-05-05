@@ -17,6 +17,8 @@ export class WebAudioTrack implements IAudioTrack {
   private audio: HTMLAudioElement;
   public isPlaying: boolean = false;
   public isFinished: boolean = false;
+  public isLoaded: boolean = false;
+  public hasError: boolean = false;
   private _progress: number = 0;
   private _completed: number = 0;
   private _duration: number;
@@ -43,23 +45,28 @@ export class WebAudioTrack implements IAudioTrack {
     this.audio.addEventListener("error", (err) => {
       console.log(`Audio error => track ${this.src}`, err);
       this.isPlaying = false;
+      this.hasError = true;
     }, false);
     
     this.audio.addEventListener("canplay", () => {
       console.log(`Loaded track ${this.src}`);
       this._isLoading = false;
+      this.isLoaded = true;
       this._hasLoaded = true;
+      this.hasError = false;
     }, false);
     
     this.audio.addEventListener("playing", () => {
       console.log(`Playing track ${this.src}`);
       this.isFinished = false;
       this.isPlaying = true;
+      this.hasError = false;
     }, false);
     
     this.audio.addEventListener("ended", () => {
       this.isPlaying = false;
       this.isFinished = true;
+      this.hasError = false;
       console.log('Finished playback');
     }, false);
     
@@ -245,6 +252,9 @@ export class WebAudioTrack implements IAudioTrack {
    * @method destroy
    */
   destroy() {
+    this.isLoaded = false;
+    this._hasLoaded = false;
+    this.hasError = false;
     this.audio = undefined;  
     console.log(`Released track ${this.src}`);
   }

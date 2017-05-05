@@ -44,12 +44,13 @@ export interface IAudioTrack extends ITrackConstraint {
   isPlaying: boolean; 
   isLoading: boolean;
   isFinished: boolean;
+  isLoaded: boolean;
+  hasError: boolean;
   duration: number;
   progress: number;
   completed: number;
   canPlay:  boolean;
   error: MediaError;
-  
   play();
   pause();
   stop();

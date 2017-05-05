@@ -52,6 +52,27 @@ export class AudioTrackComponent implements DoCheck {
   @Output() onFinish = new EventEmitter<ITrackConstraint>();
   
   private _isFinished: boolean = false;
+
+  /**
+   * Output property expects an event handler to be notified whenever playback has loaded
+   *
+   * @property onLoaded
+   * @type {EventEmitter}
+   */
+  @Output() onLoaded: EventEmitter <ITrackConstraint> = new EventEmitter();
+
+  private _isLoaded: boolean = false;
+
+  /**
+   * Output property expects an event handler to be notified whenever playback has detected an error
+   *
+   * @property onLoaded
+   * @type {EventEmitter}
+   */
+  @Output() onError: EventEmitter <Error> = new EventEmitter();
+
+  private _hasError: boolean = false;
+
   private _audioTrack: IAudioTrack;
   
   constructor(private _audioProvider: AudioProvider) {}
@@ -72,18 +93,31 @@ export class AudioTrackComponent implements DoCheck {
     this._audioTrack.play();
     this._audioProvider.current = this._audioTrack.id;
   }
-  
+
   pause() {
     this._audioTrack.pause();
     this._audioProvider.current = undefined;
   }
-  
+
+  stop() {
+    this._audioTrack.stop();
+    this._audioProvider.current = undefined;
+  }
+
   toggle() {
     if (this._audioTrack.isPlaying) {
       this.pause();
     } else {
       this.play();
-    }  
+    }
+  }
+
+  toggleStop() {
+    if (this._audioTrack.isPlaying) {
+      this.stop();
+    } else {
+      this.play();
+    }
   }
   
   seekTo(time:number) {
@@ -149,6 +183,18 @@ export class AudioTrackComponent implements DoCheck {
       // track has stopped, trigger finish event
       if (this._isFinished) {
         this.onFinish.emit(this.track);       
+      }
+    }
+    if(!Object.is(this._audioTrack.isLoaded, this._isLoaded)) {
+      this._isLoaded = this._audioTrack.isLoaded;
+      if (this._isLoaded) {
+        this.onLoaded.emit(this.track);
+      }
+    }
+    if(!Object.is(this._audioTrack.hasError, this._hasError)) {
+      this._hasError = this._audioTrack.hasError;
+      if (this._hasError) {
+        this.onError.emit(new Error('Error when reading audio'));
       }
     }
   }
