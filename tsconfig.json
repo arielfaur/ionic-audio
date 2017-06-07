@@ -22,16 +22,16 @@
     "rewriteTsconfig": false
   },
   "files": [
-    "dist/index.ts",
-    "dist/ionic-audio.module.ts",
-    "dist/ionic-audio-web-track.ts",
-    "dist/ionic-audio-track-progress-component.ts",
-    "dist/ionic-audio-track-play-component.ts",
-    "dist/ionic-audio-track-component.ts",
-    "dist/ionic-audio-time-pipe.ts",
-    "dist/ionic-audio-providers.ts",
-    "dist/ionic-audio-interfaces.ts",
-    "dist/ionic-audio-cordova-track.ts"
+    "src/index.ts",
+    "src/ionic-audio.module.ts",
+    "src/ionic-audio-web-track.ts",
+    "src/ionic-audio-track-progress-component.ts",
+    "src/ionic-audio-track-play-component.ts",
+    "src/ionic-audio-track-component.ts",
+    "src/ionic-audio-time-pipe.ts",
+    "src/ionic-audio-providers.ts",
+    "src/ionic-audio-interfaces.ts",
+    "src/ionic-audio-cordova-track.ts"
   ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true,

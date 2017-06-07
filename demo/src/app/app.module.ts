@@ -11,6 +11,14 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { IonicAudioModule, AudioProvider, WebAudioProvider, audioProviderFactory } from 'ionic-audio';
 
+let pages = [
+    MyApp,
+    AboutPage,
+    ContactPage,
+    HomePage,
+    TabsPage
+];
+
 /**
  * Sample custom factory function to use with ionic-audio
  */
@@ -18,30 +26,28 @@ export function myCustomAudioProviderFactory() {
   return new WebAudioProvider();
 }
 
+export function providers() {
+  return [{provide: ErrorHandler, useClass: IonicErrorHandler}, SplashScreen, StatusBar];
+}
+export function entryComponents() {
+  return pages;
+}
+export function declarations() {
+  return pages;
+}
+
 @NgModule({
-  declarations: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage
-  ],
+  declarations: declarations(),
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicAudioModule.forRoot({ provide: AudioProvider, useFactory: audioProviderFactory }), 
+    IonicAudioModule.forRoot({ provide: AudioProvider, useFactory: myCustomAudioProviderFactory }), 
     // or use custom function above to force a specific provider
     // { provide: AudioProvider, useFactory: myCustomAudioProviderFactory }
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage
-  ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, SplashScreen, StatusBar],
+  entryComponents: entryComponents(),
+  providers: providers(),
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule {}
