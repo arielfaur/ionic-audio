@@ -9,7 +9,10 @@
     "release": "npm run prepublish && npm publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "@angular/common": "4.0.0",
+    "@angular/core": "4.0.0",
     "@angular/compiler": "4.0.0",
     "@angular/compiler-cli": "4.0.0",
     "@angular/forms": "4.0.0",
@@ -24,13 +27,7 @@
     "ionicons": "3.0.0",
     "rxjs": "5.1.1",
     "sw-toolbox": "3.4.0",
-    "zone.js": "^0.8.4"
-  },
-  "peerDepedencies": {
-    "@angular/common": "^4.0.0",
-    "@angular/core": "^4.0.0"
-  },
-  "devDependencies": {
+    "zone.js": "^0.8.4",
     "typescript": "~2.2.1"
   },
   "repository": {
