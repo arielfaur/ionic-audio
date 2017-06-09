@@ -6,7 +6,7 @@ import {AudioTrackComponent} from './ionic-audio-track-component';
 import {AudioTrackProgressComponent, AudioTrackProgressBarComponent} from './ionic-audio-track-progress-component';
 import {AudioTrackPlayComponent} from './ionic-audio-track-play-component';
 import {AudioTimePipe} from './ionic-audio-time-pipe';
-import {AudioProvider, CordovaMediaProvider, WebAudioProvider} from './ionic-audio-providers';
+import {AudioProvider, audioProviderFactory} from './ionic-audio-providers';
 
 export function declarations() {
   return [
@@ -15,7 +15,15 @@ export function declarations() {
     AudioTrackProgressBarComponent,
     AudioTrackPlayComponent,
     AudioTimePipe
-  ] 
+  ]; 
+}
+
+export function providers(audioProvider?: any) {
+  audioProvider = audioProvider || { provide: AudioProvider, useFactory: audioProviderFactory }
+
+  return [
+    audioProvider
+  ];
 }
 
 @NgModule({
@@ -33,7 +41,7 @@ export class IonicAudioModule {
   static forRoot(audioProvider?: any): ModuleWithProviders {
     return {
       ngModule: IonicAudioModule,
-      providers: audioProvider
+      providers: providers(audioProvider)
     };
   }
 }

@@ -27,7 +27,11 @@ export function myCustomAudioProviderFactory() {
 }
 
 export function providers() {
-  return [{provide: ErrorHandler, useClass: IonicErrorHandler}, SplashScreen, StatusBar];
+  return [
+    {provide: ErrorHandler, useClass: IonicErrorHandler}, 
+    SplashScreen, 
+    StatusBar
+  ];
 }
 export function entryComponents() {
   return pages;
@@ -41,7 +45,7 @@ export function declarations() {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicAudioModule.forRoot({ provide: AudioProvider, useFactory: myCustomAudioProviderFactory }), 
+    IonicAudioModule.forRoot(), 
     // or use custom function above to force a specific provider
     // { provide: AudioProvider, useFactory: myCustomAudioProviderFactory }
   ],
