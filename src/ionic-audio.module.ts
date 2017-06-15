@@ -6,7 +6,7 @@ import {AudioTrackComponent} from './ionic-audio-track-component';
 import {AudioTrackProgressComponent, AudioTrackProgressBarComponent} from './ionic-audio-track-progress-component';
 import {AudioTrackPlayComponent} from './ionic-audio-track-play-component';
 import {AudioTimePipe} from './ionic-audio-time-pipe';
-import {AudioProvider, audioProviderFactory} from './ionic-audio-providers';
+import {AudioProvider} from './ionic-audio-providers';
 
 export function declarations() {
   return [
@@ -16,14 +16,6 @@ export function declarations() {
     AudioTrackPlayComponent,
     AudioTimePipe
   ]; 
-}
-
-export function providers(audioProvider?: any) {
-  audioProvider = audioProvider || { provide: AudioProvider, useFactory: audioProviderFactory }
-
-  return [
-    audioProvider
-  ];
 }
 
 @NgModule({
@@ -38,10 +30,12 @@ export class IonicAudioModule {
    * Configures Ionic Audio to use either Cordova or HTML5 audio.
    * If no ```audioProvider``` is set it will automatically choose one based on the current environment
    */
-  static forRoot(audioProvider?: any): ModuleWithProviders {
+  static forRoot(audioProviderFactory: any): ModuleWithProviders {
     return {
       ngModule: IonicAudioModule,
-      providers: providers(audioProvider)
+      providers: [
+        { provide: AudioProvider, useFactory: audioProviderFactory }
+      ]
     };
   }
 }

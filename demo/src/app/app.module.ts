@@ -45,9 +45,8 @@ export function declarations() {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicAudioModule.forRoot(), 
-    // or use custom function above to force a specific provider
-    // { provide: AudioProvider, useFactory: myCustomAudioProviderFactory }
+    IonicAudioModule.forRoot(myCustomAudioProviderFactory), 
+    // or use provided function imported above audioProviderFactory
   ],
   bootstrap: [IonicApp],
   entryComponents: entryComponents(),
