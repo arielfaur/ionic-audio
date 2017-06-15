@@ -9,7 +9,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { IonicAudioModule, AudioProvider, WebAudioProvider, audioProviderFactory } from 'ionic-audio';
+import { IonicAudioModule, WebAudioProvider, CordovaMediaProvider, defaultAudioProviderFactory } from 'ionic-audio';
 
 let pages = [
     MyApp,
@@ -23,7 +23,7 @@ let pages = [
  * Sample custom factory function to use with ionic-audio
  */
 export function myCustomAudioProviderFactory() {
-  return new WebAudioProvider();
+  return (window.hasOwnProperty('cordova')) ? new CordovaMediaProvider() : new WebAudioProvider();
 }
 
 export function providers() {
@@ -45,8 +45,8 @@ export function declarations() {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicAudioModule.forRoot(myCustomAudioProviderFactory), 
-    // or use provided function imported above audioProviderFactory
+    IonicAudioModule.forRoot(defaultAudioProviderFactory), 
+    // or use a custom provided function shown above myCustomAudioProviderFactory
   ],
   bootstrap: [IonicApp],
   entryComponents: entryComponents(),

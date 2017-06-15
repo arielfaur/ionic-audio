@@ -12,7 +12,7 @@ import {CordovaAudioTrack} from './ionic-audio-cordova-track';
  * @static
  * @return {IAudioProvider} An IAudioProvider instance 
  */
-export function audioProviderFactory() {
+export function defaultAudioProviderFactory() {
   return window.hasOwnProperty('cordova') && window.hasOwnProperty('Media') ? new CordovaMediaProvider() : new WebAudioProvider();
 }
 
