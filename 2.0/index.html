@@ -73,20 +73,28 @@
     "rxjs": "5.1.1",
     "sw-toolbox": "3.4.0",
     "zone.js": "^0.8.4",
-    <strong>"ionic-audio": "^3.0.0"</strong>
+    <strong>"ionic-audio": "^3.0.4"</strong>
 }
  </code></pre>
               </p>
             </li>
             <li><h3>Add <code>IonicAudioModule</code> to your app's <code>app.module.ts</code>.<br> 
-            <code>IonicAudioModule.forRoot()</code> will automatically inject an audio provider in real-time
+            Pass a factory function to <code>IonicAudioModule.forRoot()</code> to inject an audio provider in real-time
             based on the current environment (native audio requires the <code>cordova-plugin-media</code> to be installed).
-              Alternatively, you can pass a specific provider instance to the <code>forRoot()</code> method.
+            You can use the `defaultAudioProviderFactory` function or write your own one as shown below.
               </h3>
 
               <p>
   <pre><code>
-import { IonicAudioModule } from 'ionic-audio';
+import { IonicAudioModule, AudioProvider, WebAudioProvider, defaultAudioProviderFactory } from 'ionic-audio';
+
+/**
+ * Sample custom factory function to use with ionic-audio
+ */
+export function myCustomAudioProviderFactory() {
+  return (window.hasOwnProperty('cordova')) ? new CordovaMediaProvider() : new WebAudioProvider();
+}
+
 
 @NgModule({
   declarations: [
@@ -99,7 +107,7 @@ import { IonicAudioModule } from 'ionic-audio';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    <strong>IonicAudioModule.forRoot()</strong>
+    <strong>IonicAudioModule.forRoot(defaultAudioProviderFactory)</strong>
   ],
   bootstrap: [IonicApp],
   entryComponents: [
