@@ -48,11 +48,15 @@ export class AudioTrackProgressComponent {
 @Component({
     selector: 'audio-track-progress-bar',
     template: `
-    <ion-range [(ngModel)]="range" min="0" max="100" (ionChange)="seekTo()" name="progress" ngDefaultControl>
+    <input type="range" #seeker min="0" [max]="audioTrack.duration" step="any" [value]="audioTrack.progress" (change)="seekTo(seeker.value)">
+    `
+    /**
+     * 
+     * <ion-range [(ngModel)]="range" min="0" max="100" (ionChange)="seekTo()" name="progress" ngDefaultControl>
       <time *ngIf="showProgress" range-left>{{audioTrack.progress | audioTime}}</time>
       <time *ngIf="showDuration" range-right>{{audioTrack.duration | audioTime}}</time>
-    </ion-range>
-    `
+      </ion-range>
+     */
 })
 export class AudioTrackProgressBarComponent implements DoCheck {
   /**
@@ -97,14 +101,15 @@ export class AudioTrackProgressBarComponent implements DoCheck {
   }
   
   ngDoCheck() {
-    if(this.audioTrack.completed > 0 && !Object.is(this.audioTrack.completed, this.completed)) {
+    /*if(this.audioTrack.completed > 0 && !Object.is(this.audioTrack.completed, this.completed)) {
       this.completed = this.audioTrack.completed; 
       this.range = Math.round(this.completed*100*100)/100;
-    }
+    }*/
   }
   
-  seekTo() {
-    let seekTo: number = Math.round(this.audioTrack.duration*this.range)/100;
-    if (!Number.isNaN(seekTo)) this.audioTrack.seekTo(seekTo);     
+  seekTo(value: any) {
+    //let seekTo: number = Math.round(this.audioTrack.duration*this.range)*100;
+    console.log("Seeking to", value);
+    if (!Number.isNaN(value)) this.audioTrack.seekTo(value);     
   }
 }

@@ -60,6 +60,7 @@ export class WebAudioTrack implements IAudioTrack {
     this.audio.addEventListener("ended", () => {
       this.isPlaying = false;
       this.isFinished = true;
+      this.audio.currentTime = 0;
       console.log('Finished playback');
     }, false);
     

@@ -1,3 +1,18 @@
+@import "node_modules/ionic-angular/themes/ionic.theme.default";
+
+$ionic-audio-thumb-height:  30px;
+$ionic-audio-thumb-width:   30px;
+$ionic-audio-thumb-color:   color($colors, light);
+$ionic-audio-thumb-shadow:  2.2px 2.2px 8.9px #333333, 0px 0px 2.2px #404040;
+$ionic-audio-thumb-border:  0; //border: 1px solid #000000;
+$ionic-audio-thumb-radius:  50px;
+
+$ionic-audio-track-height:  3px;
+$ionic-audio-track-margin:  14px;
+$ionic-audio-track-radius:  0;
+$ionic-audio-track-border:  0; //1px solid #010101;
+$ionic-audio-track-color:   color($colors, dark);
+$ionic-audio-track-shadow:  none; //1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
 
 audio-track {
 
@@ -73,6 +88,46 @@ audio-track {
       &.range-md {
           padding: 0;
       }
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 99%;
+      margin: $ionic-audio-track-margin 0;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: $ionic-audio-track-height;
+        cursor: pointer;
+        background: $ionic-audio-track-color;
+        box-shadow: $ionic-audio-track-shadow;
+        border-radius: $ionic-audio-track-radius;
+        border: $ionic-audio-track-border;
+      }
+      
+      &:focus::-webkit-slider-runnable-track {
+        background: $ionic-audio-track-color;
+      }
+
+      &::-webkit-slider-thumb {
+        box-shadow: $ionic-audio-thumb-shadow;
+        border: $ionic-audio-thumb-border;
+        height: $ionic-audio-thumb-height;
+        width: $ionic-audio-thumb-width;
+        border-radius: $ionic-audio-thumb-radius;
+        background: $ionic-audio-thumb-color;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -$ionic-audio-track-margin;
+      }
+
+
+
+
     }
 
     time {
