@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node_modules/.bin/ngc && copyfiles -u 1 ./src/*.scss ./dist",
     "release": "npm run build && npm publish",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cd demo && npm uninstall ionic-audio && cd.. && npm run build && cd demo && npm install ionic-audio && ionic serve"
   },
   "devDependencies": {
     "@angular/common": "4.1.3",
