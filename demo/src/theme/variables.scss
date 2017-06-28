@@ -31,7 +31,10 @@ $colors: (
   dark:       #222
 );
 
-//$ionic-audio-thumb-color:  blue;
+$ionic-audio-thumb-height:  22px;
+$ionic-audio-thumb-width:   22px;
+$ionic-audio-track-margin:  10px; // adjust margin, approximately $ionic-audio-thumb-height / 2
+$ionic-audio-thumb-color:   orange;
 
 // App iOS Variables
 // --------------------------------------------------

@@ -1,14 +1,14 @@
 @import "node_modules/ionic-angular/themes/ionic.theme.default";
 
-$ionic-audio-thumb-height:  30px !default;
-$ionic-audio-thumb-width:   30px !default;
+$ionic-audio-thumb-height:  25px !default;
+$ionic-audio-thumb-width:   25px !default;
 $ionic-audio-thumb-color:   color($colors, light) !default;
 $ionic-audio-thumb-shadow:  (2.2px 2.2px 8.9px #333333, 0px 0px 2.2px #404040) !default; 
 $ionic-audio-thumb-border:  0 !default; //border: 1px solid #000000;
 $ionic-audio-thumb-radius:  50px !default;
 
 $ionic-audio-track-height:  3px !default;
-$ionic-audio-track-margin:  14px !default;
+$ionic-audio-track-margin:  $ionic-audio-thumb-height/2 !default;
 $ionic-audio-track-radius:  0 !default;
 $ionic-audio-track-border:  0 !default; //1px solid #010101;
 $ionic-audio-track-color:   color($colors, dark) !default;
