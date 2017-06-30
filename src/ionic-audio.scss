@@ -82,7 +82,10 @@ audio-track {
   }
 
 
-  audio-track-progress-bar{
+  audio-track-progress-bar {
+    display: flex;
+    align-items: center;
+
     ion-range {
       &.range-ios {
           padding: 0;
@@ -95,8 +98,9 @@ audio-track {
     input[type=range] {
       -webkit-appearance: none;
       width: 99%;
-      margin: $ionic-audio-track-margin 0;
-
+      margin-top: $ionic-audio-track-margin;
+      margin-bottom: $ionic-audio-track-margin;
+      
       &:focus {
         outline: none;
       }
@@ -130,6 +134,10 @@ audio-track {
       &::-webkit-slider-thumb:focus, &::-webkit-slider-thumb:active {
         background: $ionic-audio-thumb-focus-color;
       }
+    }
+
+    input[type=range] + time, time + input[type=range] {
+        margin-left: $ionic-audio-track-margin;
     }
 
     time {

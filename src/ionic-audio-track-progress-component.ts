@@ -48,15 +48,10 @@ export class AudioTrackProgressComponent {
 @Component({
     selector: 'audio-track-progress-bar',
     template: `
+    <time *ngIf="progress">{{audioTrack.progress | audioTime}}</time>
     <input type="range" #seeker min="0" [max]="audioTrack.duration" step="any" [value]="audioTrack.progress" (change)="seekTo(seeker.value)">
+    <time *ngIf="duration">{{audioTrack.duration | audioTime}}</time>
     `
-    /**
-     * 
-     * <ion-range [(ngModel)]="range" min="0" max="100" (ionChange)="seekTo()" name="progress" ngDefaultControl>
-      <time *ngIf="showProgress" range-left>{{audioTrack.progress | audioTime}}</time>
-      <time *ngIf="showDuration" range-right>{{audioTrack.duration | audioTime}}</time>
-      </ion-range>
-     */
 })
 export class AudioTrackProgressBarComponent {
   /**
@@ -67,10 +62,9 @@ export class AudioTrackProgressBarComponent {
    */
   @Input() audioTrack: IAudioTrack;
   
-  public completed: number = 0;
-  public range: number = 0;
-  public showDuration: boolean;
-  public showProgress: boolean;
+  private _showDuration: boolean;
+  private _showProgress: boolean;
+  
   constructor(private el: ElementRef, private renderer: Renderer) { 
   }
   
@@ -82,7 +76,11 @@ export class AudioTrackProgressBarComponent {
    */
   @Input()
   public set progress(v : boolean) {
-    this.showProgress = true;
+    this._showProgress = v;
+  }
+
+  public get progress() {
+    return this._showProgress;
   }
   
   /**
@@ -93,9 +91,13 @@ export class AudioTrackProgressBarComponent {
    */
   @Input()
   public set duration(v:  boolean) {
-    this.showDuration = true;
+    this._showDuration = v;
+  } 
+
+  public get duration() {
+    return this._showDuration;
   }
-  
+
   ngOnInit() {
     this.renderer.setElementStyle(this.el.nativeElement, 'width', '100%');       
   }
