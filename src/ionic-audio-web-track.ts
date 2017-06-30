@@ -46,7 +46,7 @@ export class WebAudioTrack implements IAudioTrack {
     }, false);
     
     this.audio.addEventListener("canplay", () => {
-      console.log(`Loaded track ${this.src}`);
+      console.log(`Ready to play track ${this.src}`);
       this._isLoading = false;
       this._hasLoaded = true;
     }, false);
