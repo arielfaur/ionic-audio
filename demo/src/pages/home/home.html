@@ -21,7 +21,7 @@
         </ion-thumbnail>
         <div item-content style="width:100%">
           <p><strong>{{audio.title}}</strong> &#x26AC; <em>{{audio.artist}}</em></p>
-          <audio-track-progress-bar duration progress [audioTrack]="audio"></audio-track-progress-bar>
+          <audio-track-progress-bar [duration]="true" [progress]="true" [audioTrack]="audio"></audio-track-progress-bar>
           <em style="font-size:.5em">Track ID: {{audio.id}}</em>
         </div>
       </ion-item>
