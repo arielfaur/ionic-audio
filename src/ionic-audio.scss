@@ -3,6 +3,7 @@
 $ionic-audio-thumb-height:  25px !default;
 $ionic-audio-thumb-width:   25px !default;
 $ionic-audio-thumb-color:   color($colors, light) !default;
+$ionic-audio-thumb-focus-color:   color($colors, primary) !default;
 $ionic-audio-thumb-shadow:  (2.2px 2.2px 8.9px #333333, 0px 0px 2.2px #404040) !default; 
 $ionic-audio-thumb-border:  0 !default; //border: 1px solid #000000;
 $ionic-audio-thumb-radius:  50px !default;
@@ -12,6 +13,7 @@ $ionic-audio-track-margin:  $ionic-audio-thumb-height/2 !default;
 $ionic-audio-track-radius:  0 !default;
 $ionic-audio-track-border:  0 !default; //1px solid #010101;
 $ionic-audio-track-color:   color($colors, dark) !default;
+$ionic-audio-track-focus-color:   color($colors, secondary) !default;
 $ionic-audio-track-shadow:  none !default; //1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
 
 audio-track {
@@ -125,9 +127,9 @@ audio-track {
         margin-top: -$ionic-audio-track-margin;
       }
 
-
-
-
+      &::-webkit-slider-thumb:focus, &::-webkit-slider-thumb:active {
+        background: $ionic-audio-thumb-focus-color;
+      }
     }
 
     time {
