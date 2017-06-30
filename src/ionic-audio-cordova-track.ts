@@ -1,5 +1,5 @@
 import {IAudioTrack} from './ionic-audio-interfaces'; 
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 
 declare let Media: any;
 
@@ -23,13 +23,14 @@ export class CordovaAudioTrack implements IAudioTrack {
   private _isLoading: boolean;
   private _hasLoaded: boolean;
   private _timer: any;
-  
+  private _ngZone: NgZone;
+
   constructor(public src: string) {
     if (window['cordova'] === undefined || window['Media'] === undefined) {
       console.log('Cordova Media is not available');
       return;
     };
-    
+    this._ngZone = new NgZone(false);  
     this.createAudio(); 
   }
   
@@ -37,28 +38,35 @@ export class CordovaAudioTrack implements IAudioTrack {
     this.audio = new Media(this.src, () => {
        console.log('Finished playback');
        this.stopTimer();
-       this.isFinished = true;  
+       this._ngZone.run(()=>{
+        this._progress = 0;
+        this._completed = 0;
+        this.isFinished = true;  
+        this.isPlaying = false;
+       });
        this.destroy();  // TODO add parameter to control whether to release audio on stop or finished
     }, (err) => {
       console.log(`Audio error => track ${this.src}`, err);   
     }, (status) => {
-      switch (status) {
-        case Media.MEDIA_STARTING:
-          console.log(`Loaded track ${this.src}`);
-          this._hasLoaded = true;
-          break;
-        case Media.MEDIA_RUNNING:
-          console.log(`Playing track ${this.src}`);
-          this.isPlaying = true;
-          this._isLoading = false;          
-          break; 
-        case Media.MEDIA_PAUSED:
-          this.isPlaying = false;
-          break
-        case Media.MEDIA_STOPPED:
-          this.isPlaying = false;
-          break;
-      }
+      this._ngZone.run(()=>{
+        switch (status) {
+          case Media.MEDIA_STARTING:
+            console.log(`Loaded track ${this.src}`);
+            this._hasLoaded = true;
+            break;
+          case Media.MEDIA_RUNNING:
+            console.log(`Playing track ${this.src}`);
+            this.isPlaying = true;
+            this._isLoading = false;          
+            break; 
+          case Media.MEDIA_PAUSED:
+            this.isPlaying = false;
+            break
+          case Media.MEDIA_STOPPED:
+            this.isPlaying = false;
+            break;
+        }
+      });
     });  
   }
   
@@ -68,12 +76,12 @@ export class CordovaAudioTrack implements IAudioTrack {
         this._duration = Math.round(this.audio.getDuration()*100)/100;
       }  
       
-      this.audio.getCurrentPosition((position) => {
+      this.audio.getCurrentPosition((position) => this._ngZone.run(()=>{
             if (position > -1) {
               this._progress = Math.round(position*100)/100;
               this._completed = this._duration > 0 ? Math.round(this._progress / this._duration * 100)/100 : 0; 
             }
-        }, (e) => {
+        }), (e) => {
             console.log("Error getting position", e);
         }
       );
