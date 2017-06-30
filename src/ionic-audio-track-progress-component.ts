@@ -1,5 +1,5 @@
 import {IAudioTrack} from './ionic-audio-interfaces'; 
-import {Component, DoCheck,  ElementRef, Renderer, Input } from '@angular/core';
+import {Component, ElementRef, Renderer, Input } from '@angular/core';
 
 /**
  * # ```<audio-track-progress>``` 
@@ -58,7 +58,7 @@ export class AudioTrackProgressComponent {
       </ion-range>
      */
 })
-export class AudioTrackProgressBarComponent implements DoCheck {
+export class AudioTrackProgressBarComponent {
   /**
    * The AudioTrackComponent parent instance created by ```<audio-track>```
    * 
@@ -99,16 +99,8 @@ export class AudioTrackProgressBarComponent implements DoCheck {
   ngOnInit() {
     this.renderer.setElementStyle(this.el.nativeElement, 'width', '100%');       
   }
-  
-  ngDoCheck() {
-    /*if(this.audioTrack.completed > 0 && !Object.is(this.audioTrack.completed, this.completed)) {
-      this.completed = this.audioTrack.completed; 
-      this.range = Math.round(this.completed*100*100)/100;
-    }*/
-  }
-  
+    
   seekTo(value: any) {
-    //let seekTo: number = Math.round(this.audioTrack.duration*this.range)*100;
     console.log("Seeking to", value);
     if (!Number.isNaN(value)) this.audioTrack.seekTo(value);     
   }
