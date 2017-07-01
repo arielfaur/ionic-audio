@@ -48,9 +48,9 @@ export class AudioTrackProgressComponent {
 @Component({
     selector: 'audio-track-progress-bar',
     template: `
-    <time *ngIf="progress">{{audioTrack.progress | audioTime}}</time>
+    <time *ngIf="_showProgress">{{audioTrack.progress | audioTime}}</time>
     <input type="range" #seeker min="0" [max]="audioTrack.duration" step="any" [value]="audioTrack.progress" (change)="seekTo(seeker.value)">
-    <time *ngIf="duration">{{audioTrack.duration | audioTime}}</time>
+    <time *ngIf="_showDuration">{{audioTrack.duration | audioTime}}</time>
     `
 })
 export class AudioTrackProgressBarComponent {
@@ -75,8 +75,8 @@ export class AudioTrackProgressBarComponent {
    * @type {boolean}
    */
   @Input()
-  public set progress(v : boolean) {
-    this._showProgress = v;
+  public set progress(value : boolean) {
+    this._showProgress = true;
   }
 
   public get progress() {
@@ -90,8 +90,8 @@ export class AudioTrackProgressBarComponent {
    * @type {boolean}
    */
   @Input()
-  public set duration(v:  boolean) {
-    this._showDuration = v;
+  public set duration(value:  boolean) {
+    this._showDuration = true;
   } 
 
   public get duration() {
