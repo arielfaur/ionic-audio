@@ -46,7 +46,6 @@ export class WebAudioTrack implements IAudioTrack {
     }, false);
     
     this.audio.addEventListener("canplay", () => {
-      console.log(`Ready to play track ${this.src}`);
       this._isLoading = false;
       this._hasLoaded = true;
     }, false);
@@ -60,7 +59,10 @@ export class WebAudioTrack implements IAudioTrack {
     this.audio.addEventListener("ended", () => {
       this.isPlaying = false;
       this.isFinished = true;
-      this.audio.currentTime = 0;
+      this._progress = 0;
+      this._completed = 0;
+      this._hasLoaded = false;
+      this.destroy();
       console.log('Finished playback');
     }, false);
     
@@ -144,7 +146,7 @@ export class WebAudioTrack implements IAudioTrack {
    * @type {MediaError}
    */
   public get error() : MediaError {
-    return this.audio.error;
+    return this.audio && this.audio.error;
   }
   
   /**
@@ -237,6 +239,7 @@ export class WebAudioTrack implements IAudioTrack {
    * @param {number} time the new position to seek to
    */
   seekTo(time: number) {
+    if (!this.audio) return;
     this.audio.currentTime = time;  
   }
   
