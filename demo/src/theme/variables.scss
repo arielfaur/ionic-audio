@@ -31,10 +31,27 @@ $colors: (
   dark:       #222
 );
 
-$ionic-audio-thumb-height:  22px;
-$ionic-audio-thumb-width:   22px;
-$ionic-audio-track-margin:  10px; // adjust margin, approximately $ionic-audio-thumb-height / 2
-//$ionic-audio-thumb-color:   orange; // override default thumb color in module
+
+// *** Ionic Audio default variables - feel free to customize ***
+
+//$ionic-audio-thumb-height:  25px;
+//$ionic-audio-thumb-width:   25px;
+//$ionic-audio-thumb-color:   color($colors, light);
+//$ionic-audio-thumb-focus-color:   color($colors, primary);
+//$ionic-audio-thumb-shadow:  (2.2px 2.2px 8.9px #333333, 0px 0px 2.2px #404040); 
+//$ionic-audio-thumb-border:  0;
+//$ionic-audio-thumb-radius:  50px;
+
+//$ionic-audio-track-height:  3px;
+//$ionic-audio-track-margin:  $ionic-audio-thumb-height/2;  // margin should be approximately $ionic-audio-thumb-height / 2
+//$ionic-audio-track-radius:  0;
+//$ionic-audio-track-border:  0;
+//$ionic-audio-track-color:   color($colors, dark);
+//$ionic-audio-track-focus-color:   color($colors, secondary);
+//$ionic-audio-track-shadow:  none; 
+
+$ionic-audio-track-color:   color($colors, primary);  // Customize the timeline color
+
 
 // App iOS Variables
 // --------------------------------------------------
