@@ -41,6 +41,7 @@ export class CordovaAudioTrack implements IAudioTrack {
        this._ngZone.run(()=>{
         this._progress = 0;
         this._completed = 0;
+        this._hasLoaded = false;
         this.isFinished = true;  
         this.isPlaying = false;
        });
@@ -72,8 +73,9 @@ export class CordovaAudioTrack implements IAudioTrack {
   
   private startTimer() {
     this._timer = setInterval(() => {  
-      if (this._duration===undefined || this._duration < 0) {
-        this._duration = Math.round(this.audio.getDuration()*100)/100;
+      if (this._duration===undefined) {
+        let duration: number = this.audio.getDuration();
+        (duration > 0) && (this._duration = Math.round(this.audio.getDuration()*100)/100);
       }  
       
       this.audio.getCurrentPosition((position) => this._ngZone.run(()=>{
