@@ -1,5 +1,5 @@
 import {IAudioTrack} from './ionic-audio-interfaces'; 
-import {Component, ElementRef, Renderer, Input } from '@angular/core';
+import {Component, ElementRef, Renderer, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 /**
  * # ```<audio-track-progress>``` 
@@ -53,7 +53,7 @@ export class AudioTrackProgressComponent {
     <time *ngIf="_showDuration">{{audioTrack.duration | audioTime}}</time>
     `
 })
-export class AudioTrackProgressBarComponent {
+export class AudioTrackProgressBarComponent implements OnChanges {
   /**
    * The AudioTrackComponent parent instance created by ```<audio-track>```
    * 
@@ -105,5 +105,10 @@ export class AudioTrackProgressBarComponent {
   seekTo(value: any) {
     console.log("Seeking to", value);
     if (!Number.isNaN(value)) this.audioTrack.seekTo(value);     
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("ngOnChanges", changes);
+   // if (changes.track.firstChange) return;
   }
 }

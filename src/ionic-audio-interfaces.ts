@@ -10,6 +10,7 @@ export interface IAudioProvider {
   tracks: IAudioTrack[];
   
   create(track: ITrackConstraint): IAudioTrack;
+  replace(oldAudioTrack: IAudioTrack, newTrack: ITrackConstraint): IAudioTrack;
   add(track: IAudioTrack);
   play(index: number);
   pause(index?: number);

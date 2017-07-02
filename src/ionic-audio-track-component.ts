@@ -3,7 +3,7 @@ import {AudioProvider} from './ionic-audio-providers';
 import {WebAudioTrack} from './ionic-audio-web-track'; 
 import {CordovaAudioTrack} from './ionic-audio-cordova-track'; 
 
-import {Component, DoCheck, EventEmitter, Output, Input} from '@angular/core';
+import {Component, DoCheck, OnChanges, SimpleChanges, EventEmitter, Output, Input} from '@angular/core';
 
 
 /**
@@ -26,7 +26,7 @@ import {Component, DoCheck, EventEmitter, Output, Input} from '@angular/core';
     selector: 'audio-track',
     template: '<ng-content></ng-content>'
 })
-export class AudioTrackComponent implements DoCheck { 
+export class AudioTrackComponent implements DoCheck, OnChanges { 
   /**
    * Input property containing a JSON object with at least a src property
    * ````
@@ -151,5 +151,16 @@ export class AudioTrackComponent implements DoCheck {
         this.onFinish.emit(this.track);       
       }
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("ngOnChanges", changes);
+    if (changes.track.firstChange) return;
+
+    if (this._audioTrack.isPlaying) this._audioTrack.stop();
+    this._audioTrack =  this._audioProvider.replace(changes.track.previousValue, changes.track.currentValue);
+
+    console.log("ngOnChanges -> new audio track", this._audioTrack);
+    this._audioTrack.play();
   }
 }
