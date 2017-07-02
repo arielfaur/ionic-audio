@@ -16,12 +16,14 @@
         <img src="{{track.image}}">
       </ion-thumbnail>
       <h2>{{track.title}}</h2>
-      <button ion-button (click)="playTrack(track)">Play</button>
+      <button ion-button (click)="playTrack(track)">Play</button><button ion-button (click)="addTrack(track)">Add</button>
     </ion-item>
   </ion-list>
 
   <audio-track #audio [track]="currentTrack" (onFinish)="onTrackFinished($event)">
     <audio-track-progress-bar duration progress [audioTrack]="audio">
     </audio-track-progress-bar>
+    <button ion-button (click)="audio.play()">Play</button>
+    <button ion-button (click)="audio.pause()">Pause</button>
   </audio-track>
 </ion-content>
