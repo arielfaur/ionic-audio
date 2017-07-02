@@ -10,52 +10,18 @@
     This sample project shows you how simple it is to work with the ionic-audio module.
   </p>
 
-    <ion-list>
-    <audio-track #audio *ngFor="let track of myTracks" [track]="track" (onFinish)="onTrackFinished($event)">
-      <ion-item>
-        <ion-thumbnail item-left>
-          <img src="{{audio.art}}">
-          <audio-track-play dark [audioTrack]="audio">
-            <ion-spinner></ion-spinner>
-          </audio-track-play>
-        </ion-thumbnail>
-        <div item-content style="width:100%">
-          <p><strong>{{audio.title}}</strong> &#x26AC; <em>{{audio.artist}}</em></p>
-          <audio-track-progress-bar duration progress [audioTrack]="audio"></audio-track-progress-bar>
-          <em style="font-size:.5em">Track ID: {{audio.id}}</em>
-        </div>
-      </ion-item>
-    </audio-track>
-  </ion-list>
-
-  <audio-track #track [track]="singleTrack">
-    <ion-item [audioTrack]="track">
-      <ion-thumbnail item-left>
-        <img src="{{track.art}}">
-        <audio-track-play light [audioTrack]="track">
-          <ion-spinner></ion-spinner>
-        </audio-track-play>
-      </ion-thumbnail>
-
-      <h2>{{track.title}}</h2>
-      <p>
-        <audio-track-progress [audioTrack]="track"></audio-track-progress>
-      </p>
-      <em style="font-size:.5em">Track ID: {{track.id}}</em>
-    </ion-item>
-  </audio-track>
-  
-
-  <h3>API Usage</h3>
-  <h4>Using AudioProvider to control playback</h4>
   <ion-list>
-    <ion-item>
-      <ion-label>Select track to play</ion-label>
-      <ion-select [(ngModel)]="selectedTrack">
-        <ion-option *ngFor="let track of allTracks" value="{{track.id}}">{{track.title}}</ion-option>
-      </ion-select>
+    <ion-item *ngFor="let track of myTracks">
+      <ion-thumbnail item-left>
+        <img src="{{track.image}}">
+      </ion-thumbnail>
+      <h2>{{track.title}}</h2>
+      <button ion-button (click)="playTrack(track)">Play</button>
     </ion-item>
   </ion-list>
-  <button ion-button block outline (click)="playSelectedTrack()">Play</button>
-  <button ion-button block outline color="secondary" (click)="pauseSelectedTrack()">Pause</button>
+
+  <audio-track #audio [track]="currentTrack" (onFinish)="onTrackFinished($event)">
+    <audio-track-progress-bar duration progress [audioTrack]="audio">
+    </audio-track-progress-bar>
+  </audio-track>
 </ion-content>
