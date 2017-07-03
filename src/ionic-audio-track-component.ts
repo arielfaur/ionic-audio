@@ -26,7 +26,7 @@ import {Component, DoCheck, OnChanges, SimpleChanges, EventEmitter, Output, Inpu
     selector: 'audio-track',
     template: '<ng-content></ng-content>'
 })
-export class AudioTrackComponent implements DoCheck, OnChanges { 
+export class AudioTrackComponent implements OnChanges, DoCheck { 
   /**
    * Input property containing a JSON object with at least a src property
    * ````
@@ -51,12 +51,13 @@ export class AudioTrackComponent implements DoCheck, OnChanges {
    */
   @Output() onFinish = new EventEmitter<ITrackConstraint>();
   
-  private _isFinished: boolean = false;
   private _audioTrack: IAudioTrack;
   
   constructor(private _audioProvider: AudioProvider) {}
   
   ngOnInit() {
+    if (!this.track) return;
+
     if (!(this.track instanceof WebAudioTrack) && !(this.track instanceof CordovaAudioTrack)) {
       this._audioTrack = this._audioProvider.create(this.track); 
     } else {
@@ -69,11 +70,15 @@ export class AudioTrackComponent implements DoCheck, OnChanges {
   }
   
   play() {    
+    if (!this._audioTrack) return;
+
     this._audioTrack.play();
     this._audioProvider.current = this._audioTrack.id;
   }
   
   pause() {
+    if (!this._audioTrack) return;
+
     this._audioTrack.pause();
     this._audioProvider.current = undefined;
   }
@@ -87,69 +92,70 @@ export class AudioTrackComponent implements DoCheck, OnChanges {
   }
   
   seekTo(time:number) {
+    if (!this._audioTrack) return;
+
     this._audioTrack.seekTo(time);  
   }
   
   
   public get id() : number {
-    return this._audioTrack.id;
+    return this._audioTrack ? this._audioTrack.id : -1;
   }
   
   public get art() : string {
-    return this.track.art;
+    return this.track ? this.track.art : undefined;
   }
   
   
   public get artist() : string {
-    return this.track.artist;
+    return this.track ? this.track.artist : undefined;
   }
   
   
   public get title() : string {
-    return this.track.title;
+    return this.track ? this.track.title : undefined;
   }
     
   public get progress() : number {
-    return this._audioTrack.progress;
+    return this._audioTrack ? this._audioTrack.progress : 0;
   }
       
   public get isPlaying() : boolean {
-    return this._audioTrack.isPlaying;
+    return this._audioTrack && this._audioTrack.isPlaying;
+  }
+
+  public get isFinished() : boolean {
+    return this._audioTrack && this._audioTrack.isFinished;
   }
   
   public get duration() : number {
-    return this._audioTrack.duration;
+    return this._audioTrack ? this._audioTrack.duration : 0;
   }
   
   public get completed() : number {
-    return this._audioTrack.completed;
+    return this._audioTrack ? this._audioTrack.completed : 0;
   }
   
   public get canPlay() {
-    return this._audioTrack.canPlay;
+    return this._audioTrack && this._audioTrack.canPlay;
   }
   
   public get error() {
-    return this._audioTrack.error;
+    return this._audioTrack ? this._audioTrack.error : undefined;
   }
   
   public get isLoading() : boolean {
-    return this._audioTrack.isLoading;
+    return this._audioTrack && this._audioTrack.isLoading;
   }
   
   public get hasLoaded() : boolean {
-    return this.hasLoaded;
+    return this._audioTrack && this._audioTrack.hasLoaded;
   }
   
   ngDoCheck() {
-    if(!Object.is(this._audioTrack.isFinished, this._isFinished)) {
-      // some logic here to react to the change
-      this._isFinished = this._audioTrack.isFinished;
-      
-      // track has stopped, trigger finish event
-      if (this._isFinished) {
-        this.onFinish.emit(this.track);       
-      }
+    // track has stopped, trigger finish event
+    if (this._audioTrack && this._audioTrack.isFinished) {
+      this.onFinish.emit(this.track);       
     }
   }
 
@@ -157,7 +163,7 @@ export class AudioTrackComponent implements DoCheck, OnChanges {
     console.log("ngOnChanges", changes);
     if (changes.track.firstChange) return;
 
-    if (this._audioTrack.isPlaying) this._audioTrack.stop();
+    if (this._audioTrack && this._audioTrack.isPlaying) this._audioTrack.stop();
     this._audioTrack =  this._audioProvider.replace(changes.track.previousValue, changes.track.currentValue);
 
     console.log("ngOnChanges -> new audio track", this._audioTrack);

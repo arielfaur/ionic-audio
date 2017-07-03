@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
-import { AudioProvider } from 'ionic-audio';
+import { AudioProvider, IAudioTrack } from 'ionic-audio';
 
 @Component({
   selector: 'page-home',
@@ -10,6 +10,7 @@ import { AudioProvider } from 'ionic-audio';
 })
 export class HomePage {
   myTracks: any[];
+  playlist: IAudioTrack[] = [];
   private _currentTrack: any;
 
   constructor(public navCtrl: NavController, private _audioProvider: AudioProvider) {
@@ -36,17 +37,25 @@ export class HomePage {
       art: 'assets/img/Stephane.jpg',
       preload: 'metadata' // tell the plugin to preload metadata such as duration for this track,  set to 'none' to turn off
     }];
-
-    this._currentTrack = this.myTracks[0];
-
   }
 
   playTrack(track: any) {
     this._currentTrack = track;
+
+    this.playlist = this._audioProvider.tracks;
   } 
+  addTrack(track: any) {
+    this._audioProvider.create(track);
+
+    this.playlist = this._audioProvider.tracks;
+  }
 
   get currentTrack() {
     return this._currentTrack;
+  }
+
+  set currentTrack(value: IAudioTrack) {
+    this._currentTrack = value;
   }
 
   onTrackFinished(track: any) {
