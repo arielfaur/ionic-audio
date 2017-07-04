@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
-import { AudioProvider, IAudioTrack } from 'ionic-audio';
+import { AudioProvider, IAudioTrack, AudioPlaylistComponent } from 'ionic-audio';
 
 @Component({
   selector: 'page-home',
@@ -13,6 +13,7 @@ export class HomePage {
   trackList: any[] = [];
   selectedTrack: any;
 
+  @ViewChild('playlist') playlist: AudioPlaylistComponent;
   private _currentTrack: any;
 
   constructor(public navCtrl: NavController, private _audioProvider: AudioProvider) {
@@ -41,11 +42,13 @@ export class HomePage {
     }];
   }
 
-  playTrack(track: any) {
-    this.trackList.push(track);
-  } 
   addTrack(track: any) {
     this.trackList.push(track);
+  }
+
+  playTrack(track: any) {
+    this.addTrack(track); 
+    setTimeout(()=> this.playlist.playLast(), 500);
   }
 
   get currentTrack() {

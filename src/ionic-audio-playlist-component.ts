@@ -54,12 +54,12 @@ export class AudioPlaylistComponent implements DoCheck {
   @Output() onFinish = new EventEmitter<ITrackConstraint>();
 
   private _audioTracks: IAudioTrack[] = [];
+  private _currentTrack: IAudioTrack;
 
   constructor(private _audioProvider: AudioProvider) { }
 
   ngOnInit() {
-    this._audioTracks = this.tracks.map(track => {
-        //if (!(track instanceof WebAudioTrack) && !(track instanceof CordovaAudioTrack)) {
+    this._audioTracks = this.tracks.map(track => { 
         let audioTrack: IAudioTrack = this._audioProvider.create(track);
         return audioTrack;
       });
@@ -69,12 +69,31 @@ export class AudioPlaylistComponent implements DoCheck {
     return this._audioTracks;
   }
 
-  play() {
-
+  get currentTrack() {
+    return this._currentTrack;
   }
 
-  pause() {
+  play(track?: IAudioTrack) {
+    if (track) this._currentTrack = track;
+    
+    this._currentTrack && this._currentTrack.play();
+  }
 
+  pause(track?: IAudioTrack) {
+    if (track) this._currentTrack = track;
+    
+    this._currentTrack && this._currentTrack.pause();
+  }
+
+  playLast() {
+    if (this._audioTracks.length > 0) {
+      this._currentTrack = this._audioTracks[this._audioTracks.length-1];
+      this._currentTrack.play();
+    }
+  }
+
+  start() {
+    if (!this._currentTrack && this._audioTracks.length > 0) this.play(this._audioTracks[0]);
   }
 
   next(track: any) {
