@@ -75,74 +75,76 @@ audio-track {
     }
   } 
 
-  audio-track-progress {
-    em {
-      font-size: .8em;
+  
+}
+
+audio-track-progress {
+  em {
+    font-size: .8em;
+  }
+}
+
+
+audio-track-progress-bar {
+  display: flex;
+  align-items: center;
+
+  ion-range {
+    &.range-ios {
+        padding: 0;
+    }
+    &.range-md {
+        padding: 0;
     }
   }
 
-
-  audio-track-progress-bar {
-    display: flex;
-    align-items: center;
-
-    ion-range {
-      &.range-ios {
-          padding: 0;
-      }
-      &.range-md {
-          padding: 0;
-      }
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 99%;
+    margin-top: $ionic-audio-track-margin;
+    margin-bottom: $ionic-audio-track-margin;
+    
+    &:focus {
+      outline: none;
     }
 
-    input[type=range] {
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: $ionic-audio-track-height;
+      cursor: pointer;
+      background: $ionic-audio-track-color;
+      box-shadow: $ionic-audio-track-shadow;
+      border-radius: $ionic-audio-track-radius;
+      border: $ionic-audio-track-border;
+    }
+    
+    &:focus::-webkit-slider-runnable-track {
+      background: $ionic-audio-track-color;
+    }
+
+    &::-webkit-slider-thumb {
+      box-shadow: $ionic-audio-thumb-shadow;
+      border: $ionic-audio-thumb-border;
+      height: $ionic-audio-thumb-height;
+      width: $ionic-audio-thumb-width;
+      border-radius: $ionic-audio-thumb-radius;
+      background: $ionic-audio-thumb-color;
+      cursor: pointer;
       -webkit-appearance: none;
-      width: 99%;
-      margin-top: $ionic-audio-track-margin;
-      margin-bottom: $ionic-audio-track-margin;
-      
-      &:focus {
-        outline: none;
-      }
-
-      &::-webkit-slider-runnable-track {
-        width: 100%;
-        height: $ionic-audio-track-height;
-        cursor: pointer;
-        background: $ionic-audio-track-color;
-        box-shadow: $ionic-audio-track-shadow;
-        border-radius: $ionic-audio-track-radius;
-        border: $ionic-audio-track-border;
-      }
-      
-      &:focus::-webkit-slider-runnable-track {
-        background: $ionic-audio-track-color;
-      }
-
-      &::-webkit-slider-thumb {
-        box-shadow: $ionic-audio-thumb-shadow;
-        border: $ionic-audio-thumb-border;
-        height: $ionic-audio-thumb-height;
-        width: $ionic-audio-thumb-width;
-        border-radius: $ionic-audio-thumb-radius;
-        background: $ionic-audio-thumb-color;
-        cursor: pointer;
-        -webkit-appearance: none;
-        margin-top: -$ionic-audio-track-margin;
-      }
-
-      &::-webkit-slider-thumb:focus, &::-webkit-slider-thumb:active {
-        background: $ionic-audio-thumb-focus-color;
-      }
+      margin-top: -$ionic-audio-track-margin;
     }
 
-    input[type=range] + time, time + input[type=range] {
-        margin-left: $ionic-audio-track-margin;
+    &::-webkit-slider-thumb:focus, &::-webkit-slider-thumb:active {
+      background: $ionic-audio-thumb-focus-color;
     }
+  }
 
-    time {
-      font-size: .8em;
-      min-width: 35px;
-    }
+  input[type=range] + time, time + input[type=range] {
+      margin-left: $ionic-audio-track-margin;
+  }
+
+  time {
+    font-size: .8em;
+    min-width: 35px;
   }
 }

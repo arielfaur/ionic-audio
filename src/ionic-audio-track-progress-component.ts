@@ -1,5 +1,5 @@
 import {IAudioTrack} from './ionic-audio-interfaces'; 
-import {Component, Input } from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 /**
  * # ```<audio-track-progress>``` 
@@ -48,12 +48,12 @@ export class AudioTrackProgressComponent {
 @Component({
     selector: 'audio-track-progress-bar',
     template: `
-    <time *ngIf="_showProgress" [style.opacity]="audioTrack.duration > 0 ? 1 : 0">{{audioTrack.progress | audioTime}}</time>
-    <input type="range" #seeker min="0" [max]="audioTrack.duration" step="any" [value]="audioTrack.progress" (change)="seekTo(seeker.value)">
-    <time *ngIf="_showDuration" [style.opacity]="audioTrack.duration > 0 ? 1 : 0">{{audioTrack.duration | audioTime}}</time>
+    <time *ngIf="audioTrack && _showProgress" [style.opacity]="audioTrack.duration > 0 ? 1 : 0">{{audioTrack.progress | audioTime}}</time>
+    <input type="range" #seeker min="0" [max]="audioTrack ? audioTrack.duration : 0" step="any" [value]="audioTrack ? audioTrack.progress : 0" (change)="seekTo(seeker.value)">
+    <time *ngIf="audioTrack && _showDuration" [style.opacity]="audioTrack.duration > 0 ? 1 : 0">{{audioTrack.duration | audioTime}}</time>
     `
 })
-export class AudioTrackProgressBarComponent {
+export class AudioTrackProgressBarComponent implements OnChanges {
   /**
    * The AudioTrackComponent parent instance created by ```<audio-track>```
    * 
@@ -101,6 +101,17 @@ export class AudioTrackProgressBarComponent {
   seekTo(value: any) {
     console.log("Seeking to", value);
     if (!Number.isNaN(value)) this.audioTrack.seekTo(value);     
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("ngOnChanges", changes);
+    if (changes.audioTrack.firstChange) return;
+
+    let oldTrack: IAudioTrack = changes.audioTrack.previousValue;
+    if (oldTrack) oldTrack.stop();
+
+    let newTrack: IAudioTrack = changes.audioTrack.currentValue;
+    newTrack.play();
   }
 
 }

@@ -159,11 +159,20 @@ export class WebAudioProvider extends AudioProvider {
   }
 
   replace(oldAudioTrack: IAudioTrack, newTrack: ITrackConstraint): IAudioTrack {
-    WebAudioProvider.tracks.pop();
+    //WebAudioProvider.tracks.pop();
+    let index = WebAudioProvider.tracks.findIndex((track) => Object.is(oldAudioTrack, track));
+    
+
     let newAudioTrack = newTrack instanceof WebAudioTrack ? newTrack : new WebAudioTrack(newTrack.src, newTrack.preload);
     Object.assign(newAudioTrack, newTrack);
-    let trackId = WebAudioProvider.tracks.push(newAudioTrack);
-    newAudioTrack.id = trackId - 1;
+    if (index > -1) {
+      WebAudioProvider.tracks.splice(index, 1, newAudioTrack);
+    }
+    else {
+      let trackId = WebAudioProvider.tracks.push(newAudioTrack);
+      newAudioTrack.id = trackId - 1;
+    }
+    
 
     console.log("Replaced audio track", oldAudioTrack, newAudioTrack);
     console.log("Current track list", WebAudioProvider.tracks);

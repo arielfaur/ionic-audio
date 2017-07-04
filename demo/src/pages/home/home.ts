@@ -10,7 +10,9 @@ import { AudioProvider, IAudioTrack } from 'ionic-audio';
 })
 export class HomePage {
   myTracks: any[];
-  playlist: IAudioTrack[] = [];
+  trackList: any[] = [];
+  selectedTrack: any;
+
   private _currentTrack: any;
 
   constructor(public navCtrl: NavController, private _audioProvider: AudioProvider) {
@@ -41,13 +43,14 @@ export class HomePage {
 
   playTrack(track: any) {
     this._currentTrack = track;
-
-    this.playlist = this._audioProvider.tracks;
   } 
   addTrack(track: any) {
-    this._audioProvider.create(track);
+      this.trackList.push(track);
+  }
 
-    this.playlist = this._audioProvider.tracks;
+  selectTrack(track: any) {
+    console.log("Selected track", track);
+    this.selectedTrack = track;
   }
 
   get currentTrack() {

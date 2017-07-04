@@ -164,9 +164,9 @@ export class AudioTrackComponent implements OnChanges, DoCheck {
     if (changes.track.firstChange) return;
 
     if (this._audioTrack && this._audioTrack.isPlaying) this._audioTrack.stop();
-    this._audioTrack =  this._audioProvider.replace(changes.track.previousValue, changes.track.currentValue);
+    this._audioTrack =  this._audioProvider.create(changes.track.currentValue);
 
     console.log("ngOnChanges -> new audio track", this._audioTrack);
-    this._audioTrack.play();
+    //this._audioTrack.play();
   }
 }
