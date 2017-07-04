@@ -42,15 +42,10 @@ export class HomePage {
   }
 
   playTrack(track: any) {
-    this._currentTrack = track;
+    this.trackList.push(track);
   } 
   addTrack(track: any) {
-      this.trackList.push(track);
-  }
-
-  selectTrack(track: any) {
-    console.log("Selected track", track);
-    this.selectedTrack = track;
+    this.trackList.push(track);
   }
 
   get currentTrack() {

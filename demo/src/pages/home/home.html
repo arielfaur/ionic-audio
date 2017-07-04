@@ -30,26 +30,31 @@
   </audio-track>-->
 
   <audio-playlist #playlist [tracks]="trackList">
-  <ion-list *ngIf="playlist.audioTracks.length > 0">
-    <ion-list-header no-lines inset>
-    Playlist
-    </ion-list-header>
-    <ion-item *ngFor="let audioTrack of playlist.audioTracks">
-      <h2>{{ audioTrack.title }}</h2>
-      <p>{{ audioTrack.artist }}</p>
-      <button ion-button icon-only item-end *ngIf="audioTrack.isPlaying" (click)="audioTrack.pause()">
-        <ion-icon name="pause"></ion-icon>
-      </button>
-      <button ion-button icon-only item-end *ngIf="!audioTrack.isPlaying" (click)="selectedTrack = audioTrack;">
-        <ion-icon name="play"></ion-icon>
-      </button>
-    </ion-item>
-    <div style="display: flex">
-      <button ion-button icon-only (click)="selectedTrack.play()"><ion-icon name="play"></ion-icon></button>
-      <button ion-button icon-only (click)="selectedTrack.pause()"><ion-icon name="pause"></ion-icon></button>
-      <audio-track-progress-bar duration progress [audioTrack]="selectedTrack" style="width: 100%; margin: 0 10px"></audio-track-progress-bar>
-    </div>
-    <div [style.visibility]="selectedTrack.hasLoaded ? 'visible' : 'hidden'" text-center *ngIf="selectedTrack">Playing <em>{{ selectedTrack?.title }}</em></div>
-  </ion-list>
+    <ion-list>
+      <ion-list-header no-lines inset>
+      Playlist
+      </ion-list-header>
+      <div style="display: flex">
+        <button ion-button icon-only (click)="selectedTrack.play()"><ion-icon name="play"></ion-icon></button>
+        <button ion-button icon-only (click)="selectedTrack.pause()"><ion-icon name="pause"></ion-icon></button>
+        <audio-track-progress-bar duration progress [audioTrack]="selectedTrack" style="width: 100%; margin: 0 10px" (onFinish)="playlist.next($event)"></audio-track-progress-bar>
+      </div>
+      <ion-item>
+         <div [style.visibility]="selectedTrack && selectedTrack.hasLoaded ? 'visible' : 'hidden'" text-center>Playing <em>{{ selectedTrack?.title }}</em></div>
+      </ion-item>
+     
+      
+      <ion-item *ngFor="let audioTrack of playlist.audioTracks">
+        <h2>{{ audioTrack.title }}</h2>
+        <p>{{ audioTrack.artist }}</p>
+        <button ion-button icon-only item-end *ngIf="audioTrack.isPlaying" (click)="audioTrack.pause()">
+          <ion-icon name="pause"></ion-icon>
+        </button>
+        <button ion-button icon-only item-end *ngIf="!audioTrack.isPlaying" (click)="selectedTrack = audioTrack; audioTrack.play()">
+          <ion-icon name="play"></ion-icon>
+        </button>
+      </ion-item>
+      
+    </ion-list>
   </audio-playlist>
 </ion-content>

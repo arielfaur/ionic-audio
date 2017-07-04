@@ -103,7 +103,7 @@ audio-track-progress-bar {
     width: 99%;
     margin-top: $ionic-audio-track-margin;
     margin-bottom: $ionic-audio-track-margin;
-    
+
     &:focus {
       outline: none;
     }
@@ -139,12 +139,9 @@ audio-track-progress-bar {
     }
   }
 
-  input[type=range] + time, time + input[type=range] {
-      margin-left: $ionic-audio-track-margin;
-  }
-
   time {
     font-size: .8em;
-    min-width: 35px;
+    min-width: 40px;
+    text-align: center;
   }
 }

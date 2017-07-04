@@ -3,7 +3,7 @@ import { AudioProvider } from './ionic-audio-providers';
 import { WebAudioTrack } from './ionic-audio-web-track';
 import { CordovaAudioTrack } from './ionic-audio-cordova-track';
 
-import { Component, DoCheck, SimpleChanges, EventEmitter, Output, Input } from '@angular/core';
+import { Component, DoCheck, EventEmitter, Output, Input } from '@angular/core';
 
 
 /**
@@ -77,19 +77,18 @@ export class AudioPlaylistComponent implements DoCheck {
 
   }
 
+  next(track: any) {
+    console.log('Playlist track finished =>', track)
+  }
+
   ngDoCheck() {
     if (this.tracks.length !== this._audioTracks.length) {
       this._audioTracks = this.tracks.map(track => {
-        //if (!(track instanceof WebAudioTrack) && !(track instanceof CordovaAudioTrack)) {
         let audioTrack: IAudioTrack = this._audioProvider.create(track);
         return audioTrack;
       });
 
-
-
       console.log("ngOnChanges -> new audio tracks", this._audioTracks);
     }
-
-
   }
 }
