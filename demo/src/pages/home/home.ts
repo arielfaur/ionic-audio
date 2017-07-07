@@ -2,19 +2,19 @@ import { Component, ViewChild } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
-import { AudioProvider, IAudioTrack, AudioPlaylistComponent } from 'ionic-audio';
+import { AudioProvider, IAudioTrack, ITrackConstraint } from 'ionic-audio';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  myTracks: any[];
-  trackList: any[] = [];
-  selectedTrack: any;
+  myTracks: ITrackConstraint[];
+  trackList: ITrackConstraint[] = [];
 
-  @ViewChild('playlist') playlist: AudioPlaylistComponent;
-  private _currentTrack: any;
+  //@ViewChild('playlist') playlist: AudioPlaylistComponent;
+  private _currentTrack: ITrackConstraint;
+  private _currentIndex: number;
 
   constructor(public navCtrl: NavController, private _audioProvider: AudioProvider) {
     // plugin won't preload data by default, unless preload property is defined within json object - defaults to 'none'
@@ -42,22 +42,27 @@ export class HomePage {
     }];
   }
 
-  addTrack(track: any) {
-    //this.trackList.push(track);
-    return this.playlist.add(track);
+  add(track: ITrackConstraint) {
+    this.trackList.push(track);
   }
 
-  playTrack(track: any) {
-    let index = this.addTrack(track);
-    console.log("Added track", index); 
-    setTimeout(()=> this.playlist.playIndex(index), 500);
+  play(track: ITrackConstraint, index?: number) {
+    console.log("Playing track", index)
+    this._currentTrack = track;
+    this._currentIndex = index;
+  }
+
+  next() {
+    if (this._currentIndex < this.trackList.length - 1) {
+      this._currentTrack = this.trackList[++this._currentIndex];
+    }
   }
 
   get currentTrack() {
     return this._currentTrack;
   }
 
-  set currentTrack(value: IAudioTrack) {
+  set currentTrack(value: ITrackConstraint) {
     this._currentTrack = value;
   }
 

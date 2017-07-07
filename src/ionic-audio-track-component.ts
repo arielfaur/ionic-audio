@@ -42,6 +42,8 @@ export class AudioTrackComponent implements OnChanges, DoCheck {
    * @type {ITrackConstraint}
    */
   @Input() track: ITrackConstraint;
+
+  @Input() autoplay: boolean;
   
   /**
    * Output property expects an event handler to be notified whenever playback finishes
@@ -167,6 +169,7 @@ export class AudioTrackComponent implements OnChanges, DoCheck {
     this._audioTrack =  this._audioProvider.create(changes.track.currentValue);
 
     console.log("ngOnChanges -> new audio track", this._audioTrack);
-    //this._audioTrack.play();
+    
+    this.autoplay && this._audioTrack.play();
   }
 }
