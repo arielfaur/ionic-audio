@@ -62,7 +62,7 @@ export class WebAudioTrack implements IAudioTrack {
       this._progress = 0;
       this._completed = 0;
       this._hasLoaded = false;
-      this.destroy();
+      //this.destroy();
       console.log('Finished playback');
     }, false);
     
@@ -228,7 +228,7 @@ export class WebAudioTrack implements IAudioTrack {
     this.pause();
     this.audio.removeEventListener("timeupdate", (e) => { this.onTimeUpdate(e); });
     this.isFinished = true;
-    this.destroy();
+    //this.destroy();
   }
   
   

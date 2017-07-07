@@ -37,11 +37,13 @@
       <div style="display: flex">
         <button ion-button icon-only (click)="playlist.play()"><ion-icon name="play"></ion-icon></button>
         <button ion-button icon-only (click)="playlist.pause()"><ion-icon name="pause"></ion-icon></button>
-        <audio-track-progress-bar duration progress [audioTrack]="playlist.currentTrack" style="width: 100%; margin: 0 10px" (onFinish)="playlist.next($event)"></audio-track-progress-bar>
+        <button ion-button icon-only (click)="playlist.next()"><ion-icon name="skip-forward"></ion-icon></button>
+        <audio-track-progress-bar duration progress [audioTrack]="playlist.currentTrack" style="width: 100%; margin: 0 10px" (onFinish)="playlist.next()"></audio-track-progress-bar>
       </div>
-      <ion-item>
-         <div [style.visibility]="playlist.currentTrack && playlist.currentTrack.hasLoaded ? 'visible' : 'hidden'" text-center>Playing <em>{{ playlist.currentTrack?.title }}</em></div>
-      </ion-item>
+      <div style="display: flex; justify-content: center; height: 50px">
+         <div *ngIf="playlist.currentTrack && playlist.currentTrack.hasLoaded"><em>{{ playlist.currentTrack?.title }}</em></div>
+         <ion-spinner *ngIf="playlist.currentTrack && playlist.currentTrack.isLoading"></ion-spinner>
+      </div>
      
       
       <ion-item *ngFor="let audioTrack of playlist.audioTracks">

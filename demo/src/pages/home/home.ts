@@ -43,12 +43,14 @@ export class HomePage {
   }
 
   addTrack(track: any) {
-    this.trackList.push(track);
+    //this.trackList.push(track);
+    return this.playlist.add(track);
   }
 
   playTrack(track: any) {
-    this.addTrack(track); 
-    setTimeout(()=> this.playlist.playLast(), 500);
+    let index = this.addTrack(track);
+    console.log("Added track", index); 
+    setTimeout(()=> this.playlist.playIndex(index), 500);
   }
 
   get currentTrack() {
