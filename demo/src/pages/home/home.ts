@@ -1,8 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewChildren, QueryList } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
-import { AudioProvider, IAudioTrack, ITrackConstraint } from 'ionic-audio';
+import { AudioProvider, IAudioTrack, ITrackConstraint, AudioPlaylistItemDirective } from 'ionic-audio';
 
 @Component({
   selector: 'page-home',
@@ -11,10 +11,9 @@ import { AudioProvider, IAudioTrack, ITrackConstraint } from 'ionic-audio';
 export class HomePage {
   myTracks: ITrackConstraint[];
   trackList: ITrackConstraint[] = [];
+  currentTrack: ITrackConstraint;
 
-  //@ViewChild('playlist') playlist: AudioPlaylistComponent;
-  private _currentTrack: ITrackConstraint;
-  private _currentIndex: number;
+  @ViewChildren(AudioPlaylistItemDirective) playlistItems: QueryList<AudioPlaylistItemDirective>;
 
   constructor(public navCtrl: NavController, private _audioProvider: AudioProvider) {
     // plugin won't preload data by default, unless preload property is defined within json object - defaults to 'none'
@@ -47,23 +46,12 @@ export class HomePage {
   }
 
   play(track: ITrackConstraint, index?: number) {
-    console.log("Playing track", index)
-    this._currentTrack = track;
-    this._currentIndex = index;
+    this.currentTrack = track;
   }
 
   next() {
-    if (this._currentIndex < this.trackList.length - 1) {
-      this._currentTrack = this.trackList[++this._currentIndex];
-    }
-  }
-
-  get currentTrack() {
-    return this._currentTrack;
-  }
-
-  set currentTrack(value: ITrackConstraint) {
-    this._currentTrack = value;
+    if (this.playlistItems.length == 0) return;
+    this.playlistItems.first.next();
   }
 
   onTrackFinished(track: any) {

@@ -20,15 +20,6 @@
     </ion-item>
   </ion-list>
 
-<!--  <audio-track #audioTrack [track]="currentTrack" (onFinish)="onTrackFinished($event)">
-    <div style="display: flex">
-      <button ion-button icon-only (click)="audioTrack.play()"><ion-icon name="play"></ion-icon></button>
-      <button ion-button icon-only (click)="audioTrack.pause()"><ion-icon name="pause"></ion-icon></button>
-      <audio-track-progress-bar duration progress [audioTrack]="audioTrack" style="width: 100%; margin: 0 10px"></audio-track-progress-bar>
-    </div>
-    <div [style.visibility]="audioTrack.hasLoaded ? 'visible' : 'hidden'" text-center>Playing <em>{{ audioTrack?.title }}</em></div>
-  </audio-track>-->
-  
   <audio-track #audioTrack [track]="currentTrack" [autoplay]="true" (onFinish)="onTrackFinished($event)">
       <div style="display: flex">
         <button ion-button icon-only (click)="audioTrack.play()"><ion-icon name="play"></ion-icon></button>
@@ -52,7 +43,7 @@
         <!--<button ion-button icon-only item-end (click)="pause(track)">
           <ion-icon name="pause"></ion-icon>
         </button>-->
-        <button ion-button icon-only item-end (click)="play(track, i)">
+        <button ion-button icon-only item-end audio-playlist-item [track]="track" [(currentTrack)]="currentTrack">
           <ion-icon name="play"></ion-icon>
         </button>
       </ion-item>

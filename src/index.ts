@@ -7,4 +7,4 @@ export * from './ionic-audio-track-progress-component';
 export * from './ionic-audio-track-play-component';
 export * from './ionic-audio-time-pipe';
 export * from './ionic-audio.module';
-export * from './ionic-audio-playlist-component';
+export * from './ionic-audio-playlist-item-directive';

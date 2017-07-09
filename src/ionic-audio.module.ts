@@ -7,7 +7,7 @@ import {AudioTrackProgressComponent, AudioTrackProgressBarComponent} from './ion
 import {AudioTrackPlayComponent} from './ionic-audio-track-play-component';
 import {AudioTimePipe} from './ionic-audio-time-pipe';
 import {AudioProvider} from './ionic-audio-providers';
-import {AudioPlaylistComponent} from './ionic-audio-playlist-component';
+import {AudioPlaylistItemDirective} from './ionic-audio-playlist-item-directive';
 
 export function declarations() {
   return [
@@ -16,7 +16,7 @@ export function declarations() {
     AudioTrackProgressBarComponent,
     AudioTrackPlayComponent,
     AudioTimePipe,
-    AudioPlaylistComponent
+    AudioPlaylistItemDirective
   ]; 
 }
 
