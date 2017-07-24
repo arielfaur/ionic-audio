@@ -8,7 +8,7 @@ An audio player plugin for Ionic that works out of the box in the browser and de
 
 ## Demo
 
-[Demo](http://arielfaur.github.io/ionic-audio-example/)
+[Demo](https://arielfaur.github.io/ionic-audio-demo/)
 
 ## Installation
 
@@ -20,16 +20,24 @@ npm install --save ionic-audio
 
 **For Ionic 3:**
 ```
-npm install --save ionic-audio@3.0.0
+npm install --save ionic-audio@3.2.0
 ```
 
 
 ```typescript
-import { IonicAudioModule } from 'ionic-audio';
+import { IonicAudioModule, WebAudioProvider, CordovaMediaProvider, defaultAudioProviderFactory } from 'ionic-audio';
+
+/**
+ * Sample custom factory function to use with ionic-audio
+ */
+export function myCustomAudioProviderFactory() {
+  return (window.hasOwnProperty('cordova')) ? new CordovaMediaProvider() : new WebAudioProvider();
+}
 
 @NgModule({
   imports: [
-    IonicAudioModule.forRoot()
+    IonicAudioModule.forRoot(defaultAudioProviderFactory), 
+    // or use a custom provided function shown above myCustomAudioProviderFactory
   ]
 })
 export class AppModule {}
