@@ -2,6 +2,11 @@
 
 An audio player plugin for Ionic that works out of the box in the browser and device using an underlying audio provider depending on the environment. When running inside the browser the plugin will default to a Web Audio provider, whereas on a device it will switch to Cordova Media if cordova-plugin-media is available, otherwise falls back to web audio.
 
+_If you've found this project useful please consider donating to support further development. Thank you!_
+
+[![Donate](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=KVDN3LVPRSRHC&lc=GB&item_name=Ionic%20Audio&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
+
+
 ## API Docs
 
 [API](http://arielfaur.github.io/ionic-audio/2.0/docs/modules/ionic-audio.html)
