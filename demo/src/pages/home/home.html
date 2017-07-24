@@ -22,7 +22,7 @@
 
   <audio-track #audioTrack [track]="currentTrack" [autoplay]="true" (onFinish)="onTrackFinished($event)">
     <div style="display: flex">
-      <button ion-button icon-only (click)="audioTrack.play()"><ion-icon name="play"></ion-icon></button>
+      <button ion-button icon-only (click)="audioTrack.canPlay ? audioTrack.play() : next()"><ion-icon name="play"></ion-icon></button>
       <button ion-button icon-only (click)="audioTrack.pause()"><ion-icon name="pause"></ion-icon></button>
       <button ion-button icon-only (click)="next()"><ion-icon name="skip-forward"></ion-icon></button>
       <audio-track-progress-bar duration progress [audioTrack]="audioTrack" style="width: 100%; margin: 0 10px"></audio-track-progress-bar>
@@ -35,7 +35,8 @@
 
   <ion-list *ngIf="playlist.length > 0">
     <ion-list-header no-lines inset>
-      Playlist
+      PLAYLIST
+      <button ion-button clear item-right (click)="clear()">Clear</button>
     </ion-list-header>
     <ion-item *ngFor="let track of playlist; let i = index">
       <h2>{{ track.title }}</h2>

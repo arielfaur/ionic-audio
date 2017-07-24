@@ -48,21 +48,28 @@ export class HomePage {
   play(track: ITrackConstraint, index: number) {
       this.currentTrack = track;
       this.currentIndex = index;
-      this._cdRef.detectChanges();
+      //this._cdRef.detectChanges();
   }
 
   next() {
+    // if there is a next track on the list play it
     if (this.playlist.length > 0 && this.currentIndex >= 0 && this.currentIndex < this.playlist.length - 1) {
       let i = this.currentIndex + 1;
       let track = this.playlist[i];
       this.play(track, i);
-    } else if (this.playlist.length > 0) {
+      this._cdRef.detectChanges();
+    } else if (this.currentIndex == -1 && this.playlist.length > 0) {
+      // if no track is playing then start with the first track on the list
       this.play(this.playlist[0], 0);
     }
   }
 
   onTrackFinished(track: any) {
     this.next();
+  }
+
+  clear() {
+    this.playlist = [];
   }
 
 }
