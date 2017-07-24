@@ -1,5 +1,5 @@
 angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', '$window', function ($interval, $timeout, $window) {
-    var tracks = [], currentTrack, currentMedia, playerTimer;
+    var tracks = [], currentTrack, currentMedia, playerTimer, volume = 1;
 
     if (!$window.cordova && !$window.Media) {
         console.log("ionic-audio: missing Cordova Media plugin. Have you installed the plugin? \nRun 'ionic plugin add cordova-plugin-media'");
@@ -12,6 +12,7 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
         pause: pause,
         stop: stop,
         seekTo: seekTo,
+        setVolume: setVolume,
         destroy: destroy
     };
 
@@ -114,6 +115,7 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
 
         currentMedia = createMedia(currentTrack);
         currentMedia.play();
+        setVolume(volume);
 
         startTimer();
     }
@@ -122,6 +124,14 @@ angular.module('ionic-audio').factory('MediaManager', ['$interval', '$timeout', 
         console.log('ionic-audio: resuming track ' + currentTrack.title);
         currentMedia.play();
         startTimer();
+    }
+
+    function setVolume(value) {
+        console.log('ionic-audio: change volume ' + value);
+        if (currentMedia) {
+            currentMedia.setVolume(value);
+        }
+        volume = value;
     }
 
     function stop() {
