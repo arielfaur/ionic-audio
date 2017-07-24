@@ -1,5 +1,9 @@
 # ionic-audio
-Visit the project page for demo and documentation. 
+This repo is for Ionic 1 and is no longer maintained. 
 
-http://arielfaur.github.io/ionic-audio/2.0/index.html
+For the Ionic 3 / Angular 4 version visit:
+https://github.com/arielfaur/ionic-audio/tree/3.0
+
+
+
 
