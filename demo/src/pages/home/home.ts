@@ -48,7 +48,6 @@ export class HomePage {
   play(track: ITrackConstraint, index: number) {
       this.currentTrack = track;
       this.currentIndex = index;
-      //this._cdRef.detectChanges();
   }
 
   next() {
@@ -57,7 +56,7 @@ export class HomePage {
       let i = this.currentIndex + 1;
       let track = this.playlist[i];
       this.play(track, i);
-      this._cdRef.detectChanges();
+      this._cdRef.detectChanges();  // needed to ensure UI update
     } else if (this.currentIndex == -1 && this.playlist.length > 0) {
       // if no track is playing then start with the first track on the list
       this.play(this.playlist[0], 0);
