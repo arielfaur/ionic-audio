@@ -111,7 +111,9 @@ export class AudioTrackProgressBarComponent implements OnChanges, DoCheck {
 
     // stop old track just in case
     let oldTrack: IAudioTrack = changes.audioTrack.previousValue;
-    if (oldTrack) oldTrack.stop();
+    if ((oldTrack) && (typeof oldTrack.stop === "function")) {
+        oldTrack.stop();          
+    }
   }
 
   ngDoCheck() {
