@@ -137,7 +137,8 @@ import {Component, Provider} from '@angular/core';
 export class Page1 {
   myTracks: any[];
   allTracks: any[];
-   
+  selectedTrack: any;
+  
   constructor(private _audioProvider: AudioProvider) { 
     // plugin won't preload data by default, unless preload property is defined within json object - defaults to 'none'
     this.myTracks = [{
@@ -195,7 +196,12 @@ export class Page1 {
     &lt;/ion-item&gt;    
   &lt;/audio-track&gt;</strong>
 &lt;/ion-list&gt;
-  </code></pre>
+
+&lt;ion-label&gt;Select track to play&lt;/ion-label&gt;
+      &lt;ion-select [(ngModel)]="selectedTrack"&gt;
+        &lt;ion-option *ngFor="let track of allTracks" value="{{track.id}}"&gt;{{track.title}}&lt;/ion-option&gt;
+      &lt;/ion-select&gt;
+</code></pre>
                 </p>
             </li>
           </ul>
