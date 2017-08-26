@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
 import { AudioProvider, IAudioTrack, ITrackConstraint } from 'ionic-audio';
 
 @Component({
@@ -9,8 +8,10 @@ import { AudioProvider, IAudioTrack, ITrackConstraint } from 'ionic-audio';
 })
 export class AboutPage {
   myTracks: ITrackConstraint[];
+  allTracks: any[];
+  selectedTrack: any;
 
-  constructor(public navCtrl: NavController) {
+  constructor(private _audioProvider: AudioProvider) {
     this.myTracks = [{
       src: 'https://archive.org/download/JM2013-10-05.flac16/V0/jm2013-10-05-t12-MP3-V0.mp3',
       artist: 'John Mayer',
@@ -35,4 +36,19 @@ export class AboutPage {
     }];
   }
 
+  ngAfterContentInit() {     
+    // get all tracks managed by AudioProvider so we can control playback via the API
+    this.allTracks = this._audioProvider.tracks; 
+  }
+  
+  playSelectedTrack() {
+    // use AudioProvider to control selected track 
+    this._audioProvider.play(this.selectedTrack);
+  }
+  
+  pauseSelectedTrack() {
+     // use AudioProvider to control selected track 
+     this._audioProvider.pause(this.selectedTrack);
+  }
+         
 }

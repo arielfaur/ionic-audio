@@ -24,4 +24,17 @@
       </ion-item>
     </audio-track>
   </ion-list>
+
+  <h3>API Usage</h3>
+  <h4>Using AudioProvider to control playback</h4>
+  <ion-list>
+    <ion-item>
+      <ion-label>Select track to play</ion-label>
+      <ion-select [(ngModel)]="selectedTrack">
+        <ion-option *ngFor="let track of allTracks" value="{{track.id}}">{{track.title}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <button ion-button block outline (click)="playSelectedTrack()">Play</button>
+  <button ion-button block outline color="secondary" (click)="pauseSelectedTrack()">Pause</button>
 </ion-content>
