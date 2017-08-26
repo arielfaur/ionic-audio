@@ -17,6 +17,7 @@ dist/
 .sass-cache/
 .tmp/
 .versions/
+.sourcemaps/
 coverage/
 node_modules/
 tmp/
