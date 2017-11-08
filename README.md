@@ -1,3 +1,12 @@
+# Nov 8th 2017
+## I don't have time to keep up with all the questions/issues so please don't send me requests to my personal email address.
+
+### Brief notes about some of the issues reported lately
+- Keep in mind that in certain scenarios you might be better off using standard HTML 5 audio components instead of this plugin
+- The plugin allows for simultaneous playback (multiple tracks), you are responsible for stopping / resuming playback responding to events
+- Some audio formats / codecs may not be supported, you might need to convert your audio files
+
+
 # Ionic Audio for Ionic 3
 
 An audio player plugin for Ionic that works out of the box in the browser and device using an underlying audio provider depending on the environment. When running inside the browser the plugin will default to a Web Audio provider, whereas on a device it will switch to Cordova Media if cordova-plugin-media is available, otherwise falls back to web audio.
