@@ -101,17 +101,17 @@ export class AudioTrackProgressBarComponent implements OnChanges, DoCheck {
   }
 
   seekTo(value: any) {
-    console.log("Seeking to", value);
     if (!Number.isNaN(value)) this.audioTrack.seekTo(value);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log("ngOnChanges", changes);
     if (changes.audioTrack.firstChange) return;
 
     // stop old track just in case
     let oldTrack: IAudioTrack = changes.audioTrack.previousValue;
-    if (oldTrack) oldTrack.stop();
+    if ((oldTrack) && (typeof oldTrack.stop === "function")) {
+        oldTrack.stop();          
+    }
   }
 
   ngDoCheck() {

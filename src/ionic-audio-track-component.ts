@@ -63,12 +63,16 @@ export class AudioTrackComponent implements OnChanges, DoCheck {
     if (!(this.track instanceof WebAudioTrack) && !(this.track instanceof CordovaAudioTrack)) {
       this._audioTrack = this._audioProvider.create(this.track); 
     } else {
-      Object.assign(this._audioTrack, this.track);
-      this._audioProvider.add(this._audioTrack);
+      if (this._audioTrack) {
+        Object.assign(this._audioTrack, this.track);
+        this._audioProvider.add(this._audioTrack);
+      }
     }
     
-    // update input track parameter with track is so we pass it to WebAudioProvider if needed
-    this.track.id = this._audioTrack.id; 
+    if (this._audioTrack) {
+      // update input track parameter with track is so we pass it to WebAudioProvider if needed
+      this.track.id = this._audioTrack.id;
+    }
   }
   
   play() {    
