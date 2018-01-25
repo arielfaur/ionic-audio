@@ -1,4 +1,7 @@
-# Nov 8th 2017
+# CHANGELOG
+25.01.2018 Updated to Angular 5 / Ionic 3.9.2
+
+# UPDATE Nov 8th 2017
 ## I don't have time to keep up with all the questions/issues so please don't send me requests to my personal email address.
 
 ### Brief notes about some of the issues reported lately
