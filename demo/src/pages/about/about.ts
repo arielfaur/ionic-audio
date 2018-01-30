@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { AudioProvider, IAudioTrack, ITrackConstraint } from 'ionic-audio';
+import { AudioProvider, ITrackConstraint } from 'ionic-audio';
 
 @Component({
   selector: 'page-about',
@@ -36,19 +36,22 @@ export class AboutPage {
     }];
   }
 
-  ngAfterContentInit() {     
+  ngAfterContentInit() {
     // get all tracks managed by AudioProvider so we can control playback via the API
-    this.allTracks = this._audioProvider.tracks; 
+    this.allTracks = this._audioProvider.tracks;
   }
-  
+
   playSelectedTrack() {
-    // use AudioProvider to control selected track 
+    // use AudioProvider to control selected track
     this._audioProvider.play(this.selectedTrack);
   }
-  
+
   pauseSelectedTrack() {
-     // use AudioProvider to control selected track 
+     // use AudioProvider to control selected track
      this._audioProvider.pause(this.selectedTrack);
   }
-         
+
+  onTrackFinished(track: any) {
+    console.log('Track finished', track);
+  }
 }

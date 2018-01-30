@@ -29,7 +29,7 @@ export class HomePage {
       art: 'assets/img/johnmayer.jpg',
       preload: 'metadata' // tell the plugin to preload metadata such as duration for this track,  set to 'none' to turn off
     },
-    
+
     {
       src: 'https://archive.org/download/swrembel2010-03-07.tlm170.flac16/swrembel2010-03-07s1t05.mp3',
       artist: 'Stephane Wrembel',

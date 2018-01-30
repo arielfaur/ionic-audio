@@ -8,7 +8,7 @@
 
 <ion-content padding>
   <ion-list>
-    <audio-track #audio *ngFor="let track of myTracks" [track]="track">
+    <audio-track #audio *ngFor="let track of myTracks" [track]="track" (onFinish)="onTrackFinished($event)">
       <ion-item>
         <ion-thumbnail item-left>
           <img src="{{audio.art}}">
