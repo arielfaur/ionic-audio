@@ -57,13 +57,13 @@ audio-track {
           margin: 0 !important;
           
           &.light {
-            background: map-get($colors, dark);
-            color: map-get($colors, light);
+            background: color($colors, dark);
+            color: color($colors, light);
             opacity: .8;
           }
           
           &.dark {
-            color: map-get($colors, dark);
+            color: color($colors, dark);
             opacity: .6;
           }
           
